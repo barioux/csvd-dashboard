@@ -1,6 +1,6 @@
 ---
 name: regenerate-data
-description: Use when regenerating data/*.json (deno task data, deno task geocode, or --export at the end of a pipeline run), backing up or restoring the production database, working out which PostgreSQL is serving (the native Homebrew postgresql@18 that holds the data, versus the throwaway dhi.io/postgres:18-alpine3.23 container tests use), rebuilding a database from scratch, or drawing the print figures and cytobands (deno task figure, deno task cytobands).
+description: Use when regenerating data/*.json (deno task data, deno task geocode, or --export at the end of a pipeline run), backing up or restoring the production database (from a dump, or from the committed data/*.json when no dump survives), working out which PostgreSQL is serving (the native Homebrew postgresql@18 that holds the data, versus the throwaway dhi.io/postgres:18-alpine3.23 container tests use), a server that brew services reports as started but that answers `FATAL: role "csvd_user" does not exist` (after a Homebrew reinstall, say), rebuilding a database from scratch, or drawing the print figures and cytobands (deno task figure, deno task cytobands).
 ---
 
 # Regenerating the data
@@ -69,6 +69,24 @@ ps aux | grep '[p]ostgres'   # the native server names its data directory
 pg_isready -h localhost -p 5432
 ```
 
+**A server that answers can still be an empty cluster.** Reinstalling Homebrew
+deletes `/opt/homebrew/var`, and the `postgresql@18` formula's post-install
+runs `initdb` on the empty directory. `brew services` then reports `started`,
+the server listens on 5432, and every connection fails with
+`FATAL: role "csvd_user" does not exist`. That is not a configuration problem,
+and no config change brings the data back. Check before touching any config:
+
+```bash
+stat -f '%SB' /opt/homebrew/var/postgresql@18/PG_VERSION   # when initdb ran
+# /tmp is the formula's Unix socket, which connects as the macOS user --
+# the one role a new cluster has.
+psql -h /tmp -d postgres -XAtc "SELECT rolname FROM pg_roles WHERE rolname !~ '^pg_'"
+```
+
+A `PG_VERSION` born at the reinstall, and the macOS user as the only role, mean
+the cluster is new: restore it from a dump, or from the committed JSON (both
+below). A dump kept under `/opt/homebrew` goes with it, so keep dumps in `~/`.
+
 ## The test container image
 
 The runtime is **Apple's `container`** (`brew install container`;
@@ -128,7 +146,7 @@ Four things about it are load-bearing:
   either image for the other: this recipe would reorder an existing index, and
   the fixture would skip every database test on an image that is not pulled.
 
-## What can be rebuilt, and the one thing that cannot
+## What can be rebuilt, and from where
 
 "Regenerating the database" is two different jobs. The schema is fully
 scripted; the data is not.
@@ -145,32 +163,43 @@ Run it on an existing database too before the first `deno task data` after the
 `clinical_trials.svd_population` to `target_population`, and the export, the
 merge and the clinical-trials sync all read the new name.
 
-From nothing, that is preceded by `createuser -s csvd_user` and
-`createdb -O csvd_user csvd_dashboard`. Note that `csvd_user` is **not** a
-superuser and cannot create databases, so those two run as the macOS user.
-Migrations 001-009 build the whole schema and **none of them seeds any data**.
+From nothing, that is preceded by creating the role and the database, as the
+macOS user (the cluster's superuser). `csvd_user` is **not** a superuser and
+needs not be: owning the database is enough for every migration, triggers and
+the plpgsql function included. `-P` prompts for the password; type the `.env`
+`DB_PASSWORD`. Both tools are keg-only like `psql`:
 
-**Data — mostly scripted, with one hole:**
+```bash
+export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
+createuser -P csvd_user
+createdb -O csvd_user csvd_dashboard
+```
+
+Migrations 001-014 build the whole schema and **none of them seeds any data**.
+
+**Data — scripted, but not all from the same place:**
 
 | Table | Rebuilt by | Cost |
 | --- | --- | --- |
-| `clinical_trials` | `--clinical-trials` | free |
-| NCBI / UniProt / PubMed caches | `--sync-external-data` | free |
+| `genes` and its three list tables | `scripts.restore_from_json` from `table1.json` | free |
+| `clinical_trials`, curated rows | `scripts.restore_from_json` from `table2.json` | free |
+| `clinical_trials`, uncurated discoveries | `--clinical-trials` | free |
+| NCBI / UniProt / PubMed caches | either (`--sync-external-data` refetches) | free |
 | `gene_annotations` | `--sync-annotations` | free, ~30 min |
-| `pubmed_refs` | accrues from `--pubmed` runs | **paid re-extraction** |
-| `pipeline_runs` | accrues naturally | — |
-| **`genes` (63 curated rows)** | **nothing — no path exists** | — |
+| `pubmed_refs` | `scripts.restore_from_json` from the run reports in `logs/` | free back to the oldest report; **paid re-extraction** before it |
+| `pipeline_runs`, `sync_runs` | `scripts.restore_from_json`, latest run only | — |
 
-**The curated `genes` table cannot be regenerated.** No migration seeds it, no
-script imports it, and `scripts/` has no importer: those rows are curator
-judgement that entered upstream of this repo from the source spreadsheet. The
-only copy outside the database is the published projection in
-`data/table1.json`, and that is lossy — `source_quote` is held out by
-`_UNPUBLISHED_COLUMNS` (`pipeline/export/main.py`), as are the id and timestamp
-columns.
+**No migration seeds `genes`, and nothing upstream can refetch it**: those rows
+are curator judgement that entered from the source spreadsheet, plus what the
+pipeline has merged since. Outside the database it exists only in a dump and in
+the published projection `data/table1.json`, which carries every column but
+the id and timestamps — `source_quote` and `confidence` included. `_publishable`
+in `pipeline/export/main.py` drops only `id`, `created_at` and `updated_at`.
+The projection is only as current as the last export.
 
-**So a dump is the backstop, and it is the only one.** It also protects
-`pubmed_refs`, the ledger whose loss makes the next `--days-back` run re-extract
+**A dump is the first backstop.** It is exact, and it also holds what the JSON
+cannot: the ids, every `pipeline_runs` row, and `pubmed_refs` beyond the
+surviving logs. That ledger's loss makes the next `--days-back` run re-extract
 papers already paid for:
 
 ```bash
@@ -185,6 +214,37 @@ compare, because matching row counts do not prove matching content:
 ```sql
 SELECT md5(string_agg(t::text, '|' ORDER BY id)) FROM genes t;
 ```
+
+### Restoring from the committed JSON
+
+When no dump survives, `scripts/restore_from_json.py` rebuilds the tables in
+the table above from `data/*.json` and `logs/`, into a database freshly
+migrated to head:
+
+```bash
+uv run python -m scripts.restore_from_json           # builds and checks; writes nothing
+uv run python -m scripts.restore_from_json --write
+```
+
+It refuses unless every `genes` and `clinical_trials` row, pushed back through
+the export's own `clean_gene_row` / `clean_trial_row`, reproduces its committed
+JSON row exactly. It also refuses to write into a database where any table it
+fills holds a row, and writes in one transaction. Then check the result the way
+the restore is tested: export into a scratch directory and compare bytes.
+**Do not check with `deno task data`**: it writes over `data/`, the only other
+copy.
+
+```bash
+OUT=$(mktemp -d)
+uv run python -c "import asyncio, pathlib, sys; from pipeline.export.main import run_export; asyncio.run(run_export(pathlib.Path(sys.argv[1])))" "$OUT"
+for f in "$OUT"/*.json; do cmp -s "$f" "data/${f##*/}" || echo "differs: ${f##*/}"; done
+```
+
+No output means every exported file matches. `gene_annotations.json` is not
+among them: the export keeps the committed file until `--sync-annotations`
+refills the table. The script's docstring lists what does not come back: the
+annotations, the unpublished cache columns, the uncurated and the stopped
+trials, papers older than the oldest report in `logs/`, and the ids.
 
 `filter.ids` fetches every trial's locations in one request, so
 `deno task geocode` no longer needs a cache or a rate limit.
