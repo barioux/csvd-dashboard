@@ -17,8 +17,10 @@ store, no Deno KV, no auth library. Five things are load-bearing:
 
 - **The gate is `routes/_middleware.ts`, and it fails closed.** It runs for
   every file route, exempts only `/login` and `/logout`, and answers 503 on
-  every route while `DASHBOARD_PASSPHRASE` or `DASHBOARD_SESSION_SECRET` is
-  unset — in development too. There is no environment-sniffing bypass; put both
+  every other route while `DASHBOARD_PASSPHRASE` or `DASHBOARD_SESSION_SECRET`
+  is unset — in development too. The exemption comes first, so `/login` still
+  renders without them, which is why Fly's liveness check on it cannot see a
+  missing secret and `scripts/smoke_deploy.sh` checks `GET /` instead. There is no environment-sniffing bypass; put both
   in `.env`, which `deno task dev` and `deno task start` both load; an exported
   variable beats the file, so a host that injects secrets is unaffected. Static
   assets never reach the gate because `main.ts` registers `staticFiles()` first,

@@ -389,7 +389,7 @@ title comes from `UNTABBED_TITLES` in `routes/_app.tsx`.
 
 The dashboard sits behind one shared passphrase and a 30-day signed cookie, with
 no store and no auth library. Three things hold everywhere: the gate in
-`routes/_middleware.ts` fails closed and answers 503 on every route while
+`routes/_middleware.ts` fails closed and answers 503 on every gated route while
 `DASHBOARD_PASSPHRASE` or `DASHBOARD_SESSION_SECRET` is unset, in development
 too; `/logout` is a POST guarded by `csrf()`, so do not turn it into a GET link;
 and the e2e suite runs pre-authenticated, so a spec about the logged-out state
@@ -399,10 +399,14 @@ and `e2e/`, and carries the rest.
 
 ### Hosting
 
-The app runs on Deno Deploy at
-`https://csvd-dashboard.mathieubpoiriericm.deno.net`, built from `main` through
-the native GitHub integration. The build-config fields, the four non-obvious
-settings and the wholly-503 diagnosis are in the `deploy` skill
+The app runs on Fly.io as one always-on machine built from the root `Dockerfile`
+and configured by `fly.toml`. CI's `deploy` job ships it on a push to `main`
+once every other job has passed, then checks it from outside with
+`scripts/smoke_deploy.sh`. It is moving there from Deno Deploy, which shuts down
+six months after Deno's 9 October 2026 announcement;
+`https://csvd-dashboard.mathieubpoiriericm.deno.net` serves until the cut-over.
+The one-machine rule, the `Fly-Client-IP` header the login limiter keys on, the
+allowlist `.dockerignore` and the 503 diagnosis are in the `deploy` skill
 (`.claude/skills/deploy/SKILL.md`).
 
 Because `data/*.json` is committed and bundled at build time, regenerating data
