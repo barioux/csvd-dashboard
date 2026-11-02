@@ -1,6 +1,6 @@
 ---
 name: update-from-upstream
-description: Use when pulling upstream changes into a disease fork - the merge, the one resolution per location (data/, disease/, the csvd/ trees, the README's first line, docs/screenshots/), the schema diff for new manifest keys, and the gates afterwards.
+description: Use when pulling upstream changes into a disease fork - the merge, the one resolution per location (data/, disease/, the csvd/ trees, the README's first line, fly.toml's app and region, docs/screenshots/), the schema diff for new manifest keys, and the gates afterwards.
 ---
 
 # Updating a disease fork from upstream
@@ -32,6 +32,7 @@ Then one resolution per location, in this order.
 | `tests/csvd/`, `e2e/tests/csvd/`, `tests/pipeline/csvd/`, `tests/scripts/csvd/` | Upstream's new files there arrive as "deleted by us" (or as plain additions when the merge is clean). Remove them again: `git rm -r -q -f --ignore-unmatch tests/csvd e2e/tests/csvd tests/pipeline/csvd tests/scripts/csvd` -- `-f` because a file the merge staged is one `git rm` otherwise refuses to drop. |
 | `README.md`                                                                | Generic upstream, so it normally merges clean. If the fork retitled it, the H1 is **ours**; everything below it is upstream's.                                                                                                                 |
 | `disease/README.md`                                                        | **Ours**, entirely; upstream's is the cSVD page.                                                                                                                                                                                             |
+| `fly.toml`                                                                 | **Ours** for `app` and `primary_region`, which name the fork's own Fly app; **upstream's** for every other line.                                                                                                                             |
 | `docs/screenshots/`                                                        | **Recaptured**, whatever the merge left. Upstream's images are of the cSVD dashboard: they conflict where the fork recaptured its own, and arrive silently where it never did. After `data/` is regenerated, `deno task screenshots && git add docs/screenshots`; the task builds the merged code, so the images follow any page upstream changed too. |
 | Anything else                                                              | Should not conflict. If it does, resolve nothing yet: note the file, finish the merge with the rest, and open an upstream issue naming the file and the two hunks — the seam has a leak there.                                                 |
 

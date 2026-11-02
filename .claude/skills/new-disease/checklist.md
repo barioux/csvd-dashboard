@@ -122,9 +122,10 @@ judgement the fork's owner makes once:
       `createdb -O <key>_user <key>_dashboard`, each after `sudo -u postgres`
       on Linux; then `cd pipeline && uv run alembic upgrade head`.
 - [ ] First commit.
-- [ ] `deploy` skill: project `<key>-dashboard` (each `_` of the key
-      written `-`), `DASHBOARD_PASSPHRASE`
-      (without its quotes), `DASHBOARD_SESSION_SECRET`.
+- [ ] `deploy` skill: `fly.toml`'s `app = "<key>-dashboard"` (each `_` of
+      the key written `-`) and `primary_region`; `fly secrets set` with
+      `DASHBOARD_PASSPHRASE` (single-quoted) and `DASHBOARD_SESSION_SECRET`;
+      `FLY_API_TOKEN` stored on GitHub.
 - [ ] `hosting.url` written into `manifest.json` and `disease/README.md`
       once the site answers; committed.
 - [ ] The hand-off message: files, gates, papers and cost, recall and the

@@ -165,9 +165,9 @@ Whichever you choose, the steps are the same and this guide describes them.
 1. On GitHub, fork `mathieubpoiriericm/csvd-dashboard` under your account or
    organisation. Name it `<key>-dashboard`, where `<key>` is the one-word
    disease key you will choose in the interview (for example `als-dashboard`). A
-   key may hold underscores, and a repository or Deno Deploy name becomes part
-   of a host name, so there each `_` is written `-`: the key `example_itis`
-   makes `example-itis-dashboard`. Database names keep the key as it is
+   key may hold underscores, and a repository or Fly.io app name becomes part of
+   a host name, so there each `_` is written `-`: the key `example_itis` makes
+   `example-itis-dashboard`. Database names keep the key as it is
    (`example_itis_dashboard`). Wherever this guide writes `<key>-dashboard`,
    read it with that change.
 2. Clone it and register the original as `upstream`:
@@ -631,8 +631,8 @@ Edit `.env` and fill in:
 Wrap the passphrase in single quotes and keep apostrophes out of it. The two
 serving tasks, `deno task dev` and `deno task start`, read `.env` with
 `--env-file`, which ends an unquoted value at a `#` and expands a `$NAME`, and
-the login then refuses the sentence you meant. Deno Deploy takes the same
-sentence without the quotes (section 14).
+the login then refuses the sentence you meant. `fly secrets set` takes the same
+sentence in the same quotes, because a shell reads it the same way (section 14).
 
 `NCBI_API_KEY` is commented out in `.env.example`. Uncomment it only to set a
 real key from your NCBI account: NCBI answers any other value, an empty one
@@ -755,18 +755,33 @@ same way, and the same three commands follow it.
 
 **Purpose:** put the site on the web behind its passphrase.
 
-The site runs on [Deno Deploy](https://deno.com/deploy) from your GitHub
-repository's `main` branch. Three values are needed:
+The site runs on [Fly.io](https://fly.io) as one always-on machine, built from
+the repository's `Dockerfile` and deployed by CI from your `main` branch once
+every check has passed. It costs about $3.69 a month. Four values are needed:
 
-| Setting                    | Value                                            |
-| -------------------------- | ------------------------------------------------ |
-| Project name               | `<key>-dashboard`, each `_` in the key as `-`    |
-| `DASHBOARD_PASSPHRASE`     | The same sentence as your `.env`, without quotes |
-| `DASHBOARD_SESSION_SECRET` | The same value as your `.env`                    |
+| Setting                    | Value                                                |
+| -------------------------- | ---------------------------------------------------- |
+| `app` in `fly.toml`        | `<key>-dashboard`, each `_` in the key as `-`        |
+| `primary_region`           | The Fly region nearest your readers                  |
+| `DASHBOARD_PASSPHRASE`     | The same sentence as your `.env`, in the same quotes |
+| `DASHBOARD_SESSION_SECRET` | The same value as your `.env`                        |
 
-The build settings and the diagnosis for a site that answers 503 on every page
-are in `.claude/skills/deploy/SKILL.md` and in the README's "Deployment"
-section. Once the site answers, write its URL into `hosting.url` in
+The app name becomes the address `<key>-dashboard.fly.dev` and has to be free on
+Fly. Set the first two in `fly.toml` and commit, then:
+
+```bash
+brew install flyctl && fly auth login
+fly launch --no-deploy --copy-config
+fly secrets set DASHBOARD_PASSPHRASE='…' DASHBOARD_SESSION_SECRET='…'
+fly tokens create deploy
+```
+
+Store the token as the repository secret `FLY_API_TOKEN` on GitHub; from then on
+every push to `main` that passes CI deploys, and is checked from outside by
+`scripts/smoke_deploy.sh`. Without the token, CI skips the deploy and says so.
+The setup, the one-machine rule and the diagnosis for a site that answers 503 on
+every page are in `.claude/skills/deploy/SKILL.md` and in the README's
+"Deployment" section. Once the site answers, write its URL into `hosting.url` in
 `disease/manifest.json` and into `disease/README.md`, and commit.
 
 Because the JSON is bundled at build time, every push of regenerated data to
@@ -793,6 +808,7 @@ Then one resolution per location, and only these:
 | `disease/`                  | Keep yours; then diff the two schemas for any new key         |
 | The four `csvd/` test trees | Keep them deleted                                             |
 | `README.md` first line      | Keep yours                                                    |
+| `fly.toml`                  | Keep your `app` and `primary_region`; take the rest           |
 | `docs/screenshots/`         | Recapture with `deno task screenshots`, once `data/` is yours |
 
 A conflict anywhere else is a bug in the seam; please report it upstream rather

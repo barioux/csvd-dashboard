@@ -20,9 +20,9 @@ export function renderChecklist(answers: Answers): string {
   const key = KEY.test(clean(disease.key)) ? clean(disease.key) : "<key>";
   const name = clean(disease.name) || "<disease name>";
   const abbreviation = clean(disease.abbreviation) || "<abbreviation>";
-  // The repository and the Deploy project are named with a hyphen where
-  // the key has an underscore: the project's name becomes a host name, and
-  // a host name holds no underscore. The database names keep the key.
+  // The repository and the Fly app are named with a hyphen where the key has
+  // an underscore: the app's name becomes a host name, and a host name holds
+  // no underscore. The database names keep the key.
   const project = `${key.replaceAll("_", "-")}-dashboard`;
   const stem = BUNDLE_NAME.replace(/\.zip$/, "");
   const lines = [
@@ -141,7 +141,14 @@ export function renderChecklist(answers: Answers): string {
     "",
     "## 9. Deploy",
     "",
-    `On Deno Deploy, create the project with the project name \`${project}\` from your GitHub repository, set \`DASHBOARD_PASSPHRASE\` (without the quotes \`.env\` needs) and \`DASHBOARD_SESSION_SECRET\`, and follow \`.claude/skills/deploy/SKILL.md\` for the build settings. Once the site answers, write its URL into \`hosting.url\` in \`disease/manifest.json\` and into \`disease/README.md\`, and commit.`,
+    `The site runs on Fly.io, and \`.claude/skills/deploy/SKILL.md\` has the details. In \`fly.toml\`, set \`app = "${project}"\` (it becomes the address \`${project}.fly.dev\`, so it has to be free on Fly) and \`primary_region\` to the region nearest your readers, and commit. Then:`,
+    "",
+    "    brew install flyctl && fly auth login",
+    "    fly launch --no-deploy --copy-config",
+    "    fly secrets set DASHBOARD_PASSPHRASE='…' DASHBOARD_SESSION_SECRET='…'",
+    "    fly tokens create deploy",
+    "",
+    "The passphrase goes in the same single quotes as in `.env`. Store the token as the repository secret `FLY_API_TOKEN` on GitHub: from then on, every push to `main` that passes CI deploys. Once the site answers, write its URL into `hosting.url` in `disease/manifest.json` and into `disease/README.md`, and commit.",
     "",
   ];
   return wrap80(lines.join("\n"));

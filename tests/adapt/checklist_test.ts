@@ -79,7 +79,7 @@ Deno.test("the checklist substitutes the key into every command and lists the gu
     text,
     "git rm -r tests/pipeline/cassettes/test_query_recall_gold",
   );
-  assertStringIncludes(text, "project name `exampleitis-dashboard`");
+  assertStringIncludes(text, 'app = "exampleitis-dashboard"');
   assertStringIncludes(text, "docs/adapting-to-your-disease.md");
   assert(!text.includes("<key>"), "every placeholder is substituted");
   for (const line of raw.split("\n")) {
@@ -89,12 +89,14 @@ Deno.test("the checklist substitutes the key into every command and lists the gu
   }
 });
 
-Deno.test("the repository and Deploy names carry a hyphen where the key has an underscore", () => {
+Deno.test("the repository and Fly app names carry a hyphen where the key has an underscore", () => {
   const answers = structuredClone(EXAMPLEITIS);
   answers.identity.disease.key = "example_itis";
   const text = flat(renderChecklist(answers));
   assertStringIncludes(text, "/example-itis-dashboard.git");
-  assertStringIncludes(text, "project name `example-itis-dashboard`");
+  // The app's name is a host name, which holds no underscore.
+  assertStringIncludes(text, 'app = "example-itis-dashboard"');
+  assertStringIncludes(text, "`example-itis-dashboard.fly.dev`");
   // A database name may hold one, and keeps the key.
   assertStringIncludes(text, "DB_NAME=example_itis_dashboard");
   assertStringIncludes(text, "createuser -s -P example_itis_user");
@@ -169,12 +171,28 @@ Deno.test("the NCBI key is optional and stays commented out rather than a placeh
   assertStringIncludes(text, "an empty one included");
 });
 
-Deno.test("the passphrase is single-quoted in .env and typed bare on Deno Deploy", () => {
+Deno.test("the passphrase is single-quoted in .env and in fly secrets set", () => {
   const text = flat(renderChecklist(EXAMPLEITIS));
-  // `--env-file` ends an unquoted value at "#" and expands "$NAME".
+  // `--env-file` ends an unquoted value at "#" and expands "$NAME", and so
+  // does the shell `fly secrets set` is typed into.
   assertStringIncludes(text, "`DASHBOARD_PASSPHRASE='…'`");
   assertStringIncludes(text, "single quotes");
-  assertInOrder(text, ["## 9. Deploy", "without the quotes"]);
+  assertInOrder(text, [
+    "## 9. Deploy",
+    "fly secrets set DASHBOARD_PASSPHRASE='…'",
+  ]);
+});
+
+Deno.test("step 9 names the fork's own Fly app before launching it", () => {
+  // fly.toml arrives naming the upstream app, and a Fly app name is unique
+  // across Fly, so launching it unchanged fails on a name already taken.
+  const text = flat(renderChecklist(EXAMPLEITIS));
+  assertInOrder(text, [
+    "## 9. Deploy",
+    'app = "exampleitis-dashboard"',
+    "fly launch --no-deploy --copy-config",
+    "FLY_API_TOKEN",
+  ]);
 });
 
 Deno.test("step 2 unpacks the newest archive the browser saved", () => {
