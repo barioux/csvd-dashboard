@@ -301,3 +301,97 @@ jobs:
 
       - name: Run the checks on two wizard-made forks
         run: deno run -A scripts/adapt_fork_check.ts --e2e
+
+  # The image Fly.io runs, built and checked from outside on every push and
+  # pull request, so a change to the Dockerfile, to .dockerignore's allowlist
+  # or to anything the build imports cannot reach a deploy unrun. The secrets
+  # are throwaway: the container holds nothing and goes with the job. A second
+  # container with no secrets has to fail the smoke script, which is what
+  # shows the script would catch a production deploy missing one.
+  container:
+    name: Production image builds and answers
+    runs-on: ubuntu-latest
+
+    env:
+      SMOKE_PASSPHRASE: ci smoke passphrase
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build the image
+        run: docker build -t dashboard .
+
+      - name: Start it, configured and not
+        run: |
+          docker run -d --name configured -p 8000:8000 \
+            -e DASHBOARD_PASSPHRASE="$SMOKE_PASSPHRASE" \
+            -e DASHBOARD_SESSION_SECRET=ci-smoke-session-secret \
+            -e LOGIN_CLIENT_IP_HEADER=Fly-Client-IP \
+            dashboard
+          docker run -d --name unconfigured -p 8001:8000 dashboard
+          for port in 8000 8001; do
+            for _ in $(seq 1 30); do
+              curl -fsS -o /dev/null "http://localhost:$port/login" && break
+              sleep 1
+            done
+          done
+
+      - name: Smoke test the configured image
+        run: scripts/smoke_deploy.sh http://localhost:8000
+
+      - name: The smoke test fails an image missing its secrets
+        run: |
+          if SMOKE_PASSPHRASE= scripts/smoke_deploy.sh http://localhost:8001; then
+            echo "::error::the smoke test passed a server with no login secrets"
+            exit 1
+          fi
+
+      - name: Container logs
+        if: ${{ !cancelled() }}
+        run: |
+          docker logs configured
+          docker logs unconfigured
+
+  # Fly.io deploys what every gate above passed, on a push to main and on
+  # nothing else. FLY_API_TOKEN is a repository secret (`fly tokens create
+  # deploy`); a repository without it -- a fork that hosts elsewhere, or the
+  # second of this project's two remotes -- skips the deploy instead of
+  # failing. --ha=false keeps a first deploy from creating Fly's default two
+  # machines: the login limiter counts in the process, so there must be one.
+  deploy:
+    name: Deploy to Fly.io
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [check, python, e2e, empty-data, adapt-fork, container]
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: fly-deploy
+      cancel-in-progress: false
+
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+    steps:
+      - name: Skip without a Fly.io token
+        if: env.FLY_API_TOKEN == ''
+        run: echo "::notice::FLY_API_TOKEN is not set in this repository; nothing was deployed."
+
+      - uses: actions/checkout@v7
+        if: env.FLY_API_TOKEN != ''
+
+      - uses: superfly/flyctl-actions/setup-flyctl@1.6
+        if: env.FLY_API_TOKEN != ''
+
+      - name: Deploy
+        if: env.FLY_API_TOKEN != ''
+        run: flyctl deploy --remote-only --ha=false
+
+      # Logged-out checks only: the passphrase stays a Fly secret. Fly's own
+      # health check is liveness on /login, which renders even with a login
+      # secret unset, so the smoke script's GET / is what turns such a deploy
+      # red here.
+      - name: Smoke test the live site
+        if: env.FLY_API_TOKEN != ''
+        run: |
+          app=$(sed -n 's/^app = "\(.*\)"$/\1/p' fly.toml)
+          scripts/smoke_deploy.sh "https://$app.fly.dev"

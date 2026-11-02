@@ -1,0 +1,24 @@
+# An allowlist: the image is built from what the server needs and nothing
+# else. A denylist would let .env (the login secrets), .venv, or the publisher
+# PDFs the pipeline fetches into data/test_data/ into the build context the
+# moment someone forgot a line. A new top-level file the build imports has to
+# be added here; CI's container job fails until it is.
+*
+!deno.json
+!deno.lock
+!main.ts
+!client.ts
+!utils.ts
+!vite.config.ts
+!routes/
+!islands/
+!components/
+!lib/
+!server/
+!data/
+!disease/
+!assets/
+!static/
+
+# Licensed inputs to the pipeline, gitignored, and never part of the site.
+data/test_data/
