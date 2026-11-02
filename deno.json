@@ -65,10 +65,10 @@
     "leaflet.markercluster": "npm:leaflet.markercluster@^1.5.3",
     "@types/leaflet": "npm:@types/leaflet@^1.9.22",
     "@types/leaflet.markercluster": "npm:@types/leaflet.markercluster@^1.5.6",
-    "@types/node": "npm:@types/node@^26.6.5",
+    "@types/node": "npm:@types/node@^26.6.6",
     "@floating-ui/dom": "npm:@floating-ui/dom@^1.8.0",
     "fflate": "npm:fflate@^0.8.3",
-    "preact-render-to-string": "npm:preact-render-to-string@^6.8.1",
+    "preact-render-to-string": "npm:preact-render-to-string@^6.8.2",
     "@std/assert": "jsr:@std/assert@^1.0.19",
     "@std/fs": "jsr:@std/fs@^1"
   },

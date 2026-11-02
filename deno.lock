@@ -6,6 +6,7 @@
     "jsr:@deno/loader@0.4": "0.4.0",
     "jsr:@deno/loader@~0.3.10": "0.3.14",
     "jsr:@fresh/build-id@1": "1.0.1",
+    "jsr:@fresh/core@*": "2.3.3",
     "jsr:@fresh/core@2": "2.3.3",
     "jsr:@fresh/core@^2.3.3": "2.3.3",
     "jsr:@fresh/plugin-vite@^1.1.2": "1.1.2",
@@ -49,26 +50,26 @@
     "npm:@preact/signals@^2.5.1": "2.11.3_preact@10.29.8",
     "npm:@prefresh/vite@^2.4.8": "2.4.12_preact@10.29.8_vite@7.3.7",
     "npm:@remix-run/node-fetch-server@0.12": "0.12.0",
-    "npm:@tanstack/preact-table@^9.3.1": "9.3.1_preact@10.29.8_preact-render-to-string@6.8.1",
+    "npm:@tanstack/preact-table@^9.3.1": "9.3.1_preact@10.29.8",
     "npm:@tanstack/table-core@^9.3.1": "9.3.1",
     "npm:@types/babel__core@^7.20.5": "7.20.5",
     "npm:@types/leaflet.markercluster@^1.5.6": "1.5.6",
     "npm:@types/leaflet@^1.9.22": "1.9.22",
-    "npm:@types/node@^26.6.5": "26.6.5",
+    "npm:@types/node@^26.6.6": "26.6.6",
     "npm:esbuild-wasm@~0.25.11": "0.25.12",
     "npm:esbuild@0.25.7": "0.25.7",
     "npm:esbuild@~0.25.5": "0.25.12",
     "npm:fflate@~0.8.3": "0.8.3",
     "npm:leaflet.markercluster@^1.5.3": "1.5.3_leaflet@1.9.4",
     "npm:leaflet@^1.9.4": "1.9.4",
-    "npm:preact-render-to-string@^6.6.3": "6.8.1_preact@10.29.8",
-    "npm:preact-render-to-string@^6.8.1": "6.8.1_preact@10.29.8",
-    "npm:preact@^10.28.2": "10.29.8_preact-render-to-string@6.8.1",
-    "npm:preact@^10.29.1": "10.29.8_preact-render-to-string@6.8.1",
-    "npm:preact@^10.29.8": "10.29.8_preact-render-to-string@6.8.1",
+    "npm:preact-render-to-string@^6.6.3": "6.8.2_preact@10.29.8",
+    "npm:preact-render-to-string@^6.8.2": "6.8.2_preact@10.29.8",
+    "npm:preact@^10.28.2": "10.29.8_preact-render-to-string@6.8.2",
+    "npm:preact@^10.29.1": "10.29.8_preact-render-to-string@6.8.2",
+    "npm:preact@^10.29.8": "10.29.8_preact-render-to-string@6.8.2",
     "npm:rollup@^4.55.1": "4.65.0",
-    "npm:vite@^7.1.4": "7.3.7_@types+node@26.6.5",
-    "npm:vite@^7.3.7": "7.3.7_@types+node@26.6.5"
+    "npm:vite@^7.1.4": "7.3.7_@types+node@26.6.6",
+    "npm:vite@^7.3.7": "7.3.7_@types+node@26.6.6"
   },
   "jsr": {
     "@deno/esbuild-plugin@1.2.1": {
@@ -1018,14 +1019,14 @@
       "os": ["win32"],
       "cpu": ["x64"]
     },
-    "@tanstack/preact-store@0.13.5_preact@10.29.8_preact-render-to-string@6.8.1": {
+    "@tanstack/preact-store@0.13.5_preact@10.29.8": {
       "integrity": "sha512-+ONKQNVqoGBpCbvahHjW39d28vwBVNRUa927m5owRQS6fySTORPKbOV6HYBXt0qHxOA8r0llg1Bfy/FKXsj3qw==",
       "dependencies": [
         "@tanstack/store",
         "preact"
       ]
     },
-    "@tanstack/preact-table@9.3.1_preact@10.29.8_preact-render-to-string@6.8.1": {
+    "@tanstack/preact-table@9.3.1_preact@10.29.8": {
       "integrity": "sha512-NT4WwLhcV460AeGXjx0UT3GBrncHUVL9eV+0BrXSAf9pGspqznsA695gyYbwlBE6BPt1Pt0dIgbvoRMc+BsznA==",
       "dependencies": [
         "@tanstack/preact-store",
@@ -1089,8 +1090,8 @@
         "@types/geojson"
       ]
     },
-    "@types/node@26.6.5": {
-      "integrity": "sha512-uMzsv9stDdofIZBx4UGh4Z9ZgXnGC9seRDscilBcTHAeOFk67MZg/k9bWVfO+bk4qZmG+l52hRnLwUiH2LnJTg==",
+    "@types/node@26.6.6": {
+      "integrity": "sha512-MzQj+8Kx3XI40OmUAE6Qoh58ZMNstNNMwn2nfd3qWsfe7nDNSqJNzes4njhz6AHwrSHOffSLwXU6yb474Q4aog==",
       "dependencies": [
         "undici-types"
       ]
@@ -1307,13 +1308,13 @@
         "source-map-js"
       ]
     },
-    "preact-render-to-string@6.8.1_preact@10.29.8": {
-      "integrity": "sha512-EIaLVlarET55f737gG/g1bK1UfjAgT3Z7Ch1Z7UX4/TwHh1O7EI5sCtwhVP+cs0n37SyV2HjZCSRtrpMm4Bujw==",
+    "preact-render-to-string@6.8.2_preact@10.29.8": {
+      "integrity": "sha512-Hdx7cKD3AMYgt795TdddBpUbuGEFoL/VeA6s7VrBt9Gjt0r6rCy5wMp5xkDjQ9cbKj62frHsEx1x8yV6EjoOpg==",
       "dependencies": [
         "preact"
       ]
     },
-    "preact@10.29.8_preact-render-to-string@6.8.1": {
+    "preact@10.29.8_preact-render-to-string@6.8.2": {
       "integrity": "sha512-ej2aVZ+vZ8WO7tvlQWRM9N63A0KzF9q4mWJfDUHgYaIofWY9hu74QdnQrjoPMmZi2/nZ5gN0bJCQF49xQqx09Q==",
       "dependencies": [
         "preact-render-to-string"
@@ -1384,7 +1385,7 @@
       ],
       "bin": true
     },
-    "vite@7.3.7_@types+node@26.6.5": {
+    "vite@7.3.7_@types+node@26.6.6": {
       "integrity": "sha512-AHEzTORMbi7/7aXp7w7KZ5+DCUdSeLsJz0grY8xHpc9DHdYb0vQu6DqJfm2tOw3gDExNgPgnJTXxM6syYFHaCA==",
       "dependencies": [
         "@types/node",
@@ -1421,11 +1422,11 @@
       "npm:@tanstack/table-core@^9.3.1",
       "npm:@types/leaflet.markercluster@^1.5.6",
       "npm:@types/leaflet@^1.9.22",
-      "npm:@types/node@^26.6.5",
+      "npm:@types/node@^26.6.6",
       "npm:fflate@~0.8.3",
       "npm:leaflet.markercluster@^1.5.3",
       "npm:leaflet@^1.9.4",
-      "npm:preact-render-to-string@^6.8.1",
+      "npm:preact-render-to-string@^6.8.2",
       "npm:preact@^10.29.8",
       "npm:vite@^7.3.7"
     ]
