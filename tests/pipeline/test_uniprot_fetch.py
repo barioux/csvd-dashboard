@@ -305,6 +305,19 @@ class TestParseSearchRows:
 
         assert _parse_search_rows(lines, "NOTCH3") == ("P2", "Notch 3")
 
+    def test_the_primary_match_wins_over_an_earlier_reviewed_synonym(self):
+        """UniProt can list another gene's reviewed entry first when it keeps
+        the symbol as an old synonym -- live, a cystatin whose own entry came
+        second. Returning that synonym row early published the other gene's
+        accession, protein name and GO terms as this gene's."""
+        lines = [
+            _HEADER,
+            "P1\treviewed\tABCB\tABC6 ABCF\tProtein B",
+            "P2\treviewed\tABC6\t\tProtein 6",
+        ]
+
+        assert _parse_search_rows(lines, "ABC6") == ("P2", "Protein 6")
+
     def test_an_obsolete_symbol_resolves_through_the_synonym_column(self):
         """C6orf195 is published from LINC01600's entry, which lists it."""
         lines = [

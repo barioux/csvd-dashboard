@@ -154,6 +154,11 @@ def _parse_search_rows(
         protein_index,
         reviewed_index if reviewed_index is not None else 0,
     )
+    # Synonym matches are only recorded here and chosen after the loop: a
+    # primary match wins outright wherever UniProt puts it, and UniProt can
+    # put another gene's reviewed entry, which keeps the symbol as an old
+    # synonym, first.
+    reviewed_synonym: tuple[str, str] | None = None
     fallback: tuple[str, str] | None = None
     wanted = gene_symbol.upper()
 
@@ -171,16 +176,18 @@ def _parse_search_rows(
         if wanted not in synonyms:
             continue
         if (
-            reviewed_index is not None
+            reviewed_synonym is None
+            and reviewed_index is not None
             and columns[reviewed_index].strip().casefold() == "reviewed"
         ):
-            return accession, protein_name
+            reviewed_synonym = accession, protein_name
         if fallback is None:
             fallback = accession, protein_name
 
-    if fallback is None:
+    chosen = reviewed_synonym or fallback
+    if chosen is None:
         logger.debug(f"No UniProt row names {gene_symbol}")
-    return fallback or (None, None)
+    return chosen or (None, None)
 
 
 # ---------------------------------------------------------------------------
