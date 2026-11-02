@@ -21,7 +21,9 @@ from typing import Any
 import pytest
 from scripts.restore_from_json import RestoreRefused, build_plan, write_plan
 
-from pipeline.database import Database
+from pipeline.cache_utils import DB_CACHE_TTL_DAYS
+from pipeline.database import Database, get_cached_uniprot_info
+from pipeline.export.lookups import read_uniprot_info
 from pipeline.export.main import run_export
 
 pytestmark = pytest.mark.usefixtures("database_env")
@@ -175,6 +177,27 @@ async def test_the_next_insert_after_a_restore_does_not_collide(
         )
 
     assert (gene_id, trial_id) == (2, 2)
+
+
+async def test_a_restored_uniprot_row_is_refetched_by_the_next_sync(
+    tmp_path: Path,
+) -> None:
+    """protein_info.json publishes a UniProt row's accession and url, not its
+    name or GO terms, so the restore stores those NULL. The sync reads its
+    cache with a TTL, and a row stamped with the restore's own time read as
+    fresh for 30 days -- so --sync-external-data left those columns NULL
+    until it aged out. The export reads with no TTL and must still see it."""
+    url = "https://www.uniprot.org/uniprotkb/P12345"
+    data = _one_gene_export(tmp_path / "data")
+    (data / "protein_info.json").write_text(
+        json.dumps([{"gene": "ABC1", "accession": "P12345", "url": url}])
+    )
+    await write_plan(build_plan(data, tmp_path / "no-logs"))
+
+    assert await get_cached_uniprot_info(["ABC1"], max_age_days=DB_CACHE_TTL_DAYS) == {}
+    assert await read_uniprot_info(["ABC1"]) == [
+        {"gene": "ABC1", "accession": "P12345", "url": url}
+    ]
 
 
 async def test_a_write_that_fails_part_way_leaves_nothing_behind(
