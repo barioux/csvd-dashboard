@@ -638,74 +638,86 @@ request:
 
 ## Deployment
 
-The dashboard is hosted on [Deno Deploy](https://console.deno.com) at
-**<https://csvd-dashboard.mathieubpoiriericm.deno.net>**.
+The dashboard is built into a container image by the root `Dockerfile` and runs
+on [Fly.io](https://fly.io) as one always-on machine in Paris, configured by
+`fly.toml`. It is moving there from Deno Deploy, which Deno announced on 9
+October 2026 would shut down six months later; until the move is cut over,
+**<https://csvd-dashboard.mathieubpoiriericm.deno.net>** keeps serving.
 
-Pushing to `main` builds and deploys it; every other branch gets its own preview
-URL. CI runs in parallel and does **not** gate the deploy — a red push still
-ships, and the remedy is timeline locking in the console rather than a workflow.
-Because `data/*.json` is committed and bundled at build time, regenerating data
-and pushing it to `main` republishes the site.
+Pushing to `main` deploys it once every other CI job has passed: the `deploy`
+job in `.github/workflows/ci.yml` needs all of them, runs
+`flyctl deploy --remote-only --ha=false`, and then runs
+`scripts/smoke_deploy.sh` against the live site. A red push does not ship. Pull
+requests and other branches build and check the image (the `container` job) but
+deploy nothing, and there are no preview URLs. Because `data/*.json` is
+committed and bundled at build time, regenerating data and pushing it to `main`
+republishes the site.
 
-### Build configuration
+| Where           | What it holds                                                                                                   |
+| --------------- | --------------------------------------------------------------------------------------------------------------- |
+| `fly.toml`      | the app name (also the host name, `<app>.fly.dev`), region `cdg`, one 512 MB `shared-cpu-1x` machine, always on |
+| `Dockerfile`    | `denoland/deno:2.9.8`; `deno install --frozen`, `deno task build`, then `deno serve --cached-only`              |
+| `.dockerignore` | an allowlist of what the build reads                                                                            |
+| `FLY_API_TOKEN` | a GitHub Actions secret (`fly tokens create deploy`); without it the deploy job skips                           |
 
-Set through the Deno Deploy console, via the native GitHub integration:
+The machine costs about $3.69 a month at Fly's November 2026 prices.
 
-| Field             | Value                             |
-| ----------------- | --------------------------------- |
-| Framework preset  | `Fresh`                           |
-| App directory     | **empty** (deploys from the root) |
-| Install command   | `deno install`                    |
-| Build command     | `deno task build`                 |
-| Runtime config    | Native Fresh integration          |
-| Deployment target | Free Regions                      |
-| Build timeout     | 5 min (the free-tier ceiling)     |
-| Build memory      | 3 GiB                             |
-| Runtime memory    | 768 MiB                           |
+**Exactly one machine.** The login limiter counts failed sign-ins in the server
+process, so a second machine would double the guess budget and a stopped one
+would forget it. `fly.toml` keeps the machine always on, and `--ha=false` stops
+a first deploy from creating the pair Fly makes by default; `fly status` should
+list one.
 
-**Enter the install and build commands explicitly.** The Fresh preset renders
-both as greyed placeholders in empty fields, which look identical to values that
-have been set. `deno install` is not optional — `nodeModulesDir` is `"manual"`,
-so Deno will not populate `node_modules` implicitly and Vite resolves through
-it. `.github/workflows/ci.yml` carries the same note for the same reason.
+**`LOGIN_CLIENT_IP_HEADER` stays set.** Every request reaches the machine from
+Fly's proxy, so without `fly.toml`'s `LOGIN_CLIENT_IP_HEADER = "Fly-Client-IP"`
+the limiter would see a single client, and five wrong guesses from anyone would
+lock everyone out for a minute.
 
-**App directory must be empty, not `/`.** A `/` there produces
-`Module not found file:///_fresh/server.js` at the Warm up stage — the error
-names the module rather than the field, which makes it the least legible
-first-build failure available.
+**The Deno tag is pinned and bumped by hand.** The 2.9 LTS line receives monthly
+bug-fix and security releases until October 2027 and nothing after, so bumping
+the `Dockerfile`'s tag, with the local Deno, each month is the image's security
+maintenance.
 
-**There is no entrypoint field.** Runtime config is "Native Fresh integration"
-and Deploy resolves `_fresh/server.js` itself; the build page reports which
-entrypoint it used. Do not hand-configure `_fresh/compiled-entry.js` should the
-field ever return: the plugin emits it alongside `server.js`, but it calls
-`Deno.serve({ port: Deno.env.get("PORT") })`, passing a string where a number is
-required.
+**`.dockerignore` is an allowlist,** so `.env`, `.venv` and the pipeline's
+licensed PDFs cannot reach the image. A new top-level file the build imports has
+to be added there; the `container` job fails until it is.
 
-A full build runs in about 30 seconds (install ~2 s, `vite build` ~22 s), so the
-free tier's 5-minute cap is not a constraint. Deno's version is not pinnable —
-the builder runs the same version as the runtime — which is the one upgrade risk
-that cannot be controlled from this repo.
+To check the image locally with Apple's `container` runtime, use throwaway
+secrets and the address `container ls` prints for it. A port published with `-p`
+was bound but did not forward under `container` 1.6.1:
+
+```sh
+container build -t dashboard .
+container run -d --rm --name dashboard \
+  -e DASHBOARD_PASSPHRASE='a throwaway phrase' \
+  -e DASHBOARD_SESSION_SECRET=throwaway dashboard
+container ls
+SMOKE_PASSPHRASE='a throwaway phrase' scripts/smoke_deploy.sh http://<address>:8000
+container stop dashboard
+```
 
 ### Secrets
 
-`DASHBOARD_PASSPHRASE` and `DASHBOARD_SESSION_SECRET` are set in the console
-under `Settings → Environment Variables`, both of type **Secret** and entered
-without the quotes `.env` needs. Generate the session secret with
+`DASHBOARD_PASSPHRASE` and `DASHBOARD_SESSION_SECRET` are Fly secrets:
+
+```sh
+fly secrets set DASHBOARD_PASSPHRASE='…' DASHBOARD_SESSION_SECRET='…'
+```
+
+They go in single quotes for the shell, as `.env` writes them, and for the same
+reason the passphrase keeps apostrophes out. Generate the session secret with
 `openssl rand -base64 32`; the passphrase is shared out of band and never
-committed. Give both the `Production` and `Development` contexts — preview and
-branch URLs run in `Development` — or, to gate those behind a different
-passphrase, give this pair `Production` only and add a second pair in
-`Development`.
+committed. Setting a secret restarts the machine. Do not import the whole
+`.env`: the web app reads only these two, and the rest are the pipeline's
+database password and API keys, which have no use on Fly.
 
-Do not upload the whole `.env`: the web app reads only these two, and the rest
-are the pipeline's database password and API keys, which have no use on Deploy.
-
-**A missing secret is a 503 on every route, not a build failure.** The build
-cannot see the runtime context, so it goes green and the gate fails closed at
-request time. A wholly-503 site after a deploy means a context is missing a
-variable. Rotating `DASHBOARD_SESSION_SECRET` logs everyone out at once and is
-the only revocation there is; rotating the passphrase leaves existing 30-day
-sessions valid.
+**A missing secret is a 503 on every gated route, and Fly's health check does
+not see it.** The check is liveness on `/login`, which the gate exempts before
+it reads the secrets, so it renders either way. The deploy job's smoke test is
+what catches it: a logged-out `GET /` has to redirect to `/login`, and a 503
+there fails the job with both variables named. Rotating
+`DASHBOARD_SESSION_SECRET` logs everyone out at once and is the only revocation
+there is; rotating the passphrase leaves existing 30-day sessions valid.
 
 ---
 
@@ -713,13 +725,15 @@ sessions valid.
 
 Copy `.env.example` to `.env` and fill in real values; `.env` is never
 committed, and `deno task dev` and `deno task start` load it themselves. **The
-web app needs only the first two**, the only two set on
-[Deno Deploy](#deployment); the rest are the pipeline's.
+web app needs only the first two**, the only two set as Fly secrets (see
+[Deployment](#deployment)); `fly.toml` sets the third, and the rest are the
+pipeline's.
 
 | Variable                                                               | Purpose                                                                 |
 | ---------------------------------------------------------------------- | ----------------------------------------------------------------------- |
 | `DASHBOARD_PASSPHRASE`                                                 | what collaborators type on `/login`                                     |
 | `DASHBOARD_SESSION_SECRET`                                             | signs the 30-day session cookie; rotate to log everyone out             |
+| `LOGIN_CLIENT_IP_HEADER`                                               | behind a proxy, the header naming the visitor; unset locally            |
 | `DB_HOST` … `DB_PASSWORD`                                              | PostgreSQL connection, for the pipeline and Alembic                     |
 | `ANTHROPIC_API_KEY`                                                    | LLM gene extraction                                                     |
 | `ANTHROPIC_WORKSPACE_ID`                                               | only for an identity-linked key                                         |

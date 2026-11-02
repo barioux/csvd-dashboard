@@ -205,8 +205,9 @@ the two login values, `ANTHROPIC_API_KEY`, `ENTREZ_EMAIL` and
 
 - **The passphrase is single-quoted** (`DASHBOARD_PASSPHRASE='…'`) and holds
   no apostrophe: `--env-file` ends an unquoted value at a `#` and expands a
-  `$NAME`, so the login refuses the sentence the researcher meant. Deno
-  Deploy's secret takes it without the quotes.
+  `$NAME`, so the login refuses the sentence the researcher meant.
+  `fly secrets set` takes it in the same quotes, since a shell reads it the
+  same way.
 - **`NCBI_API_KEY` stays commented out** unless the researcher has a real
   key. NCBI answers any other value, an empty one included, with HTTP 400 on
   every call, and the pipeline reports only "Bad Request".
@@ -219,14 +220,20 @@ the two login values, `ANTHROPIC_API_KEY`, `ENTREZ_EMAIL` and
 
 ## Deploy hand-off
 
-Hand the researcher to the `deploy` skill with three values: the Deno Deploy
-project name (`<key>-dashboard`, with each `_` of the key written `-`: the
-name becomes a host name), and the two runtime secrets
-`DASHBOARD_PASSPHRASE` (without the quotes `.env` needs) and
-`DASHBOARD_SESSION_SECRET` from their `.env`. The build config is in that
-skill and in `README.md` "Deployment". Once the site answers, write its URL
-into `hosting.url` in `disease/manifest.json` and `disease/README.md`, and
-commit.
+Hand the researcher to the `deploy` skill, whose "Setting up an app" section
+they run themselves, because it touches their Fly.io account and secrets. Four
+values come with them:
+
+- the Fly app name `<key>-dashboard`, with each `_` of the key written `-`,
+  because the name becomes the host name `<key>-dashboard.fly.dev`, to go in
+  `fly.toml`'s `app`;
+- a `primary_region` near their readers;
+- the two runtime secrets `DASHBOARD_PASSPHRASE`, in the same single quotes as
+  `.env`, and `DASHBOARD_SESSION_SECRET`, from their `.env`.
+
+The `FLY_API_TOKEN` repository secret is what lets CI deploy. Once the site
+answers, write its URL into `hosting.url` in `disease/manifest.json` and
+`disease/README.md`, and commit.
 
 ## What the hand-off says
 

@@ -25,6 +25,13 @@ app.use(protectDataAssets());
 app.use(staticFiles());
 // Reject cross-site writes before they consume a rate-limit reservation. The
 // limiter then reserves atomically before POST /login verifies the passphrase.
+// Behind a proxying host, LOGIN_CLIENT_IP_HEADER names the header its ingress
+// sets with the visitor's address (fly.toml sets Fly-Client-IP); unset, the
+// socket peer is the client, as it is locally and in e2e.
 app.use(csrf());
-app.use(loginPostLimiter());
+app.use(
+  loginPostLimiter({
+    trustedClientIpHeader: Deno.env.get("LOGIN_CLIENT_IP_HEADER"),
+  }),
+);
 app.fsRoutes();

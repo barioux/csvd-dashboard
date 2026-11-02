@@ -1,4 +1,4 @@
-import { assertEquals } from "@std/assert";
+import { assertEquals, assertThrows } from "@std/assert";
 
 import { SESSION_COOKIE } from "../lib/auth.ts";
 import {
@@ -22,6 +22,7 @@ function invoke(
     hostname?: string;
     port?: number;
     forwardedFor?: string;
+    headers?: Record<string, string>;
     method?: string;
     pathname?: string;
     basePath?: string;
@@ -29,7 +30,7 @@ function invoke(
   } = {},
 ): Promise<Response> {
   const pathname = options.pathname ?? "/login";
-  const headers = new Headers();
+  const headers = new Headers(options.headers);
   if (options.forwardedFor) {
     headers.set("X-Forwarded-For", options.forwardedFor);
   }
@@ -95,6 +96,78 @@ Deno.test("remote client identity uses the socket peer and ignores source port",
     remoteClientKey(info("192.0.2.20", 1111).remoteAddr),
     remoteClientKey(info("192.0.2.20", 9999).remoteAddr),
   );
+});
+
+// Behind a proxying host every socket peer is the proxy, so without a trusted
+// client-IP header all visitors would share one bucket.
+const PROXY = "172.16.0.2";
+
+Deno.test("a configured client-IP header keys clients behind a shared proxy", async () => {
+  const limiter = loginPostLimiter({
+    perClientLimit: 1,
+    globalLimit: 10,
+    trustedClientIpHeader: "Fly-Client-IP",
+  });
+  const viaProxy = (client: string) =>
+    invoke(limiter, { hostname: PROXY, headers: { "Fly-Client-IP": client } });
+
+  assertEquals((await viaProxy("198.51.100.7")).status, 401);
+  assertEquals((await viaProxy("203.0.113.8")).status, 401);
+  assertLimited(await viaProxy("198.51.100.7"), "60");
+});
+
+Deno.test("the client-IP header is ignored unless configured", async () => {
+  const limiter = loginPostLimiter({ perClientLimit: 1, globalLimit: 10 });
+  assertEquals(
+    (await invoke(limiter, {
+      hostname: PROXY,
+      headers: { "Fly-Client-IP": "198.51.100.7" },
+    })).status,
+    401,
+  );
+  assertLimited(
+    await invoke(limiter, {
+      hostname: PROXY,
+      headers: { "Fly-Client-IP": "203.0.113.8" },
+    }),
+    "60",
+  );
+});
+
+Deno.test("a missing or blank client-IP header falls back to the socket peer", async () => {
+  const limiter = loginPostLimiter({
+    perClientLimit: 1,
+    globalLimit: 10,
+    trustedClientIpHeader: "Fly-Client-IP",
+  });
+  assertEquals((await invoke(limiter, { hostname: "192.0.2.1" })).status, 401);
+  assertEquals(
+    (await invoke(limiter, {
+      hostname: "192.0.2.2",
+      headers: { "Fly-Client-IP": " " },
+    })).status,
+    401,
+  );
+  assertLimited(
+    await invoke(limiter, {
+      hostname: "192.0.2.1",
+      headers: { "Fly-Client-IP": "" },
+    }),
+    "60",
+  );
+});
+
+Deno.test("forwarding lists and invalid names cannot be the client-IP header", () => {
+  for (
+    const name of ["X-Forwarded-For", "x-forwarded-for", "Forwarded", "Fly IP"]
+  ) {
+    assertThrows(
+      () => loginPostLimiter({ trustedClientIpHeader: name }),
+      TypeError,
+      undefined,
+      name,
+    );
+  }
 });
 
 Deno.test("eight concurrent guesses visibly exceed the conservative default", async () => {
