@@ -7,7 +7,7 @@ pipeline and the tests outside the four `csvd/` trees hold for any disease.
 - **Institute:** Paris Brain Institute (ICM),
   <https://institutducerveau-icm.org>
 - **Maintainer:** Mathieu B. Poirier, <mathieu.poirier@icm-institute.org>
-- **Hosted at:** <https://csvd-dashboard.mathieubpoiriericm.deno.net>
+- **Hosted at:** <https://csvd-dashboard.fly.dev>
 
 ## What the dashboard holds
 

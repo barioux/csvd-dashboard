@@ -46,7 +46,7 @@
     "additionalSources": []
   },
   "hosting": {
-    "url": "https://csvd-dashboard.mathieubpoiriericm.deno.net"
+    "url": "https://csvd-dashboard.fly.dev"
   },
   "populations": [
     { "key": "CAA", "label": "CAA" },

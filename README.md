@@ -638,11 +638,11 @@ request:
 
 ## Deployment
 
-The dashboard is built into a container image by the root `Dockerfile` and runs
-on [Fly.io](https://fly.io) as one always-on machine in Paris, configured by
-`fly.toml`. It is moving there from Deno Deploy, which Deno announced on 9
-October 2026 would shut down six months later; until the move is cut over,
-**<https://csvd-dashboard.mathieubpoiriericm.deno.net>** keeps serving.
+The dashboard is hosted at **<https://csvd-dashboard.fly.dev>**. It is built
+into a container image by the root `Dockerfile` and runs on
+[Fly.io](https://fly.io) as one always-on machine in Paris, configured by
+`fly.toml`. It moved there on 2 November 2026 from Deno Deploy, which Deno
+announced on 9 October 2026 would shut down six months later.
 
 Pushing to `main` deploys it once every other CI job has passed: the `deploy`
 job in `.github/workflows/ci.yml` needs all of them, runs
