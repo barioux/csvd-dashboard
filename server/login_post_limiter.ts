@@ -37,6 +37,7 @@ export interface LoginPostLimiterOptions {
   windowMs?: number;
   maxTrackedClients?: number;
   now?: () => number;
+  trustedClientIpHeader?: string;
 }
 
 interface ResolvedOptions {
@@ -45,13 +46,31 @@ interface ResolvedOptions {
   windowMs: number;
   maxTrackedClients: number;
   now: () => number;
+  trustedClientIpHeader: string | undefined;
 }
+
+/** Headers a client may append to, so no single value in them names the client. */
+const FORWARDING_LISTS = new Set(["x-forwarded-for", "forwarded"]);
 
 function positiveInteger(value: number, name: string): number {
   if (!Number.isInteger(value) || value <= 0) {
     throw new TypeError(`${name} must be a positive integer`);
   }
   return value;
+}
+
+function trustedHeaderName(name: string | undefined): string | undefined {
+  const trimmed = name?.trim();
+  if (!trimmed) return undefined;
+  // Headers rejects an invalid name with a TypeError, so a typo in the
+  // deployment's setting fails at startup instead of on every sign-in.
+  new Headers().has(trimmed);
+  if (FORWARDING_LISTS.has(trimmed.toLowerCase())) {
+    throw new TypeError(
+      `${trimmed} is a client-appendable list and cannot identify a client`,
+    );
+  }
+  return trimmed;
 }
 
 function resolveOptions(options: LoginPostLimiterOptions): ResolvedOptions {
@@ -73,6 +92,7 @@ function resolveOptions(options: LoginPostLimiterOptions): ResolvedOptions {
       "maxTrackedClients",
     ),
     now: options.now ?? Date.now,
+    trustedClientIpHeader: trustedHeaderName(options.trustedClientIpHeader),
   };
 }
 
@@ -256,17 +276,28 @@ function issuedSession(response: Response): boolean {
 }
 
 /**
- * Limit exact POST /login requests by socket peer and across this process.
+ * Limit exact POST /login requests per client and across this process.
  *
  * Counters are deliberately process-local: restarts clear them and N replicas
  * allow roughly N times the global limit. A deployment with multiple workers or
- * instances still needs a distributed ingress limit. This middleware never
- * trusts X-Forwarded-For; only ctx.info.remoteAddr contributes to the key.
+ * instances still needs a distributed ingress limit.
+ *
+ * The client is the socket peer, ctx.info.remoteAddr, unless the deployment
+ * names `trustedClientIpHeader`. Behind a proxying host every socket peer is
+ * the proxy, so all visitors would otherwise share one bucket and five wrong
+ * guesses from anyone would lock out everyone. Name only a header the host's
+ * ingress proxy sets on every request (Fly.io's `Fly-Client-IP`), and only
+ * where that proxy is the sole way in. A request without it falls back to the
+ * socket peer. X-Forwarded-For and Forwarded are refused outright: a client
+ * can append to both. Even a spoofable header cannot raise the guess rate past
+ * the global limit, which keys on nothing a client sends.
  */
 export function loginPostLimiter<State>(
   options: LoginPostLimiterOptions = {},
 ): Middleware<State> {
-  const ledger = new AttemptLedger(resolveOptions(options));
+  const resolved = resolveOptions(options);
+  const header = resolved.trustedClientIpHeader;
+  const ledger = new AttemptLedger(resolved);
 
   return async function loginPostLimiter(ctx) {
     if (
@@ -276,7 +307,10 @@ export function loginPostLimiter<State>(
       return await ctx.next();
     }
 
-    const reservation = ledger.reserve(remoteClientKey(ctx.info.remoteAddr));
+    const forwarded = header ? ctx.req.headers.get(header) : null;
+    const reservation = ledger.reserve(
+      forwarded ? `header:${forwarded}` : remoteClientKey(ctx.info.remoteAddr),
+    );
     if (!reservation.allowed) {
       return tooManyRequests(reservation.retryAfterSeconds);
     }
