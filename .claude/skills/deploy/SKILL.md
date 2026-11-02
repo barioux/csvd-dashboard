@@ -1,17 +1,18 @@
 ---
 name: deploy
-description: Use when deploying the dashboard to Fly.io, setting up a fork's Fly app, or diagnosing a broken deploy - the one-machine rule the login limiter depends on, the Fly-Client-IP header, the allowlist .dockerignore, the CI deploy job and its FLY_API_TOKEN, why Fly's health check cannot see a missing login secret, and the Deno Deploy cut-over.
+description: Use when deploying the dashboard to Fly.io, setting up a fork's Fly app, or diagnosing a broken deploy - the one-machine rule the login limiter depends on, the Fly-Client-IP header, the allowlist .dockerignore, the CI deploy job and its FLY_API_TOKEN, why Fly's health check cannot see a missing login secret, the Fly-Client-IP spoof probe and its result, and retiring the old Deno Deploy project.
 ---
 
 # Hosting on Fly.io
 
-The app runs on Fly.io as one always-on machine built from the root
-`Dockerfile` and configured by `fly.toml`. CI's `deploy` job in
-`.github/workflows/ci.yml` ships it on a push to `main`, but only once every
-other job has passed, then runs `scripts/smoke_deploy.sh` against
-`https://<app>.fly.dev`. `README.md`'s "Deployment" section carries the summary
-table. It is moving there from Deno Deploy, which shuts down about six months
-after Deno's 9 October 2026 announcement; see "Cut-over" below.
+The app runs at `https://csvd-dashboard.fly.dev`, on Fly.io, as one always-on
+machine built from the root `Dockerfile` and configured by `fly.toml`. CI's
+`deploy` job in `.github/workflows/ci.yml` ships it on a push to `main`, but
+only once every other job has passed, then runs `scripts/smoke_deploy.sh`
+against `https://<app>.fly.dev`. `README.md`'s "Deployment" section carries the
+summary table. It moved there on 2 November 2026 from Deno Deploy, which shuts
+down about six months after Deno's 9 October 2026 announcement; "Retiring Deno
+Deploy" below has what is left.
 
 Six things are non-obvious enough to state here:
 
@@ -26,10 +27,11 @@ Six things are non-obvious enough to state here:
   keys every visitor on the proxy's address, and five wrong guesses from anyone
   lock everyone out for a minute. The limiter refuses `X-Forwarded-For` and
   `Forwarded` as the header, because a client can append to both. Fly's docs do
-  not say whether the proxy overwrites a client-sent `Fly-Client-IP`; the
-  probe below answers that for the live app. Even if it does not, the global
-  limit, which keys on nothing a client sends, still caps guessing at 64 a
-  minute.
+  not say whether the proxy overwrites a client-sent `Fly-Client-IP`, so the
+  probe below was run against the live app on 2 November 2026: it does, and a
+  visitor cannot pick their own bucket. Were that ever to change, the global
+  limit, which keys on nothing a client sends, would still cap guessing at 64
+  a minute.
 - **Fly's health check is liveness only, and cannot see a missing login
   secret.** Fly's checks pass on a 2xx and follow no redirect, and `/login` is
   the one page that answers 200 without a session. The gate exempts it before
@@ -101,23 +103,32 @@ address may be locked out for a minute:
 
 1. POST five wrong passphrases to `/login` with `Sec-Fetch-Site: same-origin`
    to exhaust your own bucket.
-2. POST a sixth with a made-up `Fly-Client-IP` header.
+2. POST a sixth with a made-up `Fly-Client-IP` header, and a seventh without
+   one.
+3. Confirm the header is configured on the running machine:
+   `fly machine status <id> -d` lists `LOGIN_CLIENT_IP_HEADER` under `env`.
+   Without it every request shares the proxy's bucket, which would also answer
+   429 and pass for the safe result.
 
-A 429 means the proxy overwrote the header, which is the safe answer. A 401
-means it passed the client's value through, and the per-client limit can be
-dodged, though not the global one. Record the result here.
+With the header configured, a 429 on the sixth means the proxy overwrote the
+header, which is the safe answer. A 401 means it passed the client's value
+through, and the per-client limit can be dodged, though not the global one.
 
-## Cut-over from Deno Deploy
+**Result, 2 November 2026:** five 401s, then 429 with the made-up header and
+429 without it, with `LOGIN_CLIENT_IP_HEADER = Fly-Client-IP` in machine
+`853d9df4213e38`'s env. Fly's proxy overwrites a client-sent `Fly-Client-IP`.
+Run the probe again if the app moves host or the proxy changes behaviour.
 
-The Deno Deploy project at `https://csvd-dashboard.mathieubpoiriericm.deno.net`
-keeps serving until it is deleted, and Deno Deploy itself shuts down in about
-April 2027 (no date published). Once the Fly app answers and the smoke test
-passes:
+## Retiring Deno Deploy
 
-1. Write the new URL into `hosting.url` in `disease/manifest.json` and into
-   `disease/README.md`, as the `new-disease` checklist does for a fork, and
-   replace the old one in `README.md` and in the root `CLAUDE.md`'s "Hosting".
-2. Tell the readers. A session cookie belongs to its host, so everyone signs in
-   once more on the new address.
-3. Delete the Deno Deploy project once nobody uses the old address. The
-   researcher does this in the Deno Deploy console; it cannot be undone.
+The site moved from `https://csvd-dashboard.mathieubpoiriericm.deno.net` to
+`https://csvd-dashboard.fly.dev` on 2 November 2026, and `hosting.url`,
+`disease/README.md`, `README.md` and the root `CLAUDE.md` name the new address.
+The Deno Deploy project keeps serving the old one until it is deleted, and Deno
+Deploy itself shuts down in about April 2027 (no date published). Two steps are
+left, and both are the researcher's:
+
+1. Tell the readers the new address. A session cookie belongs to its host, so
+   everyone signs in once more there, with the same passphrase.
+2. Delete the Deno Deploy project once nobody uses the old address, in the Deno
+   Deploy console. It cannot be undone. Then this section can go.

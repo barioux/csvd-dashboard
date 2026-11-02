@@ -399,15 +399,14 @@ and `e2e/`, and carries the rest.
 
 ### Hosting
 
-The app runs on Fly.io as one always-on machine built from the root `Dockerfile`
-and configured by `fly.toml`. CI's `deploy` job ships it on a push to `main`
-once every other job has passed, then checks it from outside with
-`scripts/smoke_deploy.sh`. It is moving there from Deno Deploy, which shuts down
-six months after Deno's 9 October 2026 announcement;
-`https://csvd-dashboard.mathieubpoiriericm.deno.net` serves until the cut-over.
-The one-machine rule, the `Fly-Client-IP` header the login limiter keys on, the
-allowlist `.dockerignore` and the 503 diagnosis are in the `deploy` skill
-(`.claude/skills/deploy/SKILL.md`).
+The app runs at `https://csvd-dashboard.fly.dev`, on Fly.io, as one always-on
+machine built from the root `Dockerfile` and configured by `fly.toml`. CI's
+`deploy` job ships it on a push to `main` once every other job has passed, then
+checks it from outside with `scripts/smoke_deploy.sh`. It moved there on 2
+November 2026 from Deno Deploy, which shuts down six months after Deno's 9
+October 2026 announcement. The one-machine rule, the `Fly-Client-IP` header the
+login limiter keys on, the allowlist `.dockerignore` and the 503 diagnosis are
+in the `deploy` skill (`.claude/skills/deploy/SKILL.md`).
 
 Because `data/*.json` is committed and bundled at build time, regenerating data
 and pushing it to `main` republishes the site — `tests/filters_test.ts`'s caveat
