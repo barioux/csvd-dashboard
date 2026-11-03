@@ -248,6 +248,31 @@ annotations, the unpublished cache columns, the uncurated and the stopped
 trials, papers older than the oldest report in `logs/`, and the ids. The
 history below brings back the stopped trials, the older runs and the papers.
 
+### Re-extracting under a new extraction method
+
+The merge only adds, so a run under a new model or prompt cannot take the old
+method's values back out of `genes`. When nothing the old method merged should
+stand, `scripts/reset_to_baseline.py` puts the genes back to a curated
+`table1.json` from before its first merge -- for this dataset
+`a5915b4:data/table1.json` in the pre-squash history (below), the 63 curated
+genes of 31 August 2026 -- empties `pubmed_refs` so the next window counts every
+paper as new, and deletes the annotations of the genes it removes. Trials,
+caches, the kept genes' annotations and the run history are left alone.
+
+```bash
+uv run python -m scripts.reset_to_baseline --baseline PATH            # check
+uv run python -m scripts.reset_to_baseline --baseline PATH --write    # reset
+```
+
+It refuses unless every baseline row round-trips through the export, the live
+table holds it plus additions only, and every gene it would remove carries the
+quote and confidence of the extraction that inserted it, so no curation made
+after the baseline can be thrown away unnoticed. It prints its target from the
+environment first. Take a dump, then rehearse on a throwaway `container` copy:
+`pg_restore --no-owner` the dump into one, export **all five** `DB_*` variables
+at its address (one left unset comes from `.env`, which names production), and
+read the printed target before `--write`.
+
 ### What the pre-squash history still holds
 
 The repository's history was squashed into one commit on 2026-09-24, but the

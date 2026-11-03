@@ -94,7 +94,7 @@ def _entrez_contact(monkeypatch: pytest.MonkeyPatch) -> None:
 # test_extraction_golden.py: re-measure and update when the query changes on
 # purpose; do not edit a figure to turn a red run green.
 
-# SVD_QUERY retrieves 106 of the 111 papers this dashboard cites. It was 18
+# SVD_QUERY retrieves 173 of the 178 papers this dashboard cites. It was 18
 # of 29 before the MeSH branch: the two Title/Abstract branches both AND on
 # the phrase "cerebral small vessel disease", so a paper that never writes it
 # out was unreachable however many genetic or marker terms were added.
@@ -116,6 +116,13 @@ def _entrez_contact(monkeypatch: pytest.MonkeyPatch) -> None:
 # 3.5x larger gold set is the strongest evidence this suite has produced
 # that those five are properties of the papers rather than of the query.
 #
+# On 2026-11-03 the gene table was reset to its curated 31 August baseline and
+# two years of papers were re-extracted under Claude Opus 5.5 with prompt v7
+# (1,533 of 1,570 extracted; 37 refused by the bio classifier), taking the gold
+# set to 178. Re-measured against live PubMed: 173/178, and again the same five
+# missed. The anchor-only figure moved 74 -> 113, so the MeSH branch now
+# recovers 60 papers.
+#
 # Re-recorded against live PubMed each time: the committed cassettes are
 # POSTed bodies, which VCR's default matchers do not compare, so a stale one
 # answers a changed gold set with the old response and the new PMIDs read as
@@ -129,7 +136,7 @@ def _entrez_contact(monkeypatch: pytest.MonkeyPatch) -> None:
 #   36180795  GIGASTROKE. Recorded in CLAUDE.md as out of the prompt's scope.
 #   39805841  one of the digit-recovered references.
 #   30651383, 37063705  carry neither the phrase nor a cSVD MeSH heading.
-_SVD_QUERY_RECALL: Final[int] = 106
+_SVD_QUERY_RECALL: Final[int] = 173
 _MISSED: Final[frozenset[str]] = frozenset(
     {
         "23649698",
@@ -164,10 +171,10 @@ async def test_svd_query_recall_matches_the_recorded_baseline() -> None:
     gold = gold_pmids()
     result = await measure_recall(SVD_QUERY, gold)
 
-    assert result.total == 111, f"gold set changed: {result.total} PMIDs, was 111"
+    assert result.total == 178, f"gold set changed: {result.total} PMIDs, was 178"
     assert len(result.matched) == _SVD_QUERY_RECALL, (
         f"SVD_QUERY recall moved to {len(result.matched)}/{result.total}, "
-        f"was {_SVD_QUERY_RECALL}/111. If the query changed on purpose, "
+        f"was {_SVD_QUERY_RECALL}/178. If the query changed on purpose, "
         "re-measure and update _SVD_QUERY_RECALL and _MISSED together."
     )
     assert result.missed == _MISSED
@@ -240,9 +247,9 @@ async def test_the_anchor_still_caps_the_title_abstract_branches() -> None:
 
     The papers the MeSH branch recovers are exactly the gap between this
     number and the full query's. It was six against a 32-paper gold set and
-    is 32 against a 111-paper one -- the branch is worth far more than the
-    small set suggested, because a gold set of that size was mostly papers
-    that name the phrase outright.
+    was 32 against a 111-paper one and is 60 against a 178-paper one -- the
+    branch is worth far more than the small set suggested, because a gold set
+    of that size was mostly papers that name the phrase outright.
     """
     gold = gold_pmids()
     anchor = " OR ".join(f'"{term}"[Title/Abstract]' for term in DISEASE_TERMS)
@@ -250,9 +257,9 @@ async def test_the_anchor_still_caps_the_title_abstract_branches() -> None:
     anchor_only = await measure_recall(anchor, gold)
     full = await measure_recall(SVD_QUERY, gold)
 
-    assert len(anchor_only.matched) == 74
+    assert len(anchor_only.matched) == 113
     assert anchor_only.matched < full.matched
-    assert len(full.matched - anchor_only.matched) == 32
+    assert len(full.matched - anchor_only.matched) == 60
 
 
 def test_the_recorded_anchor_requests_carry_the_current_queries() -> None:

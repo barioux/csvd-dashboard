@@ -1,5 +1,5 @@
 /**
- * The cSVD karyogram, pinned: 79 genes on 21 chromosomes, CENPF's row, the
+ * The cSVD karyogram, pinned: 87 genes on 20 chromosomes, CENPF's row, the
  * pills the runs have added, the seven families.
  *
  * The rules that hold for any dataset are in tests/phenogram_layout_test.ts;
@@ -40,7 +40,6 @@ const DRAWN = [
   "14",
   "16",
   "17",
-  "18",
   "19",
   "20",
   "21",
@@ -50,17 +49,19 @@ const DRAWN = [
 
 // X joined the list when the 365-day run added GLA (Xq22.1, Fabry disease),
 // and 18 when it added AQP4 (18q11.2) -- the first genes the dashboard has
-// carried on either.
-Deno.test("79 genes are placed, none unplaced, on 21 chromosomes including X", () => {
-  assertEquals(layout.blocks.length, 79);
+// carried on either. The 2026-11-03 re-extraction under Opus 5.5 started
+// again from the curated 31 August table and found GLA but not AQP4, so 18
+// left the list again.
+Deno.test("87 genes are placed, none unplaced, on 20 chromosomes including X", () => {
+  assertEquals(layout.blocks.length, 87);
   assertEquals(layout.unplaced, []);
   assertEquals(layout.chromosomes.map((c) => c.name), DRAWN);
   assertEquals(layout.rows.map((row) => row.map((c) => c.name)), [
     DRAWN.slice(0, 10),
     DRAWN.slice(10),
   ]);
-  assertEquals(layout.canvas, { width: 1732, height: 1160 });
-  assertEquals(layout.blocks.map((b) => b.index), [...Array(79).keys()]);
+  assertEquals(layout.canvas, { width: 1732, height: 1640 });
+  assertEquals(layout.blocks.map((b) => b.index), [...Array(87).keys()]);
 });
 
 Deno.test("chromosome 1 heads the first row and 13 the second", () => {
@@ -90,8 +91,8 @@ Deno.test("the raster's errors are gone: ABO on 9, C6orf195 on 6, COL4A1/2 on 13
 // cannot silently drift apart.
 Deno.test("CENPF's marker position is pinned", () => {
   const cenpf = byGene.get("CENPF")!;
-  assertAlmostEquals(cenpf.markerY, 487.74276110057525, 1e-6);
-  assertAlmostEquals(cenpf.y, 402, 1e-6);
+  assertAlmostEquals(cenpf.markerY, 699.0086508393023, 1e-6);
+  assertAlmostEquals(cenpf.y, 642, 1e-6);
 });
 
 Deno.test("pills and glyphs derive from the four evidence columns", () => {
@@ -107,22 +108,21 @@ Deno.test("pills and glyphs derive from the four evidence columns", () => {
   assertEquals(glyphs("TLR1"), ["omics", "mr"]);
   assertEquals(labels("CENPF"), ["WM-PVS", "HIP-PVS", "PSMD"]);
   assertEquals(glyphs("CENPF"), ["omics", "monogenic"]);
-  // The gene the runs have moved most: Lacunes and CMB from PMID 42437605
-  // on the first live --pubmed run, FA from 42607872 on the 30-day run,
-  // then BG-PVS, Extreme-cSVD, Lacunar stroke and Stroke from the 365-day
-  // one. Ten pills is the tallest block in the table and what set the row
-  // height. The labels are the encoding's display forms.
+  // The curated table's five, then Stroke, BG-PVS and Lacunar stroke from
+  // the 2026-11-03 re-extraction under Opus 5.5. Under Opus 5 it reached
+  // ten pills and set the row height; FA and Extreme-cSVD did not come back.
+  // NOTCH3's fourteen are now the tallest block, but a stack sets the row:
+  // chromosome 17's thirteen blocks need 736 units, hence 760. The labels
+  // are the encoding's display forms.
   assertEquals(labels("COL4A1/2"), [
     "WMH",
     "SVS",
     "MD",
     "Lacunes",
     "CMB",
-    "FA",
-    "BG-PVS",
-    "Extreme-cSVD",
-    "Lacunar stroke",
     "Stroke",
+    "BG-PVS",
+    "Lacunar stroke",
   ]);
 
   const cenpf = byGene.get("CENPF")!;

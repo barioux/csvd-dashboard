@@ -3,9 +3,9 @@ import { expect, type Page, test } from "@playwright/test";
 import { tooltip } from "../../helpers.ts";
 
 /**
- * The karyogram over the committed cSVD genes, by name: 21 chromosomes and
- * 79 blocks, ABO on 9, LAMB1's tooltip, PCSK9 first and GLA last, WMH's
- * STRIVE-2 definition. The figure's behaviour is tested over derived counts
+ * The karyogram over the committed cSVD genes, by name: 20 chromosomes and
+ * 87 blocks, ABO on 9, LAMB1's tooltip, EPHA2 first and GLA last, SLK's band
+ * range, WMH's STRIVE-2 definition. The figure's behaviour is tested over derived counts
  * in ../phenogram.spec.ts; a fork deletes the whole e2e/tests/csvd/ tree.
  */
 
@@ -17,13 +17,13 @@ async function figureSettled(page: Page) {
   await page.evaluate(() => document.fonts.ready);
 }
 
-test("draws 21 chromosomes and 79 gene blocks under seven families", async ({ page }) => {
+test("draws 20 chromosomes and 87 gene blocks under seven families", async ({ page }) => {
   await figureSettled(page);
   const figure = page.locator(FIGURE);
-  await expect(figure.locator("g.phenogram-chromosome")).toHaveCount(21);
+  await expect(figure.locator("g.phenogram-chromosome")).toHaveCount(20);
   await expect(figure.locator('g.phenogram-chromosome[data-chromosome="13"]'))
     .toHaveCount(1);
-  await expect(figure.locator("g.phenogram-block")).toHaveCount(79);
+  await expect(figure.locator("g.phenogram-block")).toHaveCount(87);
   await expect(page.locator(".phenogram-legend-family")).toHaveCount(7);
 });
 
@@ -65,12 +65,18 @@ test("hovering LAMB1 opens its tooltip and the keyboard reaches the NCBI link", 
   await expect(lamb1).toBeFocused();
 });
 
-test("gene buttons run from PCSK9 to GLA and name CENPF's evidence", async ({ page }) => {
+test("gene buttons run from EPHA2 to GLA and name CENPF's evidence", async ({ page }) => {
   await figureSettled(page);
   const names = await page.locator(".phenogram-genes button").evaluateAll(
     (buttons) => buttons.map((b) => b.textContent?.trim() ?? ""),
   );
-  expect(names[0]).toMatch(/^PCSK9, 1p32\.3\. GWAS phenotypes: none found\./);
+  expect(names[0]).toMatch(
+    /^EPHA2, 1p36\.13\. GWAS phenotypes: WMH, MD, FA\./,
+  );
+  // NCBI's range for a gene across a band edge is placed, and named whole.
+  expect(names.find((n) => n.startsWith("SLK,"))).toMatch(
+    /^SLK, 10q24\.33-q25\.1\./,
+  );
   expect(names.find((n) => n.startsWith("CENPF,"))).toBe(
     "CENPF, 1q41. GWAS phenotypes: WM-PVS, HIP-PVS, PSMD. " +
       "Other evidence: Other omics, Monogenic disease.",

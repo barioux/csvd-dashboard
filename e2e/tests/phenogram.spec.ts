@@ -29,7 +29,7 @@ async function openKey(page: Page) {
 test("draws every placeable gene on its chromosome, with both legends", async ({ page }) => {
   await figureSettled(page);
   const figure = page.locator(FIGURE);
-  await expect(figure).toHaveAttribute("viewBox", "0 0 1732 1160");
+  await expect(figure).toHaveAttribute("viewBox", "0 0 1732 1640");
   await expect(figure.locator("g.phenogram-chromosome")).toHaveCount(
     P.chromosomes,
   );

@@ -24,7 +24,7 @@ from scripts.restore_from_json import RestoreRefused, build_plan, write_plan
 from pipeline.cache_utils import DB_CACHE_TTL_DAYS
 from pipeline.database import Database, get_cached_uniprot_info
 from pipeline.export.lookups import read_uniprot_info
-from pipeline.export.main import run_export
+from pipeline.export.main import read_published_genes, run_export
 
 pytestmark = pytest.mark.usefixtures("database_env")
 
@@ -139,6 +139,17 @@ async def test_a_restored_database_exports_the_committed_files_byte_for_byte(
         if (out / name).read_bytes() != (_DATA_DIR / name).read_bytes()
     ]
     assert differing == []
+
+
+async def test_read_published_genes_is_what_the_export_writes(tmp_path: Path) -> None:
+    """The reset compares the live table with a baseline in the published
+    shape, so this reader has to be exactly what table1.json receives."""
+    await write_plan(build_plan(_one_gene_export(tmp_path / "data"), tmp_path / "x"))
+    out = tmp_path / "export"
+    await run_export(out)
+
+    published = json.loads((out / "table1.json").read_text(encoding="utf-8"))
+    assert await read_published_genes() == published
 
 
 async def test_a_database_holding_rows_is_refused_and_left_as_it_was(

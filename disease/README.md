@@ -13,14 +13,14 @@ pipeline and the tests outside the four `csvd/` trees hold for any disease.
 
 | File                    | Rows             | Source                              |
 | ----------------------- | ---------------- | ----------------------------------- |
-| `table1.json`           | 79 genes         | `genes` table (+ three join tables) |
+| `table1.json`           | 87 genes         | `genes` table (+ three join tables) |
 | `table2.json`           | 102 trial rows   | `clinical_trials` table (curated)   |
-| `gene_info.json`        | 79               | `ncbi_gene_info` cache              |
+| `gene_info.json`        | 87               | `ncbi_gene_info` cache              |
 | `gene_info_table2.json` | 26               | `ncbi_gene_info` cache              |
-| `protein_info.json`     | 79               | `uniprot_info` cache                |
-| `refs.json`             | 111 citations    | `pubmed_citations` cache            |
+| `protein_info.json`     | 87               | `uniprot_info` cache                |
+| `refs.json`             | 159 citations    | `pubmed_citations` cache            |
 | `omim_info.json`        | 49               | `disease/omim_info.csv`             |
-| `gene_annotations.json` | 171              | `gene_annotations` table (pivoted)  |
+| `gene_annotations.json` | 151              | `gene_annotations` table (pivoted)  |
 | `pipeline_syncs.json`   | 3 (one per mode) | `sync_runs` table                   |
 | `geocoded_trials.json`  | 378 sites        | ClinicalTrials.gov                  |
 | `cytobands_hg38.json`   | 862 bands        | UCSC Genome Browser                 |
@@ -69,24 +69,26 @@ monogenic)" on the radar.
 `SVD_QUERY` in `pipeline/pubmed_search.py` is built from the search terms in
 `pipeline.json`, and its recall is measured rather than assumed.
 `tests/pipeline/csvd/test_query_recall.py` intersects it with a `[uid]`
-disjunction over the 111 PMIDs the dashboard cites, so recall is exact rather
-than sampled and never meets PubMed's 9,999-record `esearch` cap -- it bounds a
-result set that can never exceed the gold set. `recall_gold.csv` holds the same
-111 PMIDs for the generic harness, and `recall_baseline.json` the figure the
-last `scripts.measure_recall --write-baseline` recorded.
+disjunction over a gold set of 178 PMIDs -- the 159 the dashboard cites, and 19
+it cited before the 2026-11-03 re-extraction that the query should still find --
+so recall is exact rather than sampled and never meets PubMed's 9,999-record
+`esearch` cap -- it bounds a result set that can never exceed the gold set.
+`recall_gold.csv` holds the same 178 PMIDs for the generic harness, and
+`recall_baseline.json` the figure the last
+`scripts.measure_recall --write-baseline` recorded.
 
-It retrieves **106 of 111**. The third branch, `MESH_TERMS AND GENETIC_TERMS`,
+It retrieves **173 of 178**. The third branch, `MESH_TERMS AND GENETIC_TERMS`,
 reaches papers that never write the disease name out in the title or abstract
-and recovers 32 of the 111 on its own; its genetics gate is what keeps
+and recovers 60 of the 178 on its own; its genetics gate is what keeps
 `"White Matter"[MeSH]` from quadrupling ingestion. The two Title/Abstract
 branches both `AND` on `"cerebral small vessel disease"[Title/Abstract]`, which
 is therefore the ceiling on them: the ten `GENETIC_TERMS` and seven
 `MARKER_TERMS` are precision filters and **contribute no recall at all**, and a
 test pins that so widening either list in the belief that it helps fails loudly.
 
-The five misses are the same five at gold sets of 29, 32 and 111 papers, which
-is the strongest evidence the suite has produced that they are properties of
-those papers rather than of the query. They are pinned with a reason each in
+The five misses are the same five at gold sets of 29, 32, 111 and 178 papers,
+which is the strongest evidence the suite has produced that they are properties
+of those papers rather than of the query. They are pinned with a reason each in
 `_MISSED`.
 
 Retrieval precision is not measured. The argument for the MeSH branch is a

@@ -140,13 +140,15 @@ uv run python -m pipeline.main --test-mode --days-back 365
 ```
 
 It prints the papers the query retrieves in a year. The `run-long-window`
-skill's figure for the cSVD query is ~795 papers ≈ $70 of extraction, so
-estimate **papers × 0.09 USD**, print it, and above roughly **2,000 papers a
-year send the researcher back to question 3** to remove the broadest marker
-terms or make them more specific. Each one adds the papers that use it beside
-a disease phrase, and a shorter phrase matches more, so shortening a term
-raises the count. A MeSH heading that is a broad parent inflates it too, even
-behind the genetics gate; question 2 replaces it with a narrower one.
+skill's figure for the cSVD query is 1,570 papers over two years ≈ $116 of
+extraction under Opus 5.5, about $0.074 a paper, so estimate **papers × 0.09
+USD** (the wizard's checklist uses the same figure), print it, and above
+roughly **2,000 papers a year send the researcher back to question 3** to
+remove the broadest marker terms or make them more specific. Each one adds the
+papers that use it beside a disease phrase, and a shorter phrase matches more,
+so shortening a term raises the count. A MeSH heading that is a broad parent
+inflates it too, even behind the genetics gate; question 2 replaces it with a
+narrower one.
 
 **Recall**, once `recall_gold.csv` has its ten to thirty PMIDs:
 

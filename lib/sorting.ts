@@ -52,8 +52,11 @@ export function compareCompletionDates(a: string, b: string): number {
 export function chromosomeOf(location: string): string | null {
   // Anchor the complete band. A prefix-only match turns malformed values such
   // as "1garbage" or "Xylophone" into real chromosomes and quietly inflates
-  // their density buckets.
-  const match = /^\s*(\d+|[XY])(?:[pq]\d+(?:\.\d+)?)?\s*$/i.exec(location);
+  // their density buckets. NCBI writes a gene across a band edge as a range
+  // on one chromosome ("10q24.33-q25.1"), so a second band may follow.
+  const match =
+    /^\s*(\d+|[XY])(?:[pq]\d+(?:\.\d+)?(?:-[pq]\d+(?:\.\d+)?)?)?\s*$/i
+      .exec(location);
   if (!match) return null;
 
   const raw = match[1].toUpperCase();
