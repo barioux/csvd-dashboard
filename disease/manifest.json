@@ -34,15 +34,15 @@
   },
   "contact": {
     "maintainer": {
-      "name": "Mathieu B. Poirier",
-      "email": "mathieu.poirier@icm-institute.org"
+      "name": "Bastien Rioux",
+      "email": "bastien.rioux@icm-institute.org"
     }
   },
   "about": {
     "citation": null,
     "board": null,
     "contactUs": null,
-    "acknowledgements": null,
+    "acknowledgements": "Developed by Mathieu B. Poirier at the Paris Brain Institute (ICM).",
     "additionalSources": []
   },
   "hosting": {
