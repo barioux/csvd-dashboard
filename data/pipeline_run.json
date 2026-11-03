@@ -1,15 +1,15 @@
 {
-  "runTimestamp": "2026-09-03T19:41:35.512619+00:00",
+  "runTimestamp": "2026-11-03T12:26:16.337859+00:00",
   "status": "completed_with_warnings",
   "runMode": "standard",
-  "durationSeconds": 413.971,
-  "computeSeconds": 1959.616,
+  "durationSeconds": 2270.277,
+  "computeSeconds": 11223.357,
   "config": {
-    "model": "claude-opus-5",
+    "model": "claude-opus-5-5",
     "effort": "high",
-    "promptVersion": "v6",
-    "disease": null,
-    "promptSha256": null,
+    "promptVersion": "v7",
+    "disease": "csvd",
+    "promptSha256": "e94fa49c33a2788a4901d3e1fcd242712735b624309c4834c1e85531b0b303bb",
     "mode": null,
     "skipValidation": false,
     "dryRun": false,
@@ -17,37 +17,37 @@
     "confidenceThresholdInsert": 0.65
   },
   "papers": {
-    "found": 798,
-    "newlySeen": 55,
-    "alreadySeen": 743,
-    "processed": 55,
-    "fulltext": 35,
-    "abstractOnly": 20,
+    "found": 1570,
+    "newlySeen": 249,
+    "alreadySeen": 1321,
+    "processed": 212,
+    "fulltext": 142,
+    "abstractOnly": 70,
     "noTextAvailable": 0,
-    "failed": 0
+    "failed": 37
   },
   "genes": {
-    "extracted": 17,
-    "validated": 7,
-    "rejected": 10,
-    "rejectedAtInsertFloor": 1,
-    "quotesChecked": 17,
-    "quotesVerbatim": 17,
-    "quotesCited": 14
+    "extracted": 148,
+    "validated": 51,
+    "rejected": 97,
+    "rejectedAtInsertFloor": 19,
+    "quotesChecked": 148,
+    "quotesVerbatim": 147,
+    "quotesCited": 112
   },
   "tokens": {
-    "inputTokens": 519590,
-    "outputTokens": 38794,
-    "thinkingTokens": 8391,
-    "cacheReadInputTokens": 505920,
-    "totalTokens": 558384,
-    "cacheHitRate": 0.4933,
+    "inputTokens": 3307313,
+    "outputTokens": 218464,
+    "thinkingTokens": 55814,
+    "cacheReadInputTokens": 2430400,
+    "totalTokens": 3525777,
+    "cacheHitRate": 0.4236,
     "truncatedResponses": 0,
-    "estimatedCostUsd": 4.22
+    "estimatedCostUsd": 18.4
   },
   "database": {
-    "inserted": 0,
-    "updated": 3
+    "inserted": 2,
+    "updated": 12
   },
   "steps": [
     {
@@ -55,10 +55,10 @@
       "label": "Search PubMed",
       "ordinal": 1,
       "status": "ok",
-      "startedAt": "2026-09-03T19:34:41.547035+00:00",
-      "durationSeconds": 0.498,
+      "startedAt": "2026-11-03T11:48:26.068598+00:00",
+      "durationSeconds": 1.029,
       "actions": [
-        "Searched PubMed over the last 365 days: 798 papers matched"
+        "Searched PubMed over the last 730 days: 1570 papers matched"
       ],
       "warnings": [],
       "error": null
@@ -68,10 +68,10 @@
       "label": "Filter new papers",
       "ordinal": 2,
       "status": "ok",
-      "startedAt": "2026-09-03T19:34:42.045008+00:00",
-      "durationSeconds": 0.043,
+      "startedAt": "2026-11-03T11:48:27.097202+00:00",
+      "durationSeconds": 0.039,
       "actions": [
-        "55 papers are new; 743 were processed before"
+        "249 papers are new; 1321 were processed before"
       ],
       "warnings": [],
       "error": null
@@ -81,23 +81,149 @@
       "label": "Retrieve & extract",
       "ordinal": 3,
       "status": "warning",
-      "startedAt": "2026-09-03T19:34:42.087551+00:00",
-      "durationSeconds": 413.342,
+      "startedAt": "2026-11-03T11:48:27.136301+00:00",
+      "durationSeconds": 2269.07,
       "actions": [
-        "Retrieved full text for 35, abstract only for 20",
-        "Extracted 17 genes, of which 7 passed validation"
+        "Retrieved full text for 142, abstract only for 70",
+        "Extracted 148 genes, of which 51 passed validation"
       ],
       "warnings": [
         {
+          "kind": "paper_retrieval_failed",
+          "title": "37 papers could not be processed",
+          "count": 37,
+          "detail": null,
+          "subjects": [
+            "42957517",
+            "42942992",
+            "42856351",
+            "42711949",
+            "42682509",
+            "42559965",
+            "42541861",
+            "42268716",
+            "42225261",
+            "42169653",
+            "42102430",
+            "42037485",
+            "42018350",
+            "42002114",
+            "42000856",
+            "41806331",
+            "41802717",
+            "41566527",
+            "41455771",
+            "41445191",
+            "41433068",
+            "41327223",
+            "41318543",
+            "41171875",
+            "40796891",
+            "40754098",
+            "40725422",
+            "40710331",
+            "40518665",
+            "40476824",
+            "40328357",
+            "40203112",
+            "39853935",
+            "39613464",
+            "39563031",
+            "39537978",
+            "39490876"
+          ]
+        },
+        {
           "kind": "genes_rejected",
-          "title": "10 genes did not clear the validation floor",
-          "count": 10,
+          "title": "97 genes did not clear the validation floor",
+          "count": 97,
           "detail": null,
           "subjects": []
         },
         {
           "kind": "api_errored",
-          "title": "journals.sagepub.com returned 1 error",
+          "title": "Europe PMC full text returned 11 errors",
+          "count": 11,
+          "detail": null,
+          "subjects": [
+            "GET /europepmc/webservices/rest/:id/fullTextXML"
+          ]
+        },
+        {
+          "kind": "api_retried",
+          "title": "E-utilities search needed 1 retry",
+          "count": 1,
+          "detail": null,
+          "subjects": [
+            "GET /entrez/eutils/esearch.fcgi"
+          ]
+        },
+        {
+          "kind": "api_retried",
+          "title": "E-utilities summary needed 2 retries",
+          "count": 2,
+          "detail": null,
+          "subjects": [
+            "GET /entrez/eutils/esummary.fcgi"
+          ]
+        },
+        {
+          "kind": "api_errored",
+          "title": "www.strokejournal.org returned 5 errors",
+          "count": 5,
+          "detail": null,
+          "subjects": [
+            "GET /article/:id/pdf"
+          ]
+        },
+        {
+          "kind": "api_errored",
+          "title": "papers.ssrn.com returned 3 errors",
+          "count": 3,
+          "detail": null,
+          "subjects": [
+            "GET /:id/papers.cfm"
+          ]
+        },
+        {
+          "kind": "api_errored",
+          "title": "www.clinexprheumatol.org returned 1 error",
+          "count": 1,
+          "detail": null,
+          "subjects": [
+            "GET /article.asp"
+          ]
+        },
+        {
+          "kind": "api_errored",
+          "title": "SAGE Journals returned 1 error",
+          "count": 1,
+          "detail": null,
+          "subjects": [
+            "GET /doi/:id/:id"
+          ]
+        },
+        {
+          "kind": "api_errored",
+          "title": "www.academicradiology.org returned 1 error",
+          "count": 1,
+          "detail": null,
+          "subjects": [
+            "GET /article/:id/pdf"
+          ]
+        },
+        {
+          "kind": "api_errored",
+          "title": "www.tandfonline.com returned 1 error",
+          "count": 1,
+          "detail": null,
+          "subjects": [
+            "GET /doi/full/:id/:id"
+          ]
+        },
+        {
+          "kind": "api_errored",
+          "title": "www.worldscientific.com returned 1 error",
           "count": 1,
           "detail": null,
           "subjects": [
@@ -112,17 +238,17 @@
       "label": "Validate",
       "ordinal": 4,
       "status": "warning",
-      "startedAt": "2026-09-03T19:41:35.428907+00:00",
-      "durationSeconds": 0.025,
+      "startedAt": "2026-11-03T12:26:16.202875+00:00",
+      "durationSeconds": 0.047,
       "actions": [
-        "Cross-checked 7 genes against the rest of the batch"
+        "Cross-checked 51 genes against the rest of the batch"
       ],
       "warnings": [
         {
           "kind": "batch_validation",
           "title": "1 batch check flagged something",
           "count": 1,
-          "detail": "Gene 'NOTCH3' extracted from 4 different papers in this batch (>3 — verify not over-extracted)",
+          "detail": "Gene 'NOTCH3' extracted from 12 different papers in this batch (>3 — verify not over-extracted)",
           "subjects": []
         }
       ],
@@ -133,20 +259,38 @@
       "label": "Merge to database",
       "ordinal": 5,
       "status": "warning",
-      "startedAt": "2026-09-03T19:41:35.453752+00:00",
-      "durationSeconds": 0.057,
+      "startedAt": "2026-11-03T12:26:16.250293+00:00",
+      "durationSeconds": 0.084,
       "actions": [
-        "Inserted 0 genes and updated 3",
-        "Recorded 55 processed PMIDs"
+        "Inserted 2 genes and updated 12",
+        "Recorded 212 processed PMIDs"
       ],
       "warnings": [
         {
           "kind": "genes_rejected",
-          "title": "1 new gene was held below the insert floor",
-          "count": 1,
+          "title": "19 new genes were held below the insert floor",
+          "count": 19,
           "detail": null,
           "subjects": [
-            "TLR4"
+            "GNAQ",
+            "ITM2B",
+            "MAP3K7",
+            "CAND2",
+            "ALDH2",
+            "CETP",
+            "NOS3",
+            "FGF19",
+            "PEAR1",
+            "METAP1D",
+            "HEXIM1",
+            "MEGF10",
+            "FLT4",
+            "TIMD4",
+            "MERTK",
+            "PDE5A",
+            "COLGALT1",
+            "CACNB2",
+            "FGF21"
           ]
         }
       ],
@@ -157,8 +301,8 @@
       "label": "Finalize",
       "ordinal": 6,
       "status": "ok",
-      "startedAt": "2026-09-03T19:41:35.511125+00:00",
-      "durationSeconds": 0.024,
+      "startedAt": "2026-11-03T12:26:16.334657+00:00",
+      "durationSeconds": 0.114,
       "actions": [],
       "warnings": [],
       "error": null
@@ -170,12 +314,12 @@
       "label": "E-utilities fetch",
       "endpoint": "/entrez/eutils/efetch.fcgi",
       "method": "GET",
-      "calls": 81,
-      "ok": 81,
+      "calls": 347,
+      "ok": 347,
       "notFound": 0,
       "errors": 0,
       "retries": 0,
-      "totalMs": 12998.7,
+      "totalMs": 57212.1,
       "bytes": 0
     },
     {
@@ -183,12 +327,12 @@
       "label": "Anthropic",
       "endpoint": "/v1/messages",
       "method": "POST",
-      "calls": 55,
-      "ok": 55,
+      "calls": 249,
+      "ok": 249,
       "notFound": 0,
       "errors": 0,
       "retries": 0,
-      "totalMs": 537785.6,
+      "totalMs": 2328449.2,
       "bytes": 0
     },
     {
@@ -196,12 +340,12 @@
       "label": "Europe PMC search",
       "endpoint": "/europepmc/webservices/rest/search",
       "method": "GET",
-      "calls": 55,
-      "ok": 55,
+      "calls": 249,
+      "ok": 249,
       "notFound": 0,
       "errors": 0,
       "retries": 0,
-      "totalMs": 16552.6,
+      "totalMs": 106926.2,
       "bytes": 0
     },
     {
@@ -209,12 +353,12 @@
       "label": "Europe PMC full text",
       "endpoint": "/europepmc/webservices/rest/:id/fullTextXML",
       "method": "GET",
-      "calls": 32,
-      "ok": 29,
-      "notFound": 3,
-      "errors": 0,
+      "calls": 161,
+      "ok": 150,
+      "notFound": 0,
+      "errors": 11,
       "retries": 0,
-      "totalMs": 7078.5,
+      "totalMs": 336601.6,
       "bytes": 0
     },
     {
@@ -222,12 +366,12 @@
       "label": "NCBI PMC ID Converter",
       "endpoint": "/tools/idconv/api/v1/articles",
       "method": "GET",
-      "calls": 26,
-      "ok": 26,
+      "calls": 99,
+      "ok": 99,
       "notFound": 0,
       "errors": 0,
       "retries": 0,
-      "totalMs": 2166.0,
+      "totalMs": 7346.4,
       "bytes": 0
     },
     {
@@ -235,25 +379,25 @@
       "label": "Unpaywall",
       "endpoint": "/v2/:id/:id",
       "method": "GET",
-      "calls": 19,
-      "ok": 19,
-      "notFound": 0,
+      "calls": 79,
+      "ok": 75,
+      "notFound": 4,
       "errors": 0,
       "retries": 0,
-      "totalMs": 1741.4,
-      "bytes": 16475
+      "totalMs": 8816.3,
+      "bytes": 72253
     },
     {
       "service": "ncbi_eutils",
       "label": "E-utilities search",
       "endpoint": "/entrez/eutils/esearch.fcgi",
       "method": "GET",
-      "calls": 6,
-      "ok": 6,
+      "calls": 39,
+      "ok": 38,
       "notFound": 0,
-      "errors": 0,
-      "retries": 0,
-      "totalMs": 947.9,
+      "errors": 1,
+      "retries": 1,
+      "totalMs": 4076.9,
       "bytes": 0
     },
     {
@@ -261,29 +405,81 @@
       "label": "E-utilities summary",
       "endpoint": "/entrez/eutils/esummary.fcgi",
       "method": "GET",
-      "calls": 4,
-      "ok": 4,
+      "calls": 39,
+      "ok": 37,
       "notFound": 0,
-      "errors": 0,
-      "retries": 0,
-      "totalMs": 215.9,
+      "errors": 2,
+      "retries": 2,
+      "totalMs": 2269.7,
       "bytes": 0
     },
     {
-      "service": "linkinghub.elsevier.com",
+      "service": "elsevier",
       "label": "Elsevier ScienceDirect",
       "endpoint": "/retrieve/pii/:id",
       "method": "GET",
-      "calls": 4,
-      "ok": 4,
+      "calls": 22,
+      "ok": 22,
       "notFound": 0,
       "errors": 0,
       "retries": 0,
-      "totalMs": 708.6,
-      "bytes": 11011
+      "totalMs": 4717.7,
+      "bytes": 61317
     },
     {
-      "service": "journals.sagepub.com",
+      "service": "www.strokejournal.org",
+      "label": "www.strokejournal.org",
+      "endpoint": "/article/:id/pdf",
+      "method": "GET",
+      "calls": 5,
+      "ok": 0,
+      "notFound": 0,
+      "errors": 5,
+      "retries": 0,
+      "totalMs": 468.8,
+      "bytes": 0
+    },
+    {
+      "service": "papers.ssrn.com",
+      "label": "papers.ssrn.com",
+      "endpoint": "/:id/papers.cfm",
+      "method": "GET",
+      "calls": 3,
+      "ok": 0,
+      "notFound": 0,
+      "errors": 3,
+      "retries": 0,
+      "totalMs": 627.1,
+      "bytes": 0
+    },
+    {
+      "service": "www.clinexprheumatol.org",
+      "label": "www.clinexprheumatol.org",
+      "endpoint": "/article.asp",
+      "method": "GET",
+      "calls": 2,
+      "ok": 1,
+      "notFound": 0,
+      "errors": 1,
+      "retries": 0,
+      "totalMs": 2310.8,
+      "bytes": 11664263
+    },
+    {
+      "service": "jstage",
+      "label": "J-STAGE",
+      "endpoint": "/article/circj/advpub/:id/:id/_pdf",
+      "method": "GET",
+      "calls": 1,
+      "ok": 1,
+      "notFound": 0,
+      "errors": 0,
+      "retries": 0,
+      "totalMs": 591.8,
+      "bytes": 0
+    },
+    {
+      "service": "sage",
       "label": "SAGE Journals",
       "endpoint": "/doi/:id/:id",
       "method": "GET",
@@ -292,627 +488,2504 @@
       "notFound": 0,
       "errors": 1,
       "retries": 0,
-      "totalMs": 73.6,
+      "totalMs": 72.3,
       "bytes": 0
     },
     {
-      "service": "www.jstage.jst.go.jp",
-      "label": "J-STAGE",
-      "endpoint": "/article/mrms/:id/:id/:id/_article",
+      "service": "unpaywall",
+      "label": "Unpaywall",
+      "endpoint": "/v2/:id/:id/:id",
       "method": "GET",
       "calls": 1,
       "ok": 1,
       "notFound": 0,
       "errors": 0,
       "retries": 0,
-      "totalMs": 818.9,
+      "totalMs": 97.5,
+      "bytes": 671
+    },
+    {
+      "service": "unpaywall",
+      "label": "Unpaywall",
+      "endpoint": "/v2/:id/brain/:id",
+      "method": "GET",
+      "calls": 1,
+      "ok": 1,
+      "notFound": 0,
+      "errors": 0,
+      "retries": 0,
+      "totalMs": 32.9,
+      "bytes": 1207
+    },
+    {
+      "service": "unpaywall",
+      "label": "Unpaywall",
+      "endpoint": "/v2/:id/clinexprheumatol/:id",
+      "method": "GET",
+      "calls": 1,
+      "ok": 1,
+      "notFound": 0,
+      "errors": 0,
+      "retries": 0,
+      "totalMs": 107.6,
+      "bytes": 753
+    },
+    {
+      "service": "unpaywall",
+      "label": "Unpaywall",
+      "endpoint": "/v2/:id/ehjci/:id",
+      "method": "GET",
+      "calls": 1,
+      "ok": 1,
+      "notFound": 0,
+      "errors": 0,
+      "retries": 0,
+      "totalMs": 127.1,
+      "bytes": 1862
+    },
+    {
+      "service": "unpaywall",
+      "label": "Unpaywall",
+      "endpoint": "/v2/:id/postmj/:id",
+      "method": "GET",
+      "calls": 1,
+      "ok": 1,
+      "notFound": 0,
+      "errors": 0,
+      "retries": 0,
+      "totalMs": 135.9,
+      "bytes": 754
+    },
+    {
+      "service": "unpaywall",
+      "label": "Unpaywall",
+      "endpoint": "/v2/:id/sleep/:id",
+      "method": "GET",
+      "calls": 1,
+      "ok": 1,
+      "notFound": 0,
+      "errors": 0,
+      "retries": 0,
+      "totalMs": 101.2,
+      "bytes": 875
+    },
+    {
+      "service": "content.ugeskriftet.dk",
+      "label": "content.ugeskriftet.dk",
+      "endpoint": "/sites/default/files/:id",
+      "method": "GET",
+      "calls": 1,
+      "ok": 1,
+      "notFound": 0,
+      "errors": 0,
+      "retries": 0,
+      "totalMs": 917.2,
+      "bytes": 269362
+    },
+    {
+      "service": "pmc.ncbi.nlm.nih.gov",
+      "label": "pmc.ncbi.nlm.nih.gov",
+      "endpoint": "/articles/:id",
+      "method": "GET",
+      "calls": 1,
+      "ok": 1,
+      "notFound": 0,
+      "errors": 0,
+      "retries": 0,
+      "totalMs": 37.0,
+      "bytes": 0
+    },
+    {
+      "service": "pure.eur.nl",
+      "label": "pure.eur.nl",
+      "endpoint": "/en/publications/normative-population-derived-data-for-mri-manifestations-of-cereb",
+      "method": "GET",
+      "calls": 1,
+      "ok": 1,
+      "notFound": 0,
+      "errors": 0,
+      "retries": 0,
+      "totalMs": 630.9,
+      "bytes": 0
+    },
+    {
+      "service": "research.tue.nl",
+      "label": "research.tue.nl",
+      "endpoint": "/p/en/research-outputs/heterogeneity-and-penumbra-of-white-matter-hyperintensities-in-sm",
+      "method": "GET",
+      "calls": 1,
+      "ok": 1,
+      "notFound": 0,
+      "errors": 0,
+      "retries": 0,
+      "totalMs": 2816.4,
+      "bytes": 0
+    },
+    {
+      "service": "www.academicradiology.org",
+      "label": "www.academicradiology.org",
+      "endpoint": "/article/:id/pdf",
+      "method": "GET",
+      "calls": 1,
+      "ok": 0,
+      "notFound": 0,
+      "errors": 1,
+      "retries": 0,
+      "totalMs": 416.0,
+      "bytes": 0
+    },
+    {
+      "service": "www.gacetamedicademexico.com",
+      "label": "www.gacetamedicademexico.com",
+      "endpoint": "/files/es/:id",
+      "method": "GET",
+      "calls": 1,
+      "ok": 1,
+      "notFound": 0,
+      "errors": 0,
+      "retries": 0,
+      "totalMs": 279.3,
+      "bytes": 1639058
+    },
+    {
+      "service": "www.imrpress.com",
+      "label": "www.imrpress.com",
+      "endpoint": "/journal/JIN/:id/:id/:id/:id",
+      "method": "GET",
+      "calls": 1,
+      "ok": 1,
+      "notFound": 0,
+      "errors": 0,
+      "retries": 0,
+      "totalMs": 415.5,
+      "bytes": 0
+    },
+    {
+      "service": "www.monaldi-archives.org",
+      "label": "www.monaldi-archives.org",
+      "endpoint": "/macd/article/download/:id/:id",
+      "method": "GET",
+      "calls": 1,
+      "ok": 1,
+      "notFound": 0,
+      "errors": 0,
+      "retries": 0,
+      "totalMs": 1034.1,
+      "bytes": 2000423
+    },
+    {
+      "service": "www.tandfonline.com",
+      "label": "www.tandfonline.com",
+      "endpoint": "/doi/full/:id/:id",
+      "method": "GET",
+      "calls": 1,
+      "ok": 0,
+      "notFound": 0,
+      "errors": 1,
+      "retries": 0,
+      "totalMs": 83.4,
+      "bytes": 0
+    },
+    {
+      "service": "www.worldscientific.com",
+      "label": "www.worldscientific.com",
+      "endpoint": "/doi/:id/:id",
+      "method": "GET",
+      "calls": 1,
+      "ok": 0,
+      "notFound": 0,
+      "errors": 1,
+      "retries": 0,
+      "totalMs": 72.6,
       "bytes": 0
     }
   ],
   "papersDetail": {
-    "shown": 55,
-    "total": 55,
+    "shown": 200,
+    "total": 249,
     "items": [
       {
-        "pmid": "42686622",
+        "pmid": "42972888",
         "source": "abstract",
         "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 10.12,
+        "processingSeconds": 7.003,
         "error": null
       },
       {
-        "pmid": "42684942",
-        "source": "abstract",
+        "pmid": "42957517",
+        "source": "unknown",
         "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 13.146,
-        "error": null
+        "processingSeconds": 6.536,
+        "error": "Refused by safety classifier for PMID 42957517 (category: bio)"
       },
       {
-        "pmid": "42684564",
-        "source": "abstract",
-        "fulltext": false,
-        "geneCount": 1,
-        "rejectedCount": 0,
-        "processingSeconds": 14.481,
-        "error": null
-      },
-      {
-        "pmid": "41009011",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 9.319,
-        "error": null
-      },
-      {
-        "pmid": "41006531",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 9.636,
-        "error": null
-      },
-      {
-        "pmid": "41002039",
-        "source": "abstract",
+        "pmid": "42942992",
+        "source": "unknown",
         "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 5.973,
-        "error": null
+        "processingSeconds": 83.325,
+        "error": "Refused by safety classifier for PMID 42942992 (category: bio)"
       },
       {
-        "pmid": "41001161",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 1,
-        "rejectedCount": 0,
-        "processingSeconds": 67.867,
-        "error": null
-      },
-      {
-        "pmid": "40999599",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 1,
-        "rejectedCount": 0,
-        "processingSeconds": 21.615,
-        "error": null
-      },
-      {
-        "pmid": "40995112",
-        "source": "europepmc",
-        "fulltext": true,
+        "pmid": "42856351",
+        "source": "unknown",
+        "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 7.083,
-        "error": null
+        "processingSeconds": 8.894,
+        "error": "Refused by safety classifier for PMID 42856351 (category: bio)"
       },
       {
-        "pmid": "40994715",
-        "source": "europepmc",
-        "fulltext": true,
+        "pmid": "42711949",
+        "source": "unknown",
+        "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 68.566,
-        "error": null
+        "processingSeconds": 9.91,
+        "error": "Refused by safety classifier for PMID 42711949 (category: bio)"
       },
       {
-        "pmid": "40992932",
-        "source": "pmc",
-        "fulltext": true,
+        "pmid": "42682509",
+        "source": "unknown",
+        "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 73.459,
-        "error": null
+        "processingSeconds": 6.419,
+        "error": "Refused by safety classifier for PMID 42682509 (category: bio)"
       },
       {
-        "pmid": "40990061",
-        "source": "europepmc",
-        "fulltext": true,
+        "pmid": "42559965",
+        "source": "unknown",
+        "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 10.603,
-        "error": null
+        "processingSeconds": 3.71,
+        "error": "Refused by safety classifier for PMID 42559965 (category: bio)"
       },
       {
-        "pmid": "40990028",
-        "source": "europepmc",
-        "fulltext": true,
+        "pmid": "42541861",
+        "source": "unknown",
+        "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 38.298,
-        "error": null
+        "processingSeconds": 59.835,
+        "error": "Refused by safety classifier for PMID 42541861 (category: bio)"
       },
       {
-        "pmid": "40982447",
+        "pmid": "42268716",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 66.481,
+        "error": "Refused by safety classifier for PMID 42268716 (category: bio)"
+      },
+      {
+        "pmid": "42225261",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 53.724,
+        "error": "Refused by safety classifier for PMID 42225261 (category: bio)"
+      },
+      {
+        "pmid": "42169653",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 56.393,
+        "error": "Refused by safety classifier for PMID 42169653 (category: bio)"
+      },
+      {
+        "pmid": "42150306",
         "source": "europepmc",
         "fulltext": true,
         "geneCount": 1,
-        "rejectedCount": 0,
-        "processingSeconds": 60.282,
-        "error": null
-      },
-      {
-        "pmid": "40981160",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 136.801,
-        "error": null
-      },
-      {
-        "pmid": "40979673",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 14.455,
-        "error": null
-      },
-      {
-        "pmid": "40977537",
-        "source": "pmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 43.545,
-        "error": null
-      },
-      {
-        "pmid": "40977463",
-        "source": "abstract",
-        "fulltext": false,
-        "geneCount": 0,
         "rejectedCount": 1,
-        "processingSeconds": 57.736,
+        "processingSeconds": 81.52,
         "error": null
       },
       {
-        "pmid": "40975099",
-        "source": "abstract",
+        "pmid": "42102430",
+        "source": "unknown",
         "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 58.895,
-        "error": null
+        "processingSeconds": 63.349,
+        "error": "Refused by safety classifier for PMID 42102430 (category: bio)"
       },
       {
-        "pmid": "40973605",
+        "pmid": "42037485",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 60.801,
+        "error": "Refused by safety classifier for PMID 42037485 (category: bio)"
+      },
+      {
+        "pmid": "42018350",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 303.051,
+        "error": "Refused by safety classifier for PMID 42018350 (category: bio)"
+      },
+      {
+        "pmid": "42002114",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 45.803,
+        "error": "Refused by safety classifier for PMID 42002114 (category: bio)"
+      },
+      {
+        "pmid": "42000856",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 60.869,
+        "error": "Refused by safety classifier for PMID 42000856 (category: bio)"
+      },
+      {
+        "pmid": "41806331",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 4.817,
+        "error": "Refused by safety classifier for PMID 41806331 (category: bio)"
+      },
+      {
+        "pmid": "41802717",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 5.475,
+        "error": "Refused by safety classifier for PMID 41802717 (category: bio)"
+      },
+      {
+        "pmid": "41566527",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 76.458,
+        "error": "Refused by safety classifier for PMID 41566527 (category: bio)"
+      },
+      {
+        "pmid": "41545082",
         "source": "pmc",
         "fulltext": true,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 45.418,
+        "processingSeconds": 54.197,
         "error": null
       },
       {
-        "pmid": "40971272",
-        "source": "abstract",
+        "pmid": "41455771",
+        "source": "unknown",
         "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 14.652,
-        "error": null
+        "processingSeconds": 48.864,
+        "error": "Refused by safety classifier for PMID 41455771 (category: bio)"
       },
       {
-        "pmid": "40967564",
-        "source": "abstract",
+        "pmid": "41445191",
+        "source": "unknown",
         "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 11.683,
-        "error": null
+        "processingSeconds": 4.974,
+        "error": "Refused by safety classifier for PMID 41445191 (category: bio)"
       },
       {
-        "pmid": "40966613",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 21.447,
-        "error": null
-      },
-      {
-        "pmid": "40959062",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 12.357,
-        "error": null
-      },
-      {
-        "pmid": "40957669",
-        "source": "pmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 44.376,
-        "error": null
-      },
-      {
-        "pmid": "40953349",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 7.36,
-        "error": null
-      },
-      {
-        "pmid": "40953012",
-        "source": "abstract",
+        "pmid": "41433068",
+        "source": "unknown",
         "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 56.477,
-        "error": null
+        "processingSeconds": 67.517,
+        "error": "Refused by safety classifier for PMID 41433068 (category: bio)"
       },
       {
-        "pmid": "40951980",
-        "source": "abstract",
-        "fulltext": false,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 34.928,
-        "error": null
-      },
-      {
-        "pmid": "40949721",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 52.869,
-        "error": null
-      },
-      {
-        "pmid": "40946810",
-        "source": "abstract",
-        "fulltext": false,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 21.131,
-        "error": null
-      },
-      {
-        "pmid": "40943799",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 29.274,
-        "error": null
-      },
-      {
-        "pmid": "40938625",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 19.367,
-        "error": null
-      },
-      {
-        "pmid": "40937180",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 19.855,
-        "error": null
-      },
-      {
-        "pmid": "40936340",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 47.006,
-        "error": null
-      },
-      {
-        "pmid": "40936251",
-        "source": "pmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 71.277,
-        "error": null
-      },
-      {
-        "pmid": "40935402",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 91.513,
-        "error": null
-      },
-      {
-        "pmid": "40935134",
-        "source": "pmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 49.025,
-        "error": null
-      },
-      {
-        "pmid": "40933048",
-        "source": "europepmc",
-        "fulltext": true,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 50.891,
-        "error": null
-      },
-      {
-        "pmid": "40932208",
-        "source": "abstract",
-        "fulltext": false,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 21.372,
-        "error": null
-      },
-      {
-        "pmid": "40930426",
-        "source": "abstract",
-        "fulltext": false,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 16.567,
-        "error": null
-      },
-      {
-        "pmid": "40925511",
-        "source": "abstract",
-        "fulltext": false,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 56.103,
-        "error": null
-      },
-      {
-        "pmid": "40922501",
-        "source": "abstract",
-        "fulltext": false,
-        "geneCount": 0,
-        "rejectedCount": 0,
-        "processingSeconds": 52.721,
-        "error": null
-      },
-      {
-        "pmid": "40919222",
+        "pmid": "41354963",
         "source": "europepmc",
         "fulltext": true,
         "geneCount": 1,
-        "rejectedCount": 6,
-        "processingSeconds": 46.285,
+        "rejectedCount": 0,
+        "processingSeconds": 85.444,
         "error": null
       },
       {
-        "pmid": "40913504",
-        "source": "abstract",
-        "fulltext": false,
-        "geneCount": 0,
-        "rejectedCount": 1,
-        "processingSeconds": 13.571,
-        "error": null
-      },
-      {
-        "pmid": "40913479",
-        "source": "abstract",
+        "pmid": "41327223",
+        "source": "unknown",
         "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 26.325,
+        "processingSeconds": 9.141,
+        "error": "Refused by safety classifier for PMID 41327223 (category: bio)"
+      },
+      {
+        "pmid": "41318543",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 55.062,
+        "error": "Refused by safety classifier for PMID 41318543 (category: bio)"
+      },
+      {
+        "pmid": "41222721",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 1,
+        "rejectedCount": 3,
+        "processingSeconds": 59.745,
         "error": null
       },
       {
-        "pmid": "40913247",
-        "source": "abstract",
+        "pmid": "41171875",
+        "source": "unknown",
         "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 57.337,
+        "error": "Refused by safety classifier for PMID 41171875 (category: bio)"
+      },
+      {
+        "pmid": "41151805",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 1,
+        "rejectedCount": 2,
+        "processingSeconds": 74.827,
+        "error": null
+      },
+      {
+        "pmid": "40796891",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 44.171,
+        "error": "Refused by safety classifier for PMID 40796891 (category: bio)"
+      },
+      {
+        "pmid": "40764588",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 1,
+        "rejectedCount": 0,
+        "processingSeconds": 50.919,
+        "error": null
+      },
+      {
+        "pmid": "40754098",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 60.114,
+        "error": "Refused by safety classifier for PMID 40754098 (category: bio)"
+      },
+      {
+        "pmid": "40725422",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 60.691,
+        "error": "Refused by safety classifier for PMID 40725422 (category: bio)"
+      },
+      {
+        "pmid": "40710331",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 48.666,
+        "error": "Refused by safety classifier for PMID 40710331 (category: bio)"
+      },
+      {
+        "pmid": "40518665",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 45.622,
+        "error": "Refused by safety classifier for PMID 40518665 (category: bio)"
+      },
+      {
+        "pmid": "40476824",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 81.632,
+        "error": "Refused by safety classifier for PMID 40476824 (category: bio)"
+      },
+      {
+        "pmid": "40328357",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 11.149,
+        "error": "Refused by safety classifier for PMID 40328357 (category: bio)"
+      },
+      {
+        "pmid": "40203112",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 58.375,
+        "error": "Refused by safety classifier for PMID 40203112 (category: bio)"
+      },
+      {
+        "pmid": "39972055",
+        "source": "europepmc",
+        "fulltext": true,
         "geneCount": 0,
         "rejectedCount": 2,
-        "processingSeconds": 40.375,
+        "processingSeconds": 25.211,
         "error": null
       },
       {
-        "pmid": "40913112",
+        "pmid": "39967653",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 3,
+        "processingSeconds": 79.868,
+        "error": null
+      },
+      {
+        "pmid": "39967599",
         "source": "europepmc",
         "fulltext": true,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 12.236,
+        "processingSeconds": 56.967,
         "error": null
       },
       {
-        "pmid": "40908978",
+        "pmid": "39965248",
         "source": "europepmc",
         "fulltext": true,
-        "geneCount": 1,
-        "rejectedCount": 0,
-        "processingSeconds": 80.147,
+        "geneCount": 0,
+        "rejectedCount": 11,
+        "processingSeconds": 157.373,
         "error": null
       },
       {
-        "pmid": "40904821",
+        "pmid": "39965059",
+        "source": "pmc",
+        "fulltext": true,
+        "geneCount": 17,
+        "rejectedCount": 2,
+        "processingSeconds": 139.176,
+        "error": null
+      },
+      {
+        "pmid": "39963633",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 61.675,
+        "error": null
+      },
+      {
+        "pmid": "39963470",
         "source": "europepmc",
         "fulltext": true,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 25.003,
+        "processingSeconds": 55.632,
         "error": null
       },
       {
-        "pmid": "40899979",
+        "pmid": "39961617",
+        "source": "pmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 40.24,
+        "error": null
+      },
+      {
+        "pmid": "39957423",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 62.111,
+        "error": null
+      },
+      {
+        "pmid": "39956627",
         "source": "abstract",
         "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 35.203,
+        "processingSeconds": 6.639,
         "error": null
       },
       {
-        "pmid": "40899970",
+        "pmid": "39955816",
         "source": "abstract",
         "fulltext": false,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 9.641,
+        "processingSeconds": 6.77,
         "error": null
       },
       {
-        "pmid": "40898560",
+        "pmid": "39955506",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 46.588,
+        "error": null
+      },
+      {
+        "pmid": "39954159",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 3,
+        "processingSeconds": 49.395,
+        "error": null
+      },
+      {
+        "pmid": "39953503",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 21.384,
+        "error": null
+      },
+      {
+        "pmid": "39953442",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 13.752,
+        "error": null
+      },
+      {
+        "pmid": "39949311",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 32.079,
+        "error": null
+      },
+      {
+        "pmid": "39948544",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 15.535,
+        "error": null
+      },
+      {
+        "pmid": "39940679",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 77.524,
+        "error": null
+      },
+      {
+        "pmid": "39938231",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 3,
+        "processingSeconds": 58.005,
+        "error": null
+      },
+      {
+        "pmid": "39937021",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 62.313,
+        "error": null
+      },
+      {
+        "pmid": "39930534",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 70.643,
+        "error": null
+      },
+      {
+        "pmid": "39929297",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 1,
+        "rejectedCount": 1,
+        "processingSeconds": 48.668,
+        "error": null
+      },
+      {
+        "pmid": "39925481",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 66.435,
+        "error": null
+      },
+      {
+        "pmid": "39925008",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 98.32,
+        "error": null
+      },
+      {
+        "pmid": "39924695",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 37.481,
+        "error": null
+      },
+      {
+        "pmid": "39924233",
         "source": "europepmc",
         "fulltext": true,
         "geneCount": 1,
         "rejectedCount": 0,
-        "processingSeconds": 25.245,
+        "processingSeconds": 32.419,
         "error": null
       },
       {
-        "pmid": "40898253",
+        "pmid": "39921508",
         "source": "europepmc",
         "fulltext": true,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 15.217,
+        "processingSeconds": 44.596,
         "error": null
       },
       {
-        "pmid": "40897525",
+        "pmid": "39921030",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 58.163,
+        "error": null
+      },
+      {
+        "pmid": "39919799",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 1,
+        "rejectedCount": 0,
+        "processingSeconds": 30.451,
+        "error": null
+      },
+      {
+        "pmid": "39916668",
         "source": "europepmc",
         "fulltext": true,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 23.74,
+        "processingSeconds": 28.007,
         "error": null
       },
       {
-        "pmid": "40897453",
+        "pmid": "39916454",
         "source": "europepmc",
         "fulltext": true,
         "geneCount": 0,
         "rejectedCount": 0,
-        "processingSeconds": 37.08,
+        "processingSeconds": 48.408,
+        "error": null
+      },
+      {
+        "pmid": "39907937",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 24.939,
+        "error": null
+      },
+      {
+        "pmid": "39907306",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 81.131,
+        "error": null
+      },
+      {
+        "pmid": "39905209",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 34.292,
+        "error": null
+      },
+      {
+        "pmid": "39905010",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 72.025,
+        "error": null
+      },
+      {
+        "pmid": "39904758",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 44.853,
+        "error": null
+      },
+      {
+        "pmid": "39903606",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 10.862,
+        "error": null
+      },
+      {
+        "pmid": "39901803",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 4.82,
+        "error": null
+      },
+      {
+        "pmid": "39899790",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 37.509,
+        "error": null
+      },
+      {
+        "pmid": "39896231",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 21.292,
+        "error": null
+      },
+      {
+        "pmid": "39894316",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 84.229,
+        "error": null
+      },
+      {
+        "pmid": "39893709",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 60.608,
+        "error": null
+      },
+      {
+        "pmid": "39885592",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 44.137,
+        "error": null
+      },
+      {
+        "pmid": "39885546",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 72.413,
+        "error": null
+      },
+      {
+        "pmid": "39882577",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 47.408,
+        "error": null
+      },
+      {
+        "pmid": "39880693",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 55.019,
+        "error": null
+      },
+      {
+        "pmid": "39879997",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 51.013,
+        "error": null
+      },
+      {
+        "pmid": "39866521",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 15.916,
+        "error": null
+      },
+      {
+        "pmid": "39864627",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 1,
+        "rejectedCount": 0,
+        "processingSeconds": 61.514,
+        "error": null
+      },
+      {
+        "pmid": "39864340",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 40.455,
+        "error": null
+      },
+      {
+        "pmid": "39863329",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 42.521,
+        "error": null
+      },
+      {
+        "pmid": "39863325",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 14.097,
+        "error": null
+      },
+      {
+        "pmid": "39862807",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 31.06,
+        "error": null
+      },
+      {
+        "pmid": "39859943",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 20.288,
+        "error": null
+      },
+      {
+        "pmid": "39859289",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 75.907,
+        "error": null
+      },
+      {
+        "pmid": "39859188",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 1,
+        "rejectedCount": 0,
+        "processingSeconds": 75.407,
+        "error": null
+      },
+      {
+        "pmid": "39859185",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 1,
+        "rejectedCount": 0,
+        "processingSeconds": 110.658,
+        "error": null
+      },
+      {
+        "pmid": "39858606",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 105.389,
+        "error": null
+      },
+      {
+        "pmid": "39853935",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 37.536,
+        "error": "Refused by safety classifier for PMID 39853935 (category: bio)"
+      },
+      {
+        "pmid": "39853492",
+        "source": "pmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 14.996,
+        "error": null
+      },
+      {
+        "pmid": "39848683",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 58.998,
+        "error": null
+      },
+      {
+        "pmid": "39848122",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 54.501,
+        "error": null
+      },
+      {
+        "pmid": "39846469",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 47.823,
+        "error": null
+      },
+      {
+        "pmid": "39840612",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 12.706,
+        "error": null
+      },
+      {
+        "pmid": "39839309",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 15.654,
+        "error": null
+      },
+      {
+        "pmid": "39831385",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 45.684,
+        "error": null
+      },
+      {
+        "pmid": "39831361",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 67.047,
+        "error": null
+      },
+      {
+        "pmid": "39826156",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 62.423,
+        "error": null
+      },
+      {
+        "pmid": "39819095",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 47.393,
+        "error": null
+      },
+      {
+        "pmid": "39819028",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 52.203,
+        "error": null
+      },
+      {
+        "pmid": "39818967",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 10,
+        "rejectedCount": 5,
+        "processingSeconds": 63.076,
+        "error": null
+      },
+      {
+        "pmid": "39818861",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 16.323,
+        "error": null
+      },
+      {
+        "pmid": "39809371",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 11.072,
+        "error": null
+      },
+      {
+        "pmid": "39808991",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 16.606,
+        "error": null
+      },
+      {
+        "pmid": "39807599",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 6,
+        "processingSeconds": 47.827,
+        "error": null
+      },
+      {
+        "pmid": "39806999",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 1,
+        "rejectedCount": 0,
+        "processingSeconds": 57.011,
+        "error": null
+      },
+      {
+        "pmid": "39806582",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 50.609,
+        "error": null
+      },
+      {
+        "pmid": "39804437",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 32.194,
+        "error": null
+      },
+      {
+        "pmid": "39800432",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 29.46,
+        "error": null
+      },
+      {
+        "pmid": "39798248",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 5.937,
+        "error": null
+      },
+      {
+        "pmid": "39794302",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 17.98,
+        "error": null
+      },
+      {
+        "pmid": "39793117",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 9.9,
+        "error": null
+      },
+      {
+        "pmid": "39791370",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 112.83,
+        "error": null
+      },
+      {
+        "pmid": "39791366",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 19.649,
+        "error": null
+      },
+      {
+        "pmid": "39791245",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 32.416,
+        "error": null
+      },
+      {
+        "pmid": "39789945",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 10.596,
+        "error": null
+      },
+      {
+        "pmid": "39788860",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 35.767,
+        "error": null
+      },
+      {
+        "pmid": "39788162",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 12.994,
+        "error": null
+      },
+      {
+        "pmid": "39785835",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 1,
+        "rejectedCount": 0,
+        "processingSeconds": 103.172,
+        "error": null
+      },
+      {
+        "pmid": "39784723",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 9.037,
+        "error": null
+      },
+      {
+        "pmid": "39777309",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 26.284,
+        "error": null
+      },
+      {
+        "pmid": "39777092",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 14.141,
+        "error": null
+      },
+      {
+        "pmid": "39766231",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 24.459,
+        "error": null
+      },
+      {
+        "pmid": "39763531",
+        "source": "pmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 65.299,
+        "error": null
+      },
+      {
+        "pmid": "39757975",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 20.794,
+        "error": null
+      },
+      {
+        "pmid": "39753308",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 47.725,
+        "error": null
+      },
+      {
+        "pmid": "39749886",
+        "source": "unpaywall",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 46.407,
+        "error": null
+      },
+      {
+        "pmid": "39749804",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 17.591,
+        "error": null
+      },
+      {
+        "pmid": "39748858",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 17.256,
+        "error": null
+      },
+      {
+        "pmid": "39744850",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 7,
+        "processingSeconds": 43.69,
+        "error": null
+      },
+      {
+        "pmid": "39743557",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 5.07,
+        "error": null
+      },
+      {
+        "pmid": "39743006",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 2,
+        "rejectedCount": 0,
+        "processingSeconds": 75.013,
+        "error": null
+      },
+      {
+        "pmid": "41839140",
+        "source": "unpaywall",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 62.191,
+        "error": null
+      },
+      {
+        "pmid": "41815113",
+        "source": "pmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 14.212,
+        "error": null
+      },
+      {
+        "pmid": "39740225",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 48.464,
+        "error": null
+      },
+      {
+        "pmid": "39737667",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 40.672,
+        "error": null
+      },
+      {
+        "pmid": "39734492",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 55.444,
+        "error": null
+      },
+      {
+        "pmid": "39731363",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 59.171,
+        "error": null
+      },
+      {
+        "pmid": "39730628",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 26.208,
+        "error": null
+      },
+      {
+        "pmid": "39726748",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 81.736,
+        "error": null
+      },
+      {
+        "pmid": "39726042",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 111.4,
+        "error": null
+      },
+      {
+        "pmid": "39723488",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 35.942,
+        "error": null
+      },
+      {
+        "pmid": "39722654",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 34.401,
+        "error": null
+      },
+      {
+        "pmid": "39719631",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 41.069,
+        "error": null
+      },
+      {
+        "pmid": "39719419",
+        "source": "pmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 6,
+        "processingSeconds": 91.948,
+        "error": null
+      },
+      {
+        "pmid": "39714481",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 50.492,
+        "error": null
+      },
+      {
+        "pmid": "39713290",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 73.984,
+        "error": null
+      },
+      {
+        "pmid": "39710355",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 24.583,
+        "error": null
+      },
+      {
+        "pmid": "39709246",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 36.51,
+        "error": null
+      },
+      {
+        "pmid": "39708806",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 19.994,
+        "error": null
+      },
+      {
+        "pmid": "39701018",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 21.371,
+        "error": null
+      },
+      {
+        "pmid": "39699757",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 69.223,
+        "error": null
+      },
+      {
+        "pmid": "39697484",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 56.892,
+        "error": null
+      },
+      {
+        "pmid": "39689282",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 1,
+        "rejectedCount": 0,
+        "processingSeconds": 40.099,
+        "error": null
+      },
+      {
+        "pmid": "39688573",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 45.745,
+        "error": null
+      },
+      {
+        "pmid": "39681255",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 88.372,
+        "error": null
+      },
+      {
+        "pmid": "39673290",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 70.717,
+        "error": null
+      },
+      {
+        "pmid": "39672520",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 49.473,
+        "error": null
+      },
+      {
+        "pmid": "39670385",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 13.852,
+        "error": null
+      },
+      {
+        "pmid": "39669894",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 13.993,
+        "error": null
+      },
+      {
+        "pmid": "39661645",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 1,
+        "rejectedCount": 8,
+        "processingSeconds": 74.966,
+        "error": null
+      },
+      {
+        "pmid": "39657824",
+        "source": "pmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 33.613,
+        "error": null
+      },
+      {
+        "pmid": "39654357",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 17.157,
+        "error": null
+      },
+      {
+        "pmid": "39654194",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 12.595,
+        "error": null
+      },
+      {
+        "pmid": "39652165",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 16.087,
+        "error": null
+      },
+      {
+        "pmid": "39649721",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 35.377,
+        "error": null
+      },
+      {
+        "pmid": "39648904",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 24.436,
+        "error": null
+      },
+      {
+        "pmid": "39647549",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 14.567,
+        "error": null
+      },
+      {
+        "pmid": "39642342",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 13.769,
+        "error": null
+      },
+      {
+        "pmid": "39640678",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 58.924,
+        "error": null
+      },
+      {
+        "pmid": "39637729",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 1,
+        "rejectedCount": 0,
+        "processingSeconds": 43.727,
+        "error": null
+      },
+      {
+        "pmid": "39636569",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 50.196,
+        "error": null
+      },
+      {
+        "pmid": "39633008",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 93.749,
+        "error": null
+      },
+      {
+        "pmid": "39632091",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 19.544,
+        "error": null
+      },
+      {
+        "pmid": "39631936",
+        "source": "unpaywall",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 53.4,
+        "error": null
+      },
+      {
+        "pmid": "39628894",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 45.137,
+        "error": null
+      },
+      {
+        "pmid": "39622749",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 22.188,
+        "error": null
+      },
+      {
+        "pmid": "39622319",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 49.028,
+        "error": null
+      },
+      {
+        "pmid": "39620496",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 1,
+        "rejectedCount": 0,
+        "processingSeconds": 41.778,
+        "error": null
+      },
+      {
+        "pmid": "39619361",
+        "source": "pmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 29.537,
+        "error": null
+      },
+      {
+        "pmid": "39618837",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 52.77,
+        "error": null
+      },
+      {
+        "pmid": "39616122",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 5.336,
+        "error": null
+      },
+      {
+        "pmid": "39613713",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 6.264,
+        "error": null
+      },
+      {
+        "pmid": "39613464",
+        "source": "unknown",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 28.878,
+        "error": "Refused by safety classifier for PMID 39613464 (category: bio)"
+      },
+      {
+        "pmid": "39613053",
+        "source": "abstract",
+        "fulltext": false,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 15.327,
+        "error": null
+      },
+      {
+        "pmid": "39610302",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 1,
+        "rejectedCount": 0,
+        "processingSeconds": 18.323,
+        "error": null
+      },
+      {
+        "pmid": "39609713",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 1,
+        "processingSeconds": 30.11,
+        "error": null
+      },
+      {
+        "pmid": "39606408",
+        "source": "pmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 5.72,
+        "error": null
+      },
+      {
+        "pmid": "39602940",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 19.847,
+        "error": null
+      },
+      {
+        "pmid": "39596918",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 55.316,
+        "error": null
+      },
+      {
+        "pmid": "39596318",
+        "source": "europepmc",
+        "fulltext": true,
+        "geneCount": 0,
+        "rejectedCount": 0,
+        "processingSeconds": 77.385,
         "error": null
       }
     ]
   },
   "acceptedGenes": {
-    "shown": 6,
-    "total": 6,
+    "shown": 32,
+    "total": 32,
     "items": [
       {
         "symbol": "NOTCH3",
-        "pmid": "42684564",
+        "pmid": "41222721",
+        "confidence": 0.95,
+        "gwasTraits": [],
+        "proteinName": "Neurogenic locus notch homolog protein 3",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Established monogenic CADASIL gene; this paper adds new data: a novel p.C533S mutation in a family, plus CRISPR knock-in in human brain microvascular endothelial cells. The knock-in reproduced CADASIL-like pathology (tight junction loss, inflammation, neuronal ferroptosis, glial activation) through VEGF/VEGFR pathway impairment. No GWAS or MR evidence.",
+        "sourceQuote": "We reported a novel mutation in the exon 10 of the NOTCH3 gene (NOTCH3 p.C533S) in a Chinese family with CADASIL."
+      },
+      {
+        "symbol": "NOTCH3",
+        "pmid": "40764588",
+        "confidence": 0.9,
+        "gwasTraits": [],
+        "proteinName": "Neurogenic locus notch homolog protein 3",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Known gene behind monogenic CADASIL. This paper adds new functional data: the CADASIL mutants R90C, C212Y and C455R are taken up into the cell, and the ectodomain separates inside endosomes (also seen in hESC-derived VSMCs). R90C shows gain-of-function, ligand-independent signalling through a TRPML-dependent, metalloprotease-independent route, which may explain ectodomain build-up in CADASIL. Cell-model evidence only; no GWAS, MR or omics data.",
+        "sourceQuote": "R90C showed significantly increased signalling activity compared to WT and shifted to an alternative mechanism of activation that was independent of metalloprotease activity and dependent on TRPML, a calcium channel protein involved in endosomal/lysosomal fusion and fission."
+      },
+      {
+        "symbol": "HTRA1",
+        "pmid": "39965059",
+        "confidence": 0.85,
+        "gwasTraits": [
+          "extreme-cSVD",
+          "SVS",
+          "lacunes"
+        ],
+        "proteinName": "HtrA serine peptidase 1",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Monogenic cSVD gene (CARASIL/CADASIL2). The review cites common intronic variant associations with extreme cSVD MRI markers and lacunar stroke, and an MTAG locus (HTRA1-ARMS2). Rare variants in UK Biobank are linked to stroke and vascular dementia. Review-level evidence (prior studies).",
+        "sourceQuote": "Specifically, a common intronic variant in HTRA1 was shown to be associated with a combination of MRI markers of extreme cSVD (including the presence of lacunes and extensive WMH) in population-based cohorts (), and lacunar stroke in patient-based cohorts ()."
+      },
+      {
+        "symbol": "COL4A2",
+        "pmid": "39965059",
         "confidence": 0.85,
         "gwasTraits": [
           "WMH",
+          "ICH-non-lobar",
+          "SVS"
+        ],
+        "proteinName": "Collagen type IV alpha 2 chain",
+        "mendelianRandomization": false,
+        "omicsEvidence": [
+          "MTAG"
+        ],
+        "causalEvidenceSummary": "Monogenic cSVD gene. Common variants at the COL4A1-COL4A2 locus are associated with WMH, non-lobar ICH and lacunar stroke, and COL4A2 is an MTAG locus for lacunar stroke/WMH. Cited prior evidence.",
+        "sourceQuote": "Likewise, common variants near the COL4A1-COL4A2 locus were found to be associated with WMH burden (, ), non-lobar ICH (), and lacunar stroke ()."
+      },
+      {
+        "symbol": "COL4A1",
+        "pmid": "39965059",
+        "confidence": 0.85,
+        "gwasTraits": [
+          "WMH",
+          "ICH-non-lobar",
+          "SVS"
+        ],
+        "proteinName": "Collagen type IV alpha 1 chain",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Monogenic hemorrhagic cSVD gene with extensive mouse model functional data (TGF-beta/PI3K, Notch3-driven ACT-zone hypermuscularization causing ICH). Common variants at the COL4A1-COL4A2 locus are associated with WMH, non-lobar ICH and lacunar stroke.",
+        "sourceQuote": "Likewise, common variants near the COL4A1-COL4A2 locus were found to be associated with WMH burden (, ), non-lobar ICH (), and lacunar stroke ()."
+      },
+      {
+        "symbol": "NOTCH3",
+        "pmid": "39965059",
+        "confidence": 0.8,
+        "gwasTraits": [
           "stroke"
+        ],
+        "proteinName": "Notch receptor 3",
+        "mendelianRandomization": false,
+        "omicsEvidence": [
+          "WES/WGS"
+        ],
+        "causalEvidenceSummary": "CADASIL gene. Population sequencing data (UK Biobank) show cysteine-altering NOTCH3 variants are common and associated with increased stroke and vascular dementia risk. Endpoint is general stroke rather than a cSVD-specific phenotype.",
+        "sourceQuote": "Despite apparently not causing classical CADASIL these mutations are nevertheless associated with an increased risk of stroke and vascular dementia in the general population ()."
+      },
+      {
+        "symbol": "ICA1L",
+        "pmid": "39965059",
+        "confidence": 0.78,
+        "gwasTraits": [
+          "SVS"
+        ],
+        "proteinName": "Islet cell autoantigen 1 like",
+        "mendelianRandomization": false,
+        "omicsEvidence": [
+          "TWAS",
+          "colocalization",
+          "PWAS"
+        ],
+        "causalEvidenceSummary": "At the lacunar stroke GWAS locus ICA1L-WDR12-CARF-NBEAL1. Supported by TWAS/colocalization (genetically elevated expression) and by integrated GWAS-proteomic analysis as a causal protein for lacunar stroke.",
+        "sourceQuote": "By combining analysis of GWAS and proteomic data from lacunar stroke, three proteins (ICA1L, CAND2, ALDH2) felt to be causally related to disease pathogenesis were identified ()."
+      },
+      {
+        "symbol": "ULK4",
+        "pmid": "39965059",
+        "confidence": 0.75,
+        "gwasTraits": [
+          "SVS"
+        ],
+        "proteinName": "Unc-51 like kinase 4",
+        "mendelianRandomization": false,
+        "omicsEvidence": [
+          "TWAS",
+          "colocalization"
+        ],
+        "causalEvidenceSummary": "Lacunar stroke GWAS locus, with TWAS/colocalization support from genetically elevated expression associated with lacunar stroke.",
+        "sourceQuote": "Such approaches identified association of genetically elevated expression of SLC25A44, ULK4, ICA1L, FAM117B, CARF, NBEAL1, with lacunar stroke ()."
+      },
+      {
+        "symbol": "NBEAL1",
+        "pmid": "39965059",
+        "confidence": 0.75,
+        "gwasTraits": [
+          "SVS"
+        ],
+        "proteinName": "Neurobeachin like 1",
+        "mendelianRandomization": false,
+        "omicsEvidence": [
+          "TWAS",
+          "colocalization"
+        ],
+        "causalEvidenceSummary": "At the lacunar stroke GWAS locus ICA1L-WDR12-CARF-NBEAL1, with TWAS/colocalization support.",
+        "sourceQuote": "Such approaches identified association of genetically elevated expression of SLC25A44, ULK4, ICA1L, FAM117B, CARF, NBEAL1, with lacunar stroke ()."
+      },
+      {
+        "symbol": "CARF",
+        "pmid": "39965059",
+        "confidence": 0.75,
+        "gwasTraits": [
+          "SVS"
+        ],
+        "proteinName": "Calcium responsive transcription factor",
+        "mendelianRandomization": false,
+        "omicsEvidence": [
+          "TWAS",
+          "colocalization"
+        ],
+        "causalEvidenceSummary": "At the lacunar stroke GWAS locus ICA1L-WDR12-CARF-NBEAL1, with TWAS/colocalization support.",
+        "sourceQuote": "Such approaches identified association of genetically elevated expression of SLC25A44, ULK4, ICA1L, FAM117B, CARF, NBEAL1, with lacunar stroke ()."
+      },
+      {
+        "symbol": "SLC25A44",
+        "pmid": "39965059",
+        "confidence": 0.72,
+        "gwasTraits": [
+          "SVS",
+          "WMH"
+        ],
+        "proteinName": "Solute carrier family 25 member 44",
+        "mendelianRandomization": false,
+        "omicsEvidence": [
+          "TWAS",
+          "colocalization",
+          "MTAG"
+        ],
+        "causalEvidenceSummary": "MTAG locus (SLC25A44-PMF1-BGLAP) for lacunar stroke with WMH, with TWAS/colocalization support for lacunar stroke.",
+        "sourceQuote": "Such approaches identified association of genetically elevated expression of SLC25A44, ULK4, ICA1L, FAM117B, CARF, NBEAL1, with lacunar stroke ()."
+      },
+      {
+        "symbol": "FAM117B",
+        "pmid": "39965059",
+        "confidence": 0.65,
+        "gwasTraits": [
+          "SVS"
+        ],
+        "proteinName": "Family with sequence similarity 117 member B",
+        "mendelianRandomization": false,
+        "omicsEvidence": [
+          "TWAS",
+          "colocalization"
+        ],
+        "causalEvidenceSummary": "TWAS/colocalization association of genetically elevated expression with lacunar stroke.",
+        "sourceQuote": "Such approaches identified association of genetically elevated expression of SLC25A44, ULK4, ICA1L, FAM117B, CARF, NBEAL1, with lacunar stroke ()."
+      },
+      {
+        "symbol": "ZCCHC14",
+        "pmid": "39965059",
+        "confidence": 0.6,
+        "gwasTraits": [
+          "SVS"
+        ],
+        "proteinName": "Zinc finger CCHC-type containing 14",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Sole gene named at a genome-wide significant lacunar stroke GWAS locus in MRI-confirmed cases.",
+        "sourceQuote": "Using such a more rigorous phenotyping approach in 7338 cases, 5 loci for lacunar stroke were identified (ICA1L-WDR12-CARF-NBEAL1, ULK4, SPI1-SLC39A13-PSMC3-RAPSN, ZCCHC14, ZBTB14-EPB41L3), and a further 7 identified on multitrait analysis with WMH (SLC25A44-PMF1-BGLAP, LOX-ZNF474-LOC100505841, FOXF2-FOXQ1, VTA1-GPR126, SH3PXD2A, HTRA1-ARMS2, COL4A2)()."
+      },
+      {
+        "symbol": "SH3PXD2A",
+        "pmid": "39965059",
+        "confidence": 0.6,
+        "gwasTraits": [
+          "SVS",
+          "WMH"
+        ],
+        "proteinName": "SH3 and PX domains 2A",
+        "mendelianRandomization": false,
+        "omicsEvidence": [
+          "MTAG"
+        ],
+        "causalEvidenceSummary": "Sole gene label of an MTAG locus for lacunar stroke with WMH; also cited as a matrisome-associated gene linked to sporadic cSVD.",
+        "sourceQuote": "Using such a more rigorous phenotyping approach in 7338 cases, 5 loci for lacunar stroke were identified (ICA1L-WDR12-CARF-NBEAL1, ULK4, SPI1-SLC39A13-PSMC3-RAPSN, ZCCHC14, ZBTB14-EPB41L3), and a further 7 identified on multitrait analysis with WMH (SLC25A44-PMF1-BGLAP, LOX-ZNF474-LOC100505841, FOXF2-FOXQ1, VTA1-GPR126, SH3PXD2A, HTRA1-ARMS2, COL4A2)()."
+      },
+      {
+        "symbol": "APOE",
+        "pmid": "39965059",
+        "confidence": 0.65,
+        "gwasTraits": [
+          "cerebral-microbleeds"
+        ],
+        "proteinName": "Apolipoprotein E",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Only genome-wide significant locus in a cerebral microbleed GWAS meta-analysis (25,862 participants).",
+        "sourceQuote": "There have been fewer studies of CMB largely because large data sets are not available due to the need for visual identification on MRI scans; a recent meta-analysis in 25,862 participants of whom 3556 had CMB, suggested significant heritability for this phenotype but only identified one gene at genome wide significance, the Apolipoprotein E locus ()."
+      },
+      {
+        "symbol": "NOTCH3",
+        "pmid": "39924233",
+        "confidence": 0.9,
+        "gwasTraits": [
+          "WMH",
+          "lacunar stroke"
         ],
         "proteinName": "Neurogenic locus notch homolog protein 3",
         "mendelianRandomization": false,
         "omicsEvidence": [],
-        "causalEvidenceSummary": "NOTCH3 is an established monogenic cause of cSVD (CADASIL), and this paper contributes NEW clinical variant-level data: two novel cases of heterozygous p.Arg1231Cys (EGFr domain 31, nominally low-risk) presenting with early-onset dementia, strokes, and extensive leukoencephalopathy. The authors argue these cases indicate higher-than-expected penetrance for this variant and call for functional evaluation, supporting a direct causal link between this NOTCH3 variant and hereditary small vessel disease rather than mere background citation.",
-        "sourceQuote": "We report two cases of p.Arg1231Cys heterozygosity presenting with early-onset dementia, strokes, and extensive leukoencephalopathy."
-      },
-      {
-        "symbol": "COL4A1",
-        "pmid": "41001161",
-        "confidence": 0.9,
-        "gwasTraits": [
-          "ICH-non-lobar",
-          "cerebral-microbleeds",
-          "lacunes"
-        ],
-        "proteinName": "Collagen type IV alpha-1 chain",
-        "mendelianRandomization": false,
-        "omicsEvidence": [],
-        "causalEvidenceSummary": "New patient-level genetic data: two consanguineous Palestinian siblings with cSVD phenotypes (antenatal intracerebral/intraventricular hemorrhage, cerebral microhemorrhages, porencephalic cysts, and an incident lacunar infarct on follow-up MRI) were confirmed by genetic testing to carry the same COL4A1 variant (missense c.2707G>C, p.Gly903Arg), with segregation supported by an affected father with encephalomalacia. The paper adds mechanistic reasoning that glycine substitutions in the collagenous domain disrupt triple-helix formation, impairing basement membrane incorporation and producing fragility of small cerebral vessels, BBB leakage, and ER stress. Evidence is cSVD-specific (microbleeds, lacunar infarct, hemorrhage, leukoaraiosis), representing new monogenic variant evidence rather than a background citation.",
-        "sourceQuote": "Genetic testing confirmed a COL4A1 missense mutation (c.2707G > C, p.Gly903Arg)."
+        "causalEvidenceSummary": "This case report finds a pathogenic heterozygous NOTCH3 c.505C>T (p.Arg169Cys) variant in a CADASIL patient with confluent WMH and multiple subcortical infarcts after COVID-19. A skin biopsy showing granular osmiophilic material (GOM) in the vascular smooth muscle cell basement membrane confirms the diagnosis. NOTCH3 is an established monogenic cause of cSVD; the evidence here is a single new case, not a statistical association.",
+        "sourceQuote": "Genetic analysis of NOTCH3 identified a heterozygous c.505C＞T (p.Arg169Cys) variant ( NM_000435.3 ), which is classified as pathogenic in ClinVar."
       },
       {
         "symbol": "NOTCH3",
-        "pmid": "40999599",
-        "confidence": 1.0,
+        "pmid": "39919799",
+        "confidence": 0.9,
         "gwasTraits": [
           "WMH"
         ],
         "proteinName": "Neurogenic locus notch homolog protein 3",
         "mendelianRandomization": false,
-        "omicsEvidence": [
-          "WES/WGS"
-        ],
-        "causalEvidenceSummary": "The paper presents NEW data for NOTCH3: whole-exome sequencing identified a novel heterozygous cysteine-altering variant (p.Cys206Trp, exon 4) in an index patient with recurrent small-vessel ischemic strokes and WMH of presumed vascular origin, with Sanger-confirmed co-segregation in the affected son and absence in the unaffected son. The variant was classified as likely pathogenic by ACMG 2015 criteria (PP3, PM1, PM2_SUP, PM5), is absent from gnomAD, is predicted damaging by AlphaMissense (0.996), and AlphaFold structural modeling of the fifth EGF-like domain supports destabilization of the cysteine-rich region and altered ligand interaction. An additional unrelated patient with the previously reported pathogenic p.Arg607Cys variant showed multiple infarcts and WMH, providing further cSVD-specific monogenic evidence.",
-        "sourceQuote": "Thus, the p.Cys206Trp NOTCH3 gene variant segregated with the CADASIL phenotype in this family, as it was detected only in the two affected family members (Figure 2 )."
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Case report of a newly genetically diagnosed CADASIL patient carrying a pathogenic NOTCH3 variant in EGFr domain 4. This is new clinical-genetic evidence for the established monogenic cSVD gene, with an atypical, mainly psychiatric presentation. There is no GWAS, omics or MR evidence.",
+        "sourceQuote": "We report on a genetically newly diagnosed 63-year-old patient with cerebral autosomal dominant arteriopathy with subcortical infarcts and leukoencephalopathy (CADASIL) with a two-decade course of severe affective symptoms in the absence of classical somatic disease characteristics although we found a pathogenic variant in the EGFr 4 domain of the NOTCH3 protein."
       },
       {
         "symbol": "NOTCH3",
-        "pmid": "40982447",
-        "confidence": 0.9,
-        "gwasTraits": [
-          "SVS"
-        ],
+        "pmid": "39864627",
+        "confidence": 1.0,
+        "gwasTraits": [],
         "proteinName": "Neurogenic locus notch homolog protein 3",
         "mendelianRandomization": false,
-        "omicsEvidence": [
-          "WES/WGS"
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Established monogenic cause of CADASIL (hereditary cSVD). This paper presents new functional data: a light-chain split luciferase (LSL) assay discriminates pathogenic from benign NOTCH3 EGF-repeat variants (100% sensitivity, 93% specificity) and implicates abnormal disulfide bonding/thiol reactivity in both cysteine and non-cysteine CADASIL mutations. Cysteine alkylation rescued the defects. No GWAS or MR data.",
+        "sourceQuote": "We demonstrate that LSL is capable of clearly differentiating benign from pathogenic changes in NOTCH3 using three parameters that result from luciferase measurements."
+      },
+      {
+        "symbol": "GLA",
+        "pmid": "39859188",
+        "confidence": 0.5,
+        "gwasTraits": [
+          "retinal-vessels",
+          "stroke"
         ],
-        "causalEvidenceSummary": "NOTCH3 is the established monogenic cause of CADASIL, explicitly described in this paper as a cerebral small vessel disease with recurrent subcortical stroke and cognitive impairment. This study contributes NEW population-level variant data: targeted NGS of 129,933 healthy Koreans yielded allele frequencies for three pathogenic variants (p.Arg640Cys, p.Arg544Cys, p.Arg75Pro), two p.Arg544Cys homozygotes, and an estimated genetic prevalence of CADASIL of 1 in 277, plus ethnic-distribution comparisons against gnomAD East Asian and KOVA. Evidence is monogenic/rare-variant population genetics rather than GWAS, MR, or omics.",
-        "sourceQuote": "For CADASIL, the allele frequencies of NOTCH3 variants were 0.07% (95% CI: 0.06–0.08%) for p.Arg640Cys, 0.07% (95% CI: 0.06–0.08%) for p.Arg544Cys, and 0.04% (95% CI: 0.03–0.05%) for p.Arg75Pro ( Table 2 )."
+        "proteinName": "alpha-galactosidase A",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "GLA is the established monogenic gene for Fabry disease, which is linked to cSVD. This paper presents new variant data: four novel GLA mutations (p.G261C, c.786G>T/p.W262C, c.583insGAATA, p.Y207X) were found by Sanger sequencing in families, with reduced α-Gal A activity and raised Lyso-Gb3. The cSVD link is only clinical (TIA, retinal vessel tortuosity, stroke at diagnosis); the paper has no neuroimaging or cSVD-specific phenotyping.",
+        "sourceQuote": "The proband was a 51-year-old woman with modest proteinuria and albuminuria and suspected cardiovascular damage; the woman showed conduction defects, tortuosity of the retinal blood vessels, hypertension, and a TIA (transient ischemic attack) event."
+      },
+      {
+        "symbol": "GLA",
+        "pmid": "39859185",
+        "confidence": 0.6,
+        "gwasTraits": [
+          "WMH"
+        ],
+        "proteinName": "Alpha-galactosidase A",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Case report of a novel truncating GLA variant (c.484delT, p.W162Gfs*3) causing classic Fabry disease, confirmed by very low enzyme activity and high Lyso-Gb3. The heterozygous female proband had ischemic microvascular white matter lesions/leukoencephalopathy on brain MRI; the hemizygous son's brain MRI was unremarkable. This is new variant-level data for an established monogenic cSVD gene, but only from case observation, with no statistical or population-level analysis.",
+        "sourceQuote": "Brain MRI highlighted findings of an ischemic microvascular nature both in the white matter of frontal subcortical, parietal subcortical, periventricular, and in the cerebellar hemispheres."
+      },
+      {
+        "symbol": "APOE",
+        "pmid": "39818967",
+        "confidence": 0.65,
+        "gwasTraits": [
+          "WMH",
+          "MD",
+          "FA",
+          "CMB"
+        ],
+        "proteinName": "Apolipoprotein E",
+        "mendelianRandomization": true,
+        "omicsEvidence": [
+          "pQTL-MR",
+          "colocalization"
+        ],
+        "causalEvidenceSummary": "Cis-pQTL MR exposure: genetically lower plasma APOE was associated with ≥2 SVD imaging markers (white matter damage and CMB), and colocalized (PP.H4>0.8). It was also linked to dementia in UKB-PPP. This is MR-exposure evidence, not a direct GWAS hit.",
+        "sourceQuote": "Consistent with the prior study, 33 we found reduced plasma APOE levels were associated with white matter damage, CMBs, and increased risk of all-cause dementia independent of APOE genotypes (Figures 2 A and 4 A)."
+      },
+      {
+        "symbol": "EPHA2",
+        "pmid": "39818967",
+        "confidence": 0.65,
+        "gwasTraits": [
+          "WMH",
+          "MD",
+          "FA"
+        ],
+        "proteinName": "Ephrin type-A receptor 2",
+        "mendelianRandomization": true,
+        "omicsEvidence": [
+          "pQTL-MR",
+          "colocalization"
+        ],
+        "causalEvidenceSummary": "Cis-pQTL MR: higher plasma EPHA2 was associated with white matter damage. The exact white matter marker is not specified in the main text. Colocalized (PP.H4>0.8), replicated, and consistent with dementia/stroke epidemiology. MR-exposure/drug target (TKIs).",
+        "sourceQuote": "We found the most consistent evidence for EPHA2 and APOE with the support of both MR and conventional epidemiological analyses (Figure 5 A)."
       },
       {
         "symbol": "NOTCH3",
-        "pmid": "40908978",
-        "confidence": 1.0,
+        "pmid": "39806999",
+        "confidence": 0.9,
         "gwasTraits": [
+          "ICH-non-lobar",
+          "ICH-lobar",
           "cerebral-microbleeds",
           "WMH",
-          "lacunes"
+          "lacunes",
+          "BG-PVS"
         ],
         "proteinName": "Neurogenic locus notch homolog protein 3",
         "mendelianRandomization": false,
         "omicsEvidence": [],
-        "causalEvidenceSummary": "This study presents new human genotype-phenotype and immunohistochemical data for the established monogenic cSVD gene NOTCH3: cysteine-altering variant position (EGFr 1-6 and 8 vs p.R544C) and allele dosage (homozygous vs heterozygous p.R544C) determine vascular NOTCH3ECD aggregation load in dermal arterioles, and higher deposition load was independently associated with cerebral microbleed count after adjustment for age, sex, and hypertension. Evidence is cSVD-specific (WMH, lacunes, CMBs, NOTCH3-SVD staging) rather than general stroke.",
-        "sourceQuote": "The NOTCH3ECD deposition load was greater in individuals with NOTCH3 variants located in EGFr 1–6 and 8 (93.21%) and in p.R544C homozygotes (56.63%) than in p.R544C heterozygotes (16.37%, p = 0.0004 and 0.0296, respectively)."
+        "causalEvidenceSummary": "This review links NOTCH3 to cSVD as the established monogenic cause of CADASIL, the most common hereditary cSVD. It pulls together data from several cohorts linking specific variants (p.R544C, p.R75P) to ICH risk, which is mostly deep (non-lobar) but sometimes lobar, and to microbleeds. NOTCH3 mutation carriers with ICH had more severe deep WMH, more basal ganglia perivascular spaces, more lacunes and more microbleeds than people with sporadic ICH. The evidence is a synthesis of earlier studies, not new genome-wide data.",
+        "sourceQuote": "In conclusion, this review provides focused insights into ICH in CADASIL, highlighting considerable variability in ICH prevalence influenced by ethnic factors and specific NOTCH3 mutations, such as p.R544C and p.R75P."
       },
       {
-        "symbol": "HTRA1",
-        "pmid": "40898560",
-        "confidence": 0.9,
-        "gwasTraits": [
-          "WMH",
-          "lacunes",
-          "cerebral-microbleeds"
-        ],
-        "proteinName": "High-temperature requirement A serine peptidase 1",
+        "symbol": "COL4A1",
+        "pmid": "39743006",
+        "confidence": 0.5,
+        "gwasTraits": [],
+        "proteinName": "Collagen type IV alpha 1 chain",
         "mendelianRandomization": false,
         "omicsEvidence": [
           "WES/WGS"
         ],
-        "causalEvidenceSummary": "The paper presents NEW variant-level data: a novel heterozygous missense mutation (c.524T>A, p.V175E) in HTRA1 identified by next-generation sequencing in a patient with late adult-onset cSVD (lacunar infarctions, confluent white matter hyperintensities, microbleeds). The variant is absent from gnomAD, predicted damaging by 16 in silico tools, arose de novo (absent in both parents), and lies near the active site of the HTRA1 trimer, consistent with the established dominant-negative mechanism of HTRA1-CSVD (reduced protease activity, TGF-beta pathway overactivation, extracellular matrix accumulation). Evidence is cSVD-specific and derives from an established monogenic cSVD gene with new mutational data.",
-        "sourceQuote": "This analysis uncovered a novel heterozygous missense mutation in the HTRA1 gene ( NM_002775.5 :exon2:c.524 T>A:p.V175E; see Fig."
+        "causalEvidenceSummary": "Whole exome sequencing of 50 NOTCH3-negative suspected CADASIL patients found three likely causative mutations in collagen type IV genes. The abstract doesn't say whether COL4A1 or COL4A2 was affected, so confidence is moderate. The evidence is rare monogenic variants in clinically suspected cSVD, not GWAS.",
+        "sourceQuote": "This analysis identified three mutations affecting the Collagen type IV genes in three individuals likely to be causative of CSVD."
+      },
+      {
+        "symbol": "COL4A2",
+        "pmid": "39743006",
+        "confidence": 0.5,
+        "gwasTraits": [],
+        "proteinName": "Collagen type IV alpha 2 chain",
+        "mendelianRandomization": false,
+        "omicsEvidence": [
+          "WES/WGS"
+        ],
+        "causalEvidenceSummary": "Whole exome sequencing of 50 NOTCH3-negative suspected CADASIL patients found three likely causative mutations in collagen type IV genes. The abstract doesn't say whether COL4A1 or COL4A2 was affected, so confidence is moderate. The evidence is rare monogenic variants in clinically suspected cSVD, not GWAS.",
+        "sourceQuote": "This analysis identified three mutations affecting the Collagen type IV genes in three individuals likely to be causative of CSVD."
+      },
+      {
+        "symbol": "NOTCH3",
+        "pmid": "39689282",
+        "confidence": 0.95,
+        "gwasTraits": [],
+        "proteinName": "Neurogenic locus notch homolog protein 3",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Known monogenic cause of CADASIL, a cerebral small vessel disease. This study adds new genotype-phenotype data from 395 French CADASIL patients: pathogenic variant location in EGFr domains 1-6 was associated with an early-onset, rapidly progressing clinical subgroup. This is monogenic or clinical-progression evidence, not GWAS or MR.",
+        "sourceQuote": "Male sex, lower education level, hypertension, and NOTCH3 pathogenic variant location within epidermal growth factor-like repeat (EGFr) 1-6 were found to be associated with this group difference."
+      },
+      {
+        "symbol": "GLA",
+        "pmid": "39620496",
+        "confidence": 0.7,
+        "gwasTraits": [
+          "WMH",
+          "stroke"
+        ],
+        "proteinName": "Alpha-galactosidase A",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Known monogenic cause of Fabry disease, which has cSVD features. This case series adds new data: a novel GLA missense variant (c.122C>G, p.Thr41Ser), reclassified as likely pathogenic under ACMG, in two unrelated patients with non-classic Fabry disease and mainly neurological involvement (ischemic strokes; periventricular, subcortical and juxtacortical white matter lesions). Evidence is clinical and case-level only (no GWAS or functional data). One patient's stroke was large-vessel (MCA), and the white matter lesions resembled MS.",
+        "sourceQuote": "We identified two novel GLA variants c.50_54del and c.122C>G."
+      },
+      {
+        "symbol": "NOTCH3",
+        "pmid": "39610302",
+        "confidence": 0.9,
+        "gwasTraits": [
+          "WMH",
+          "lacunes",
+          "PSMD",
+          "stroke"
+        ],
+        "proteinName": "Neurogenic locus notch homolog protein 3",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Known monogenic cause of CADASIL. This paper adds new genotype–phenotype data from 1,908 CADASIL-cohort cases and 101 UK Biobank carriers of cysteine-altering NOTCH3 variants: the NOTCH3-SVD stages (based on deep white matter hyperintensities, lacune count and mRS) were associated with PSMD, ischemic stroke, brain atrophy and cognition. High-risk variants reached higher stages at younger ages than moderate-risk variants. This is direct variant-carrier evidence, not GWAS or MR.",
+        "sourceQuote": "Stratification based on NOTCH3 variant risk category illustrated that cases with a high-risk NOTCH3 variant had a higher estimated probability of meeting the criterion for a certain stage at a younger age than cases with a moderate-risk NOTCH3 variant ( Figure 5 C and D)."
+      },
+      {
+        "symbol": "NOTCH3",
+        "pmid": "39588856",
+        "confidence": 0.9,
+        "gwasTraits": [
+          "WMH",
+          "cerebral-microbleeds",
+          "stroke"
+        ],
+        "proteinName": "Neurogenic locus notch homolog protein 3",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Case report of a CADASIL patient carrying a heterozygous NOTCH3 Arg153Cys mutation in exon 4. She had rapidly progressive disease with repeated ischemic strokes, extensive WMH, microbleeds and brain atrophy. The paper also summarizes 14 patients with the same mutation. This is new clinical and variant data for an established monogenic cSVD gene, not a background citation.",
+        "sourceQuote": "Here, we report a rare 50-year-old woman who had rapid disease progression with c.457C>T, p.Argl53Cys heterozygous mutation in exon 4 of NOTCH3 and discuss the possible reasons."
+      },
+      {
+        "symbol": "NOTCH3",
+        "pmid": "39547790",
+        "confidence": 0.95,
+        "gwasTraits": [
+          "lacunar stroke",
+          "stroke"
+        ],
+        "proteinName": "Neurogenic locus notch homolog protein 3",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Established monogenic cause of CADASIL. This prospective cohort of 555 people with cysteine-altering NOTCH3 mutations adds new genotype–phenotype data. Mutations in EGFr domains 1–6 independently predicted earlier first stroke, which was almost always lacunar (HR 1.64, p=0.004), but did not significantly predict dementia. This is new population-level variant evidence, not a background citation.",
+        "sourceQuote": "All patients had cysteine-altering NOTCH3 mutations; 433 (78.0%) were in EGFr domain 1–6."
+      },
+      {
+        "symbol": "NOTCH3",
+        "pmid": "39543785",
+        "confidence": 0.9,
+        "gwasTraits": [
+          "FA",
+          "WMH"
+        ],
+        "proteinName": "Neurogenic locus notch homolog protein 3",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Established monogenic cSVD gene (CADASIL). This paper reports new data from Notch3 R169C mutant mice: lower FA, less MBP staining in the striatum and corpus callosum, microglial activation where myelin has changed, and focal extravascular IgG/fibrinogen, all resembling white matter changes in human SVD. The evidence is from an animal model only; there is no new human genetic association.",
+        "sourceQuote": "Lower FA values, indicating myelin defects, were detected only in hypertensive BPH/2J and Notch3 mutant (CADASIL) mice at 6 months (Figure 1B,D )."
+      },
+      {
+        "symbol": "COL4A1",
+        "pmid": "39543785",
+        "confidence": 0.85,
+        "gwasTraits": [
+          "cerebral-microbleeds"
+        ],
+        "proteinName": "Collagen alpha-1(IV) chain",
+        "mendelianRandomization": false,
+        "omicsEvidence": [],
+        "causalEvidenceSummary": "Established monogenic cause of haemorrhagic SVD. Col4a1 G498V mutant mice showed microhaemorrhages on T2 MRI (confirmed by IgG staining), activated microglia at the haemorrhage sites and focal BBB leakage, but no white matter or myelin defects at 6 months. The evidence is from an animal model only.",
+        "sourceQuote": "Six‐month‐old Col4a1 mutant mice showed hypointense signals in T2 maps in the interbrain region (Figure S3A ), indicating microhaemorrhages."
       }
     ]
   },
   "rejectedGenes": {
-    "shown": 11,
-    "total": 11,
+    "shown": 116,
+    "total": 116,
     "items": [
       {
-        "symbol": "TLR4",
+        "symbol": "GNAQ",
         "pmid": null,
         "confidence": 0.45,
         "reasons": [
@@ -920,80 +2993,920 @@
         ]
       },
       {
-        "symbol": "SH2B3",
-        "pmid": "40977463",
-        "confidence": 0.3,
+        "symbol": "ITM2B",
+        "pmid": null,
+        "confidence": 0.6,
         "reasons": [
-          "Low confidence: 0.30 < 0.45"
+          "Held below the insert floor: 0.60 < 0.65 (new gene)"
         ]
       },
       {
-        "symbol": "MYD88",
-        "pmid": "40919222",
+        "symbol": "MAP3K7",
+        "pmid": null,
+        "confidence": 0.45,
+        "reasons": [
+          "Held below the insert floor: 0.45 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "CAND2",
+        "pmid": null,
+        "confidence": 0.55,
+        "reasons": [
+          "Held below the insert floor: 0.55 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "ALDH2",
+        "pmid": null,
+        "confidence": 0.55,
+        "reasons": [
+          "Held below the insert floor: 0.55 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "CETP",
+        "pmid": null,
+        "confidence": 0.5,
+        "reasons": [
+          "Held below the insert floor: 0.50 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "NOS3",
+        "pmid": null,
+        "confidence": 0.45,
+        "reasons": [
+          "Held below the insert floor: 0.45 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "FGF19",
+        "pmid": null,
+        "confidence": 0.45,
+        "reasons": [
+          "Held below the insert floor: 0.45 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "PEAR1",
+        "pmid": null,
+        "confidence": 0.6,
+        "reasons": [
+          "Held below the insert floor: 0.60 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "METAP1D",
+        "pmid": null,
+        "confidence": 0.55,
+        "reasons": [
+          "Held below the insert floor: 0.55 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "HEXIM1",
+        "pmid": null,
+        "confidence": 0.55,
+        "reasons": [
+          "Held below the insert floor: 0.55 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "MEGF10",
+        "pmid": null,
+        "confidence": 0.5,
+        "reasons": [
+          "Held below the insert floor: 0.50 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "FLT4",
+        "pmid": null,
+        "confidence": 0.5,
+        "reasons": [
+          "Held below the insert floor: 0.50 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "TIMD4",
+        "pmid": null,
+        "confidence": 0.5,
+        "reasons": [
+          "Held below the insert floor: 0.50 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "MERTK",
+        "pmid": null,
+        "confidence": 0.45,
+        "reasons": [
+          "Held below the insert floor: 0.45 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "PDE5A",
+        "pmid": null,
+        "confidence": 0.45,
+        "reasons": [
+          "Held below the insert floor: 0.45 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "COLGALT1",
+        "pmid": null,
+        "confidence": 0.6,
+        "reasons": [
+          "Held below the insert floor: 0.60 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "CACNB2",
+        "pmid": null,
+        "confidence": 0.5,
+        "reasons": [
+          "Held below the insert floor: 0.50 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "FGF21",
+        "pmid": null,
+        "confidence": 0.45,
+        "reasons": [
+          "Held below the insert floor: 0.45 < 0.65 (new gene)"
+        ]
+      },
+      {
+        "symbol": "GNA11",
+        "pmid": "42150306",
         "confidence": 0.4,
         "reasons": [
           "Low confidence: 0.40 < 0.45"
         ]
       },
       {
-        "symbol": "RELA",
-        "pmid": "40919222",
-        "confidence": 0.35,
-        "reasons": [
-          "Low confidence: 0.35 < 0.45"
-        ]
-      },
-      {
-        "symbol": "AQP4",
-        "pmid": "40919222",
+        "symbol": "ASS1",
+        "pmid": "41222721",
         "confidence": 0.3,
         "reasons": [
           "Low confidence: 0.30 < 0.45"
         ]
       },
       {
-        "symbol": "NOS2",
-        "pmid": "40919222",
+        "symbol": "GSR",
+        "pmid": "41222721",
+        "confidence": 0.3,
+        "reasons": [
+          "Low confidence: 0.30 < 0.45"
+        ]
+      },
+      {
+        "symbol": "VEGFA",
+        "pmid": "41222721",
         "confidence": 0.25,
         "reasons": [
           "Low confidence: 0.25 < 0.45"
         ]
       },
       {
-        "symbol": "IL1B",
-        "pmid": "40919222",
+        "symbol": "RIPK1",
+        "pmid": "41151805",
+        "confidence": 0.3,
+        "reasons": [
+          "Low confidence: 0.30 < 0.45"
+        ]
+      },
+      {
+        "symbol": "MLKL",
+        "pmid": "41151805",
         "confidence": 0.25,
         "reasons": [
           "Low confidence: 0.25 < 0.45"
         ]
       },
       {
-        "symbol": "IL6",
-        "pmid": "40919222",
+        "symbol": "BPTF",
+        "pmid": "39972055",
+        "confidence": 0.15,
+        "reasons": [
+          "Low confidence: 0.15 < 0.45"
+        ]
+      },
+      {
+        "symbol": "QSER1",
+        "pmid": "39972055",
+        "confidence": 0.3,
+        "reasons": [
+          "Low confidence: 0.30 < 0.45"
+        ]
+      },
+      {
+        "symbol": "NOTCH3",
+        "pmid": "39967653",
+        "confidence": 0.1,
+        "reasons": [
+          "Low confidence: 0.10 < 0.45"
+        ]
+      },
+      {
+        "symbol": "RFNG",
+        "pmid": "39967653",
         "confidence": 0.25,
         "reasons": [
           "Low confidence: 0.25 < 0.45"
         ]
       },
       {
-        "symbol": "APOE",
-        "pmid": "40913504",
+        "symbol": "LFNG",
+        "pmid": "39967653",
+        "confidence": 0.15,
+        "reasons": [
+          "Low confidence: 0.15 < 0.45"
+        ]
+      },
+      {
+        "symbol": "ALDH2",
+        "pmid": "39965248",
+        "confidence": 0.4,
+        "reasons": [
+          "Low confidence: 0.40 < 0.45"
+        ]
+      },
+      {
+        "symbol": "KLHL24",
+        "pmid": "39965248",
+        "confidence": 0.4,
+        "reasons": [
+          "Low confidence: 0.40 < 0.45"
+        ]
+      },
+      {
+        "symbol": "ADRB1",
+        "pmid": "39965248",
+        "confidence": 0.4,
+        "reasons": [
+          "Low confidence: 0.40 < 0.45"
+        ]
+      },
+      {
+        "symbol": "BTN3A2",
+        "pmid": "39965248",
+        "confidence": 0.4,
+        "reasons": [
+          "Low confidence: 0.40 < 0.45"
+        ]
+      },
+      {
+        "symbol": "EFEMP1",
+        "pmid": "39965248",
+        "confidence": 0.4,
+        "reasons": [
+          "Low confidence: 0.40 < 0.45"
+        ]
+      },
+      {
+        "symbol": "SLC5A2",
+        "pmid": "39965248",
+        "confidence": 0.4,
+        "reasons": [
+          "Low confidence: 0.40 < 0.45"
+        ]
+      },
+      {
+        "symbol": "SLC5A1",
+        "pmid": "39965248",
+        "confidence": 0.35,
+        "reasons": [
+          "Low confidence: 0.35 < 0.45"
+        ]
+      },
+      {
+        "symbol": "PTGER3",
+        "pmid": "39965248",
+        "confidence": 0.35,
+        "reasons": [
+          "Low confidence: 0.35 < 0.45"
+        ]
+      },
+      {
+        "symbol": "SERPINA3",
+        "pmid": "39965248",
+        "confidence": 0.25,
+        "reasons": [
+          "Low confidence: 0.25 < 0.45"
+        ]
+      },
+      {
+        "symbol": "TIMP3",
+        "pmid": "39965248",
+        "confidence": 0.25,
+        "reasons": [
+          "Low confidence: 0.25 < 0.45"
+        ]
+      },
+      {
+        "symbol": "SIRT1",
+        "pmid": "39965248",
         "confidence": 0.2,
         "reasons": [
           "Low confidence: 0.20 < 0.45"
         ]
       },
       {
-        "symbol": "VCAM1",
-        "pmid": "40913247",
+        "symbol": "TIMP3",
+        "pmid": "39965059",
+        "confidence": 0.35,
+        "reasons": [
+          "Low confidence: 0.35 < 0.45"
+        ]
+      },
+      {
+        "symbol": "TGFB1",
+        "pmid": "39965059",
+        "confidence": 0.35,
+        "reasons": [
+          "Low confidence: 0.35 < 0.45"
+        ]
+      },
+      {
+        "symbol": "BDNF",
+        "pmid": "39963633",
+        "confidence": 0.2,
+        "reasons": [
+          "Low confidence: 0.20 < 0.45"
+        ]
+      },
+      {
+        "symbol": "ZNF646",
+        "pmid": "39954159",
         "confidence": 0.25,
         "reasons": [
           "Low confidence: 0.25 < 0.45"
         ]
       },
       {
-        "symbol": "ICAM1",
-        "pmid": "40913247",
+        "symbol": "PLEKHG1",
+        "pmid": "39954159",
+        "confidence": 0.25,
+        "reasons": [
+          "Low confidence: 0.25 < 0.45"
+        ]
+      },
+      {
+        "symbol": "NOTCH3",
+        "pmid": "39954159",
+        "confidence": 0.2,
+        "reasons": [
+          "Low confidence: 0.20 < 0.45"
+        ]
+      },
+      {
+        "symbol": "MSR1",
+        "pmid": "39938231",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "EFNA4",
+        "pmid": "39938231",
+        "confidence": 0.1,
+        "reasons": [
+          "Low confidence: 0.10 < 0.45"
+        ]
+      },
+      {
+        "symbol": "VWC2",
+        "pmid": "39938231",
+        "confidence": 0.1,
+        "reasons": [
+          "Low confidence: 0.10 < 0.45"
+        ]
+      },
+      {
+        "symbol": "TNFSF14",
+        "pmid": "39929297",
+        "confidence": 0.4,
+        "reasons": [
+          "Low confidence: 0.40 < 0.45"
+        ]
+      },
+      {
+        "symbol": "S100B",
+        "pmid": "39907937",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "APOE",
+        "pmid": "39885546",
+        "confidence": 0.1,
+        "reasons": [
+          "Low confidence: 0.10 < 0.45"
+        ]
+      },
+      {
+        "symbol": "NPTX1",
+        "pmid": "39818967",
+        "confidence": 0.4,
+        "reasons": [
+          "Low confidence: 0.40 < 0.45"
+        ]
+      },
+      {
+        "symbol": "COL2A1",
+        "pmid": "39818967",
+        "confidence": 0.4,
+        "reasons": [
+          "Low confidence: 0.40 < 0.45"
+        ]
+      },
+      {
+        "symbol": "CD46",
+        "pmid": "39818967",
+        "confidence": 0.35,
+        "reasons": [
+          "Low confidence: 0.35 < 0.45"
+        ]
+      },
+      {
+        "symbol": "HAVCR2",
+        "pmid": "39818967",
+        "confidence": 0.35,
+        "reasons": [
+          "Low confidence: 0.35 < 0.45"
+        ]
+      },
+      {
+        "symbol": "CR1",
+        "pmid": "39818967",
+        "confidence": 0.25,
+        "reasons": [
+          "Low confidence: 0.25 < 0.45"
+        ]
+      },
+      {
+        "symbol": "COL4A2",
+        "pmid": "39807599",
+        "confidence": 0.4,
+        "reasons": [
+          "Low confidence: 0.40 < 0.45"
+        ]
+      },
+      {
+        "symbol": "PLEKHG1",
+        "pmid": "39807599",
+        "confidence": 0.35,
+        "reasons": [
+          "Low confidence: 0.35 < 0.45"
+        ]
+      },
+      {
+        "symbol": "CALD1",
+        "pmid": "39807599",
+        "confidence": 0.35,
+        "reasons": [
+          "Low confidence: 0.35 < 0.45"
+        ]
+      },
+      {
+        "symbol": "COL4A1",
+        "pmid": "39807599",
+        "confidence": 0.3,
+        "reasons": [
+          "Low confidence: 0.30 < 0.45"
+        ]
+      },
+      {
+        "symbol": "FOXF2",
+        "pmid": "39807599",
+        "confidence": 0.35,
+        "reasons": [
+          "Low confidence: 0.35 < 0.45"
+        ]
+      },
+      {
+        "symbol": "SLC20A2",
+        "pmid": "39807599",
+        "confidence": 0.3,
+        "reasons": [
+          "Low confidence: 0.30 < 0.45"
+        ]
+      },
+      {
+        "symbol": "PLAUR",
+        "pmid": "39744850",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "PCSK9",
+        "pmid": "39744850",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "CPA1",
+        "pmid": "39744850",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "CD163",
+        "pmid": "39744850",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "CCL15",
+        "pmid": "39744850",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "CASP3",
+        "pmid": "39744850",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "BLMH",
+        "pmid": "39744850",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "GLA",
+        "pmid": "41839140",
+        "confidence": 0.2,
+        "reasons": [
+          "Low confidence: 0.20 < 0.45"
+        ]
+      },
+      {
+        "symbol": "APOE",
+        "pmid": "39737667",
+        "confidence": 0.4,
+        "reasons": [
+          "Low confidence: 0.40 < 0.45"
+        ]
+      },
+      {
+        "symbol": "APOE",
+        "pmid": "39734492",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "MT-TL1",
+        "pmid": "39719631",
+        "confidence": 0.15,
+        "reasons": [
+          "Low confidence: 0.15 < 0.45"
+        ]
+      },
+      {
+        "symbol": "CSPG4",
+        "pmid": "39719419",
+        "confidence": 0.3,
+        "reasons": [
+          "Low confidence: 0.30 < 0.45"
+        ]
+      },
+      {
+        "symbol": "ANPEP",
+        "pmid": "39719419",
+        "confidence": 0.3,
+        "reasons": [
+          "Low confidence: 0.30 < 0.45"
+        ]
+      },
+      {
+        "symbol": "PDGFRB",
+        "pmid": "39719419",
+        "confidence": 0.2,
+        "reasons": [
+          "Low confidence: 0.20 < 0.45"
+        ]
+      },
+      {
+        "symbol": "NOTCH3",
+        "pmid": "39719419",
+        "confidence": 0.2,
+        "reasons": [
+          "Low confidence: 0.20 < 0.45"
+        ]
+      },
+      {
+        "symbol": "AGTR1",
+        "pmid": "39719419",
+        "confidence": 0.15,
+        "reasons": [
+          "Low confidence: 0.15 < 0.45"
+        ]
+      },
+      {
+        "symbol": "SOD1",
+        "pmid": "39719419",
+        "confidence": 0.15,
+        "reasons": [
+          "Low confidence: 0.15 < 0.45"
+        ]
+      },
+      {
+        "symbol": "GLA",
+        "pmid": "39701018",
+        "confidence": 0.25,
+        "reasons": [
+          "Low confidence: 0.25 < 0.45"
+        ]
+      },
+      {
+        "symbol": "MMP9",
+        "pmid": "39697484",
+        "confidence": 0.2,
+        "reasons": [
+          "Low confidence: 0.20 < 0.45"
+        ]
+      },
+      {
+        "symbol": "AQP4",
+        "pmid": "39688573",
+        "confidence": 0.3,
+        "reasons": [
+          "Low confidence: 0.30 < 0.45"
+        ]
+      },
+      {
+        "symbol": "BACE1",
+        "pmid": "39673290",
+        "confidence": 0.2,
+        "reasons": [
+          "Low confidence: 0.20 < 0.45"
+        ]
+      },
+      {
+        "symbol": "APOE",
+        "pmid": "39670385",
+        "confidence": 0.25,
+        "reasons": [
+          "Low confidence: 0.25 < 0.45"
+        ]
+      },
+      {
+        "symbol": "CETP",
+        "pmid": "39661645",
+        "confidence": 0.4,
+        "reasons": [
+          "Low confidence: 0.40 < 0.45"
+        ]
+      },
+      {
+        "symbol": "LPL",
+        "pmid": "39661645",
+        "confidence": 0.4,
+        "reasons": [
+          "Low confidence: 0.40 < 0.45"
+        ]
+      },
+      {
+        "symbol": "APOC3",
+        "pmid": "39661645",
+        "confidence": 0.35,
+        "reasons": [
+          "Low confidence: 0.35 < 0.45"
+        ]
+      },
+      {
+        "symbol": "GIPR",
+        "pmid": "39661645",
+        "confidence": 0.35,
+        "reasons": [
+          "Low confidence: 0.35 < 0.45"
+        ]
+      },
+      {
+        "symbol": "ABCC8",
+        "pmid": "39661645",
+        "confidence": 0.3,
+        "reasons": [
+          "Low confidence: 0.30 < 0.45"
+        ]
+      },
+      {
+        "symbol": "NPC1L1",
+        "pmid": "39661645",
+        "confidence": 0.2,
+        "reasons": [
+          "Low confidence: 0.20 < 0.45"
+        ]
+      },
+      {
+        "symbol": "ACE",
+        "pmid": "39661645",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "ADRB1",
+        "pmid": "39661645",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "CD40",
+        "pmid": "39657824",
+        "confidence": 0.3,
+        "reasons": [
+          "Low confidence: 0.30 < 0.45"
+        ]
+      },
+      {
+        "symbol": "NOTCH3",
+        "pmid": "39652165",
+        "confidence": 0.2,
+        "reasons": [
+          "Low confidence: 0.20 < 0.45"
+        ]
+      },
+      {
+        "symbol": "GLA",
+        "pmid": "39636569",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "GLA",
+        "pmid": "39622749",
+        "confidence": 0.25,
+        "reasons": [
+          "Low confidence: 0.25 < 0.45"
+        ]
+      },
+      {
+        "symbol": "GLA",
+        "pmid": "39613053",
+        "confidence": 0.3,
+        "reasons": [
+          "Low confidence: 0.30 < 0.45"
+        ]
+      },
+      {
+        "symbol": "GLA",
+        "pmid": "39609713",
+        "confidence": 0.3,
+        "reasons": [
+          "Low confidence: 0.30 < 0.45"
+        ]
+      },
+      {
+        "symbol": "HTRA1",
+        "pmid": "39543785",
+        "confidence": 0.3,
+        "reasons": [
+          "Low confidence: 0.30 < 0.45"
+        ]
+      },
+      {
+        "symbol": "APOE",
+        "pmid": "39541803",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "GLA",
+        "pmid": "39534937",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "APOE",
+        "pmid": "39528057",
+        "confidence": 0.3,
+        "reasons": [
+          "Low confidence: 0.30 < 0.45"
+        ]
+      },
+      {
+        "symbol": "PECAM1",
+        "pmid": "39526361",
+        "confidence": 0.25,
+        "reasons": [
+          "Low confidence: 0.25 < 0.45"
+        ]
+      },
+      {
+        "symbol": "NEFL",
+        "pmid": "39522933",
+        "confidence": 0.1,
+        "reasons": [
+          "Low confidence: 0.10 < 0.45"
+        ]
+      },
+      {
+        "symbol": "TNF",
+        "pmid": "39522933",
+        "confidence": 0.05,
+        "reasons": [
+          "Low confidence: 0.05 < 0.45"
+        ]
+      },
+      {
+        "symbol": "AGER",
+        "pmid": "39522933",
+        "confidence": 0.05,
+        "reasons": [
+          "Low confidence: 0.05 < 0.45"
+        ]
+      },
+      {
+        "symbol": "CRP",
+        "pmid": "39509331",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "IL6R",
+        "pmid": "39509331",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "SPP1",
+        "pmid": "39509331",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "MMP3",
+        "pmid": "39509331",
+        "confidence": 0.0,
+        "reasons": [
+          "Low confidence: 0.00 < 0.45"
+        ]
+      },
+      {
+        "symbol": "TSPO",
+        "pmid": "39509331",
+        "confidence": 0.1,
+        "reasons": [
+          "Low confidence: 0.10 < 0.45"
+        ]
+      },
+      {
+        "symbol": "APP",
+        "pmid": "39496600",
+        "confidence": 0.2,
+        "reasons": [
+          "Low confidence: 0.20 < 0.45"
+        ]
+      },
+      {
+        "symbol": "NRGN",
+        "pmid": "39496600",
+        "confidence": 0.2,
+        "reasons": [
+          "Low confidence: 0.20 < 0.45"
+        ]
+      },
+      {
+        "symbol": "APOE",
+        "pmid": "39482724",
         "confidence": 0.0,
         "reasons": [
           "Low confidence: 0.00 < 0.45"

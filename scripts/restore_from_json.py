@@ -60,12 +60,13 @@ import json
 import re
 import sqlite3
 import sys
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Final
 
+import asyncpg
 from dotenv import load_dotenv
 
 from pipeline.database import Database
@@ -166,7 +167,7 @@ def gene_from_wire(row: Mapping[str, Any]) -> GeneRestore:
     )
 
 
-def _export_gene(gene: GeneRestore) -> dict[str, Any]:
+def export_gene(gene: GeneRestore) -> dict[str, Any]:
     """What `_read_genes_with_lists` and `clean_gene_row` publish for it."""
     row = {
         **gene.columns,
@@ -328,7 +329,9 @@ def _run_rows(
 # --------------------------------------------------------------------- plan
 
 
-def _differences(committed: Mapping[str, Any], again: Mapping[str, Any]) -> list[str]:
+def row_differences(
+    committed: Mapping[str, Any], again: Mapping[str, Any]
+) -> list[str]:
     keys = list(dict.fromkeys([*committed, *again]))
     return [k for k in keys if committed.get(k) != again.get(k)]
 
@@ -348,13 +351,13 @@ def build_plan(data_dir: Path, logs_dir: Path) -> RestorePlan:
     genes = []
     for wire in read("table1.json"):
         gene = gene_from_wire(wire)
-        if keys := _differences(wire, _export_gene(gene)):
+        if keys := row_differences(wire, export_gene(gene)):
             failures.append(f"gene {wire['gene']}: {', '.join(keys)}")
         genes.append(gene)
     trials = []
     for wire in read("table2.json"):
         trial = trial_from_wire(wire)
-        if keys := _differences(wire, _export_trial(trial)):
+        if keys := row_differences(wire, _export_trial(trial)):
             failures.append(
                 f"trial {wire['registryId']} / {wire['drug']}: {', '.join(keys)}"
             )
@@ -438,6 +441,38 @@ def _insert(table: str, columns: list[str]) -> str:
     return f"INSERT INTO {table} ({', '.join(columns)}) VALUES ({placeholders})"
 
 
+async def _advance_sequence(conn: asyncpg.Connection, table: str) -> None:
+    # The next insert takes max(id) + 1; an empty table keeps 1. Interpolating
+    # is safe: every caller passes a module constant.
+    await conn.execute(
+        f"SELECT setval(pg_get_serial_sequence('{table}', 'id'), "
+        f"COALESCE((SELECT max(id) FROM {table}), 0) + 1, false)"
+    )
+
+
+async def insert_genes(conn: asyncpg.Connection, genes: Sequence[GeneRestore]) -> None:
+    """Insert *genes* and their list rows into an empty genes table.
+
+    Explicit ids in sequence order: the export reads `ORDER BY id`, so this
+    is what keeps the given row order. Runs inside the caller's transaction.
+    """
+    for gene_id, gene in enumerate(genes, start=1):
+        await conn.execute(
+            _insert("genes", ["id", *gene.columns]),
+            gene_id,
+            *gene.columns.values(),
+        )
+        for table, column, attribute in _GENE_LISTS:
+            await conn.executemany(
+                _insert(table, ["gene_id", "ordinal", column]),
+                [
+                    (gene_id, ordinal, value)
+                    for ordinal, value in enumerate(getattr(gene, attribute))
+                ],
+            )
+    await _advance_sequence(conn, "genes")
+
+
 async def write_plan(plan: RestorePlan) -> dict[str, int]:
     """Write the plan in one transaction, so a failure leaves nothing."""
     counts: dict[str, int] = {}
@@ -455,22 +490,7 @@ async def write_plan(plan: RestorePlan) -> dict[str, int]:
                 "a freshly migrated database instead."
             )
 
-        # Explicit ids in file order: the export reads `ORDER BY id`, so this
-        # is what keeps the committed row order.
-        for gene_id, gene in enumerate(plan.genes, start=1):
-            await conn.execute(
-                _insert("genes", ["id", *gene.columns]),
-                gene_id,
-                *gene.columns.values(),
-            )
-            for table, column, attribute in _GENE_LISTS:
-                await conn.executemany(
-                    _insert(table, ["gene_id", "ordinal", column]),
-                    [
-                        (gene_id, ordinal, value)
-                        for ordinal, value in enumerate(getattr(gene, attribute))
-                    ],
-                )
+        await insert_genes(conn, plan.genes)
         await conn.executemany(
             _insert("clinical_trials", ["id", *_TRIAL_COLUMNS]),
             [
@@ -478,12 +498,7 @@ async def write_plan(plan: RestorePlan) -> dict[str, int]:
                 for trial_id, trial in enumerate(plan.trials, start=1)
             ],
         )
-        for table in ("genes", "clinical_trials"):
-            # The next insert takes max(id) + 1; an empty table keeps 1.
-            await conn.execute(
-                f"SELECT setval(pg_get_serial_sequence('{table}', 'id'), "
-                f"COALESCE((SELECT max(id) FROM {table}), 0) + 1, false)"
-            )
+        await _advance_sequence(conn, "clinical_trials")
 
         await conn.executemany(
             _insert(

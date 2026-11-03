@@ -90,6 +90,25 @@ class TestPlacement:
         assert place_gene("23q11", cytobands) is None
         assert place_gene("(unknown)", cytobands) is None
 
+    def test_place_gene_spans_a_band_range(self, cytobands) -> None:
+        """NCBI's range for a gene across a band edge, as lib/cytobands.ts."""
+        hit = place_gene("10q24.33-q25.1", cytobands)
+        assert hit is not None
+        assert (hit.chromosome, hit.band, hit.start, hit.end) == (
+            "10",
+            "q24.33-q25.1",
+            103100000,
+            110100000,
+        )
+        assert hit.midpoint == 106600000
+        reversed_hit = place_gene("10q25.1-q24.33", cytobands)
+        assert reversed_hit is not None
+        assert (reversed_hit.start, reversed_hit.end) == (103100000, 110100000)
+        assert place_gene("10q24.33-q25", cytobands) is None
+        assert place_gene("10q24.33-", cytobands) is None
+        assert place_gene("10q24.33-11q25.1", cytobands) is None
+        assert place_gene("10q24.33-q25.1-q25.2", cytobands) is None
+
     def test_only_chromosomes_with_a_gene_are_drawn(self, layout, genes) -> None:
         drawn = [c.name for c in layout.chromosomes]
         assert len(drawn) == len(set(drawn))

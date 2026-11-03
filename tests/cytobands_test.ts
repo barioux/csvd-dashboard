@@ -66,6 +66,27 @@ Deno.test("placeGene resolves an exact band to its midpoint and nothing else", (
   assertEquals(placeGene("7q31.1x"), null);
 });
 
+Deno.test("placeGene spans a band range on one chromosome", () => {
+  // NCBI names a gene that crosses a band edge with a range: SLK runs from
+  // 103.97 to 104.03 Mb on chr10, across the q24.33/q25.1 edge at 104.0 Mb.
+  // The span is both bands, so the marker goes at its midpoint -- the same
+  // rule as one band, over the region the location actually names.
+  assertEquals(placeGene("10q24.33-q25.1"), {
+    chromosome: "10",
+    band: "q24.33-q25.1",
+    start: 103100000,
+    end: 110100000,
+    midpoint: 106600000,
+  });
+  const reversed = placeGene("10q25.1-q24.33");
+  assertEquals([reversed?.start, reversed?.end], [103100000, 110100000]);
+  // Both ends exact bands of one chromosome, or nothing.
+  assertEquals(placeGene("10q24.33-q25"), null);
+  assertEquals(placeGene("10q24.33-"), null);
+  assertEquals(placeGene("10q24.33-11q25.1"), null);
+  assertEquals(placeGene("10q24.33-q25.1-q25.2"), null);
+});
+
 Deno.test("every committed gene's chromosomal location is an exact hg38 band", () => {
   const unresolved = genes
     .filter((gene) => placeGene(gene.chromosomalLocation) === null)

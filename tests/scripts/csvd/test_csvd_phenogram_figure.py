@@ -1,4 +1,4 @@
-"""The cSVD karyogram, pinned: the 21 chromosomes, 79 blocks, CENPF's row.
+"""The cSVD karyogram, pinned: the 20 chromosomes, 87 blocks, CENPF's row.
 
 The numbers here are the ones tests/csvd/phenogram_layout_test.ts pins for
 lib/phenogram.ts over the committed cSVD genes. The rules that hold for any
@@ -40,7 +40,6 @@ DRAWN = [
     "14",
     "16",
     "17",
-    "18",
     "19",
     "20",
     "21",
@@ -74,18 +73,19 @@ def by_gene(layout, symbol: str):
 
 
 class TestPlacement:
-    def test_every_gene_is_placed_on_twenty_one_chromosomes(self, layout) -> None:
+    def test_every_gene_is_placed_on_twenty_chromosomes(self, layout) -> None:
         # X joined the list when the 365-day run added GLA (Xq22.1) and 18
-        # when it added AQP4 (18q11.2). Mirrored in
+        # when it added AQP4 (18q11.2); the 2026-11-03 re-extraction found
+        # GLA again but not AQP4. Mirrored in
         # tests/csvd/phenogram_layout_test.ts.
-        assert len(layout.blocks) == 79
+        assert len(layout.blocks) == 87
         assert layout.unplaced == ()
         assert [c.name for c in layout.chromosomes] == DRAWN
         assert [[c.name for c in row] for row in layout.rows] == [
             DRAWN[:10],
             DRAWN[10:],
         ]
-        assert layout.canvas == (1732, 1160)
+        assert layout.canvas == (1732, 1640)
 
     def test_the_rasters_errors_are_gone(self, layout) -> None:
         assert by_gene(layout, "ABO").chromosome == "9"
@@ -101,8 +101,8 @@ class TestPlacement:
         tests/csvd/phenogram_layout_test.ts.
         """
         cenpf = by_gene(layout, "CENPF")
-        assert cenpf.marker_y == pytest.approx(487.74276110057525)
-        assert cenpf.y == pytest.approx(402)
+        assert cenpf.marker_y == pytest.approx(699.0086508393023)
+        assert cenpf.y == pytest.approx(642)
 
 
 class TestEncoding:
@@ -138,7 +138,7 @@ class TestRender:
         target = tmp_path / "phenogram.svg"
         fig.savefig(target, format="svg", bbox_inches="tight")
         svg = target.read_text(encoding="utf-8")
-        assert svg.count('id="gene-') == 79
+        assert svg.count('id="gene-') == 87
         # A gene symbol can carry a "/" (COL4A1/2); the gid is sanitized so
         # the id stays a valid XML Name.
         assert 'id="gene-COL4A1-2"' in svg
@@ -146,7 +146,7 @@ class TestRender:
         # Text stays text: real <text> elements, not glyph outlines. Comments
         # and gids carry the symbols regardless of svg.fonttype, so look for
         # the symbol as element content.
-        assert svg.count("<text") >= 79
+        assert svg.count("<text") >= 87
         assert re.search(r"<text[^>]*>(?:<tspan[^>]*>)?COL4A1/2<", svg)
 
     def test_main_draws_the_committed_figure(self, tmp_path: Path) -> None:

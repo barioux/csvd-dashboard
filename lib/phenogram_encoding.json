@@ -43,11 +43,11 @@
   "layout": {
     "viewBox": [
       1732,
-      1160
+      1640
     ],
     "margin": 30,
     "rowSplitAfter": "10",
-    "rowHeight": 520,
+    "rowHeight": 760,
     "rowGap": 60,
     "chromosomeWidth": 14,
     "leaderGap": 10,

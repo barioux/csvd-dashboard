@@ -50,13 +50,19 @@ export interface BandHit {
   midpoint: number;
 }
 
-/** `7q31.1` → chromosome `7`, band `q31.1`. Anchored: `23q11` and `7q31.1x` fail. */
-const LOCATION = /^(\d{1,2}|X|Y)([pq]\d+(?:\.\d+)?)$/;
+/**
+ * `7q31.1` → chromosome `7`, band `q31.1`; `10q24.33-q25.1` → the same
+ * chromosome, two bands. Anchored: `23q11` and `7q31.1x` fail.
+ */
+const LOCATION = /^(\d{1,2}|X|Y)([pq]\d+(?:\.\d+)?)(?:-([pq]\d+(?:\.\d+)?))?$/;
 
 /**
- * The band a location names, or null. Exact match only: a location naming a
- * parent band (`7q31`) or a chromosome the table lacks is unplaced rather
+ * The region a location names, or null. Exact bands only: a location naming
+ * a parent band (`7q31`) or a chromosome the table lacks is unplaced rather
  * than guessed, so a bad string can never land silently on the wrong band.
+ * NCBI names a gene that crosses a band edge with a range (`10q24.33-q25.1`);
+ * both ends must be exact bands of that one chromosome, and the hit spans
+ * them, in either order.
  */
 export function placeGene(
   location: string,
@@ -64,15 +70,22 @@ export function placeGene(
 ): BandHit | null {
   const match = LOCATION.exec(location.trim());
   if (!match) return null;
-  const [, chromosome, bandName] = match;
-  const band = table.chromosomes.find((c) => c.name === chromosome)?.bands
-    .find((b) => b.name === bandName);
-  if (!band) return null;
+  const [, chromosome, first, last] = match;
+  const bands = table.chromosomes.find((c) => c.name === chromosome)?.bands ??
+    [];
+  const ends: Band[] = [];
+  for (const name of last === undefined ? [first] : [first, last]) {
+    const band = bands.find((b) => b.name === name);
+    if (!band) return null;
+    ends.push(band);
+  }
+  const start = Math.min(...ends.map((b) => b.start));
+  const end = Math.max(...ends.map((b) => b.end));
   return {
     chromosome,
-    band: bandName,
-    start: band.start,
-    end: band.end,
-    midpoint: (band.start + band.end) / 2,
+    band: last === undefined ? first : `${first}-${last}`,
+    start,
+    end,
+    midpoint: (start + end) / 2,
   };
 }

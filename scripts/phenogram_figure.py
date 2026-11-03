@@ -41,7 +41,7 @@ CHROMOSOMES = [str(n) for n in range(1, 23)] + ["X", "Y"]
 CHROMOSOME_LABEL_OFFSET = 18.0
 FALLBACK_PILL = ("#ffffff", "#888888")
 FALLBACK_STAIN = "#cccccc"
-LOCATION = re.compile(r"^(\d{1,2}|X|Y)([pq]\d+(?:\.\d+)?)$")
+LOCATION = re.compile(r"^(\d{1,2}|X|Y)([pq]\d+(?:\.\d+)?)(?:-([pq]\d+(?:\.\d+)?))?$")
 
 # One viewBox unit is 1/100 inch on the page: 12 units of text is 8.64 pt.
 UNITS_PER_INCH = 100.0
@@ -240,21 +240,25 @@ def glyph_lift(shape: str, glyphs: dict[str, Any]) -> float:
 
 
 def place_gene(location: str, table: dict[str, Any]) -> BandHit | None:
-    """The band a location names, or None. Exact match only, as lib/cytobands.ts."""
+    """The region a location names, or None. Exact bands only, and a range
+    (`10q24.33-q25.1`) spans its two ends, as lib/cytobands.ts."""
     match = LOCATION.fullmatch(location.strip())
     if not match:
         return None
-    chromosome, band_name = match.groups()
-    for chrom in table["chromosomes"]:
-        if chrom["name"] != chromosome:
-            continue
-        for band in chrom["bands"]:
-            if band["name"] == band_name:
-                midpoint = (band["start"] + band["end"]) / 2
-                return BandHit(
-                    chromosome, band_name, band["start"], band["end"], midpoint
-                )
-    return None
+    chromosome, first, last = match.groups()
+    bands = {
+        band["name"]: band
+        for chrom in table["chromosomes"]
+        if chrom["name"] == chromosome
+        for band in chrom["bands"]
+    }
+    names = (first,) if last is None else (first, last)
+    if any(name not in bands for name in names):
+        return None
+    start = min(bands[name]["start"] for name in names)
+    end = max(bands[name]["end"] for name in names)
+    band_name = first if last is None else f"{first}-{last}"
+    return BandHit(chromosome, band_name, start, end, (start + end) / 2)
 
 
 def block_height(pill_count: int, layout: dict[str, Any]) -> float:

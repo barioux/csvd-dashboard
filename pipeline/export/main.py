@@ -27,7 +27,7 @@ from pipeline.export.omim import read_omim_csv
 from pipeline.export.publish import publish_atomically
 from pipeline.export.tables import clean_gene_row, clean_trial_row
 from pipeline.export.text import split_genetic_targets
-from pipeline.export.writer import write_rows, write_value
+from pipeline.export.writer import to_camel, write_rows, write_value
 
 logger = logging.getLogger(__name__)
 
@@ -112,6 +112,18 @@ async def _read_genes_with_lists() -> list[dict[str, object]]:
         published.update(lists.get(row["id"], {}))
         merged.append(published)
     return merged
+
+
+async def read_published_genes() -> list[dict[str, object]]:
+    """The rows `run_export` writes to table1.json, keys camelCased.
+
+    For a caller that compares the live table with a published file without
+    exporting first -- scripts.reset_to_baseline checks a baseline against it.
+    """
+    return [
+        {to_camel(key): value for key, value in clean_gene_row(row).items()}
+        for row in await _read_genes_with_lists()
+    ]
 
 
 async def _read_table(name: str) -> list[dict[str, object]]:

@@ -15,11 +15,11 @@ test("a filtered-away tooltip reopens on LAMB1's record", async ({ page }) => {
   await expect(tooltip(page)).toContainText("laminin subunit beta 1");
 });
 
-test("a rapid search burst commits LAMB1 on the full 79-row page", async ({ page }) => {
+test("a rapid search burst commits LAMB1 on the full 87-row page", async ({ page }) => {
   await page.goto("/genes");
   await page.waitForSelector('.table-controls[data-hydrated="true"]');
   await page.locator(".table-control select").selectOption("100");
-  await expect(rows(page)).toHaveCount(79);
+  await expect(rows(page)).toHaveCount(87);
   const search = page.getByPlaceholder("Search genes");
   await search.pressSequentially(" LAMB1 ", { delay: 5 });
   await expect(search).toHaveValue(" LAMB1 ");

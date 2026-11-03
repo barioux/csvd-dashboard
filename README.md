@@ -189,9 +189,10 @@ methods.
 Karyogram drawn in-app from `data/table1.json` and `data/cytobands_hg38.json`
 (UCSC hg38, 24 chromosomes, 862 bands). The chromosomes that carry a gene are
 drawn, to scale, in two rows split after chromosome 10. Each gene sits at the
-midpoint of the band its `chromosomalLocation` names, with a label block
-carrying its symbol, evidence glyphs and one pill per GWAS trait. Trait identity
-is text on a family tint, never colour alone.
+midpoint of the band its `chromosomalLocation` names (or of the span, for a
+range such as `10q24.33-q25.1`), with a label block carrying its symbol,
+evidence glyphs and one pill per GWAS trait. Trait identity is text on a family
+tint, never colour alone.
 
 ### Clinical Trials (`/trials`)
 

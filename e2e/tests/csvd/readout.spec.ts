@@ -11,23 +11,24 @@ const fillHeights = (page: import("@playwright/test").Page) =>
     els.reduce((sum, el) => sum + el.getBoundingClientRect().height, 0)
   );
 
-test("ticking WMH drains the genes readout from 79 to 34", async ({ page }) => {
+test("ticking WMH drains the genes readout from 87 to 45", async ({ page }) => {
   await page.goto("/genes");
   const shown = page.locator(".readout-stat-value").first();
-  await expect(shown).toHaveText(/79\s*\/\s*79/);
+  await expect(shown).toHaveText(/87\s*\/\s*87/);
   const full = await fillHeights(page);
 
   await choice(page, "GWAS Traits", "WMH").check();
 
-  await expect(shown).toHaveText(/34\s*\/\s*79/);
+  await expect(shown).toHaveText(/45\s*\/\s*87/);
   await expect.poll(() => fillHeights(page)).toBeLessThan(full);
 });
 
-test("searching HTRA1 leaves one gene in the readout", async ({ page }) => {
+test("searching HTRA1 leaves two genes in the readout", async ({ page }) => {
   await page.goto("/genes");
+  // HTRA1, and GLA, whose source quote names it.
   await page.getByRole("searchbox", { name: "Search genes" }).fill("HTRA1");
   await expect(page.locator(".readout-stat-value").first())
-    .toHaveText(/1\s*\/\s*79/);
+    .toHaveText(/2\s*\/\s*87/);
 });
 
 test("searching CADASIL leaves three of the five trials in the readout", async ({ page }) => {

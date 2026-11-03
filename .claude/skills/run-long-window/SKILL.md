@@ -11,11 +11,31 @@ uv run python -m pipeline.main --pubmed --days-back 365 --export
 
 `--days-back 365` is one run, and `_merge_processed_batch` is step 5 of 6: genes
 reach the database and `record_processed_pmids_batch` writes the PMIDs only once
-every paper has been extracted. Measured against the runs in `logs/json/`, a
-year's window is ~795 papers (the live count for the committed `SVD_QUERY`), ~3
-hours and ~$70 of extraction at Claude Opus 5's prices (the pipeline now runs
-Opus 5.5, 20% cheaper per token; re-measure before quoting a new figure), and a
+every paper has been extracted. Measured on 2026-11-03, a two-year window
+(`--days-back 730`) is 1,570 papers for the committed `SVD_QUERY`, and Opus 5.5
+extracted them in about four hours for $116 -- $0.074 a paper -- so a year's
+window is roughly half that; `--test-mode` gives the live count for free. A
 crash at hour two used to discard all of it and record nothing.
+
+**An exhausted credit balance fails every remaining paper, and the run still
+exits 0.** That run ran out of API credit with 210 papers to go: each answered
+`400 invalid_request_error` "Your credit balance is too low", was counted as a
+failed paper, and the merge, the export and the widget went ahead over the
+1,358 that had finished. Nothing is lost -- a failed paper is never written to
+`pubmed_refs`, so the same command retries exactly those once the balance is
+topped up, which is how that window was finished (249 papers, $18.40) -- but
+until then the exported data is a partial window. Fund the run with room to
+spare, and read `papers.failed` in the report before committing an export. The
+window starts at `datetime.now(UTC) - days_back`, so a retry on a later UTC
+date needs `--days-back` raised by the days since to start where the first run
+did.
+
+**About 2.4% of papers are refused by the bio safety classifier** (37 of 1,570,
+logged as `Refused by safety classifier ... (category: bio)`). A refusal fails
+the paper the same way, so the next run retries it, and the classifier is not
+deterministic: on the retry five of the first pass's 37 extracted, and five of
+the papers that had failed on credit were refused instead. A refusal before
+any output is still billed.
 
 **`pipeline/checkpoint.py` is what makes that survivable.** Each paper is
 appended to `logs/pipeline_checkpoint.jsonl` as it finishes, through the
