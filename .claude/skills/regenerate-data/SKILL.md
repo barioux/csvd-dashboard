@@ -184,10 +184,11 @@ Migrations 001-014 build the whole schema and **none of them seeds any data**.
 | `genes` and its three list tables | `scripts.restore_from_json` from `table1.json` | free |
 | `clinical_trials`, curated rows | `scripts.restore_from_json` from `table2.json` | free |
 | `clinical_trials`, uncurated discoveries | `--clinical-trials` | free |
+| `clinical_trials`, curated TERMINATED / WITHDRAWN rows | the pre-squash history (below), from a `table2.json` before `1299cd7` | free |
 | NCBI / UniProt / PubMed caches | either (`--sync-external-data` refetches) | free |
 | `gene_annotations` | `--sync-annotations` | free, ~30 min |
-| `pubmed_refs` | `scripts.restore_from_json` from the run reports in `logs/` | free back to the oldest report; **paid re-extraction** before it |
-| `pipeline_runs`, `sync_runs` | `scripts.restore_from_json`, latest run only | — |
+| `pubmed_refs` | `scripts.restore_from_json` from the run reports in `logs/`; older papers from the history (below) | free when a later run's skipped count names the gap; **paid re-extraction** otherwise |
+| `pipeline_runs`, `sync_runs` | `scripts.restore_from_json`, latest run only; older runs from the history (below) | — |
 
 **No migration seeds `genes`, and nothing upstream can refetch it**: those rows
 are curator judgement that entered from the source spreadsheet, plus what the
@@ -244,7 +245,46 @@ No output means every exported file matches. `gene_annotations.json` is not
 among them: the export keeps the committed file until `--sync-annotations`
 refills the table. The script's docstring lists what does not come back: the
 annotations, the unpublished cache columns, the uncurated and the stopped
-trials, papers older than the oldest report in `logs/`, and the ids.
+trials, papers older than the oldest report in `logs/`, and the ids. The
+history below brings back the stopped trials, the older runs and the papers.
+
+### What the pre-squash history still holds
+
+The repository's history was squashed into one commit on 2026-09-24, but the
+private repository's `refs/pull/*/head` still carry the 778 commits before it,
+and with them every `data/*.json` committed since 2026-08-27. A plain clone
+does not fetch those refs; a mirror does:
+
+```bash
+git clone --mirror https://github.com/mathieubpoiriericm/csvd-dashboard-private.git
+git -C csvd-dashboard-private.git log --all --oneline -- data/table2.json
+```
+
+Three things came back from it on 2026-11-02, each written in one transaction
+and checked by exporting before and after (all eleven files byte-identical):
+
+- **A curated row an export filter withholds was published before the filter
+  existed.** `1299cd7` stopped publishing TERMINATED and WITHDRAWN trials, so
+  the nine curated ones were in no current file; `f1f589e:data/table2.json`
+  still had them. Rename `svdPopulation`/`svdPopulationDetails` to today's keys
+  (migration 014), invert with `trial_from_wire`, and fill only the five curator
+  columns -- mechanism, genetic target and evidence, population and details --
+  where `target_population IS NULL`: `--clinical-trials` rediscovers the rows
+  themselves from the registry, curator columns empty. Check each against
+  `clean_trial_row` before writing it.
+- **Older run and refresh records are older file versions.** Each commit's
+  `pipeline_run.json` with the same commit's `pipeline_status.json` goes through
+  `_run_rows` as the newest one does; every committed `pipeline_syncs.json`
+  entry is a `sync_runs` row. The readers take only the newest row (per mode),
+  so these change no export.
+- **The ledger's gap is named by a later run's skipped count.** The first
+  logged run (event 4 in `logs/events.db`) skipped 18 PMIDs no surviving report
+  lists. Its query and window -- the search module as it stood at the commit
+  before that run, `pdat` from the run date minus `--days-back`, bounded by
+  `edat` at the run date so later records cannot enter -- minus the restored
+  ledger left exactly 18, and all 18 matched the newest run's query in its
+  window. Only `SELECT pmid` reads `pubmed_refs`, so they went in with the
+  unrecorded columns NULL.
 
 `filter.ids` fetches every trial's locations in one request, so
 `deno task geocode` no longer needs a cache or a rate limit.

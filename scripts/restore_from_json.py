@@ -27,7 +27,9 @@ What comes back, and from where:
   confidence included, since both are published.
 - clinical_trials, from table2.json: the curated rows only. The export never
   publishes an uncurated ClinicalTrials.gov discovery (`--clinical-trials`
-  fetches those again) or a TERMINATED / WITHDRAWN trial (gone for good).
+  fetches those again) or a TERMINATED / WITHDRAWN trial, whose curator
+  columns survive only in a table2.json committed before 1299cd7 -- in the
+  pre-squash history the regenerate-data skill describes.
 - The NCBI, UniProt and PubMed caches, from gene_info*.json, protein_info.json
   and refs.json. `ncbi_gene_info.map_location` and UniProt's GO columns are
   not published, so they stay NULL until `--sync-external-data`.
@@ -37,7 +39,8 @@ What comes back, and from where:
   gitignored logs/ rather than from data/: logs/json/pipeline_report_*.json
   and the pipeline_completed events in logs/events.db. A paper processed by
   a run older than every surviving report is missing, and the next window
-  that covers it re-extracts it.
+  that covers it re-extracts it -- unless a later run's skipped count says
+  how many there were and its query names them (the regenerate-data skill).
 
 What does not: ids and timestamps (rows are renumbered in file order, which
 is the order the export reads them in), gene_annotations (empty until
