@@ -2014,6 +2014,237 @@
     }
   },
   {
+    "geneSymbol": "EPHA2",
+    "groupKey": "MONDO:0005129",
+    "diseaseName": "Cataract",
+    "omimId": null,
+    "mondoId": "MONDO:0005129",
+    "orphacode": null,
+    "medgenId": "C0086543",
+    "omimSeries": ["PS116200"],
+    "classification": "Pathogenic",
+    "recordCount": 1,
+    "relatedXrefs": [
+      {
+        "id": "MeSH:D002386",
+        "relation": null
+      }
+    ],
+    "sourceVersions": {
+      "clinvar": null
+    }
+  },
+  {
+    "geneSymbol": "EPHA2",
+    "groupKey": "MONDO:0007288",
+    "diseaseName": "Cataract 6 multiple types",
+    "omimId": "116600",
+    "mondoId": "MONDO:0007288",
+    "orphacode": "91492",
+    "medgenId": "C1861825",
+    "omimSeries": [],
+    "classification": "Pathogenic",
+    "recordCount": 10,
+    "relatedXrefs": [
+      {
+        "id": "MONDO:0011060",
+        "relation": "E"
+      },
+      {
+        "id": "OMIM:115650",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:115660",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:115665",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:115700",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:115800",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:115900",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:116100",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:116200",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:116300",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:116400",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:116700",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:116800",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:212500",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:302200",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:600881",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:601202",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:601547",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:601885",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:604219",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:604307",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:605387",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:605728",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:605749",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:607304",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:609376",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:609741",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:610019",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:610202",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:610425",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:610623",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:611391",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:611544",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:611597",
+        "relation": "NTBT"
+      },
+      {
+        "id": "OMIM:613763",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:614422",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:614691",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:615188",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:615274",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:615277",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:616279",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:616509",
+        "relation": "BTNT"
+      },
+      {
+        "id": "OMIM:616851",
+        "relation": "BTNT"
+      },
+      {
+        "id": "UMLS:C5925050",
+        "relation": "E"
+      }
+    ],
+    "sourceVersions": {
+      "clinvar": null,
+      "orphadata": "2026-06-23 07:53:50"
+    }
+  },
+  {
+    "geneSymbol": "EPHA2",
+    "groupKey": "MONDO:0019172",
+    "diseaseName": "Congenital aniridia",
+    "omimId": null,
+    "mondoId": "MONDO:0019172",
+    "orphacode": null,
+    "medgenId": "C0003076",
+    "omimSeries": [],
+    "classification": "Pathogenic",
+    "recordCount": 1,
+    "relatedXrefs": [],
+    "sourceVersions": {
+      "clinvar": null
+    }
+  },
+  {
     "geneSymbol": "EPHB4",
     "groupKey": "MONDO:0007919",
     "diseaseName": "Hereditary lymphedema type I",

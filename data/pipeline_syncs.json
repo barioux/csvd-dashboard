@@ -1,29 +1,29 @@
 [
   {
-    "runTimestamp": "2026-11-03T05:58:17Z",
+    "runTimestamp": "2026-11-03T12:56:36Z",
     "mode": "annotation_sync",
     "status": "completed",
-    "durationSeconds": 15.069,
+    "durationSeconds": 7.104,
     "sources": [
       {
         "key": "clinvar",
         "label": "ClinVar",
-        "fetched": 22,
-        "cached": 63,
+        "fetched": 2,
+        "cached": 85,
         "failed": 0
       },
       {
         "key": "orphadata",
         "label": "Orphadata",
-        "fetched": 22,
-        "cached": 63,
+        "fetched": 2,
+        "cached": 85,
         "failed": 0
       },
       {
         "key": "opentargets",
         "label": "Open Targets",
-        "fetched": 22,
-        "cached": 63,
+        "fetched": 2,
+        "cached": 85,
         "failed": 0
       },
       {
@@ -40,25 +40,12 @@
         "label": "Open Targets",
         "endpoint": "/api/v4/graphql",
         "method": "POST",
-        "calls": 151,
-        "ok": 151,
+        "calls": 111,
+        "ok": 111,
         "notFound": 0,
         "errors": 0,
         "retries": 0,
-        "totalMs": 24190.4,
-        "bytes": 0
-      },
-      {
-        "service": "ncbi_eutils",
-        "label": "E-utilities summary",
-        "endpoint": "/entrez/eutils/esummary.fcgi",
-        "method": "POST",
-        "calls": 26,
-        "ok": 24,
-        "notFound": 0,
-        "errors": 2,
-        "retries": 0,
-        "totalMs": 33380.7,
+        "totalMs": 18487.4,
         "bytes": 0
       },
       {
@@ -66,12 +53,25 @@
         "label": "E-utilities search",
         "endpoint": "/entrez/eutils/esearch.fcgi",
         "method": "GET",
-        "calls": 22,
-        "ok": 22,
+        "calls": 2,
+        "ok": 2,
         "notFound": 0,
         "errors": 0,
         "retries": 0,
-        "totalMs": 2269.9,
+        "totalMs": 249.6,
+        "bytes": 0
+      },
+      {
+        "service": "ncbi_eutils",
+        "label": "E-utilities summary",
+        "endpoint": "/entrez/eutils/esummary.fcgi",
+        "method": "POST",
+        "calls": 2,
+        "ok": 2,
+        "notFound": 0,
+        "errors": 0,
+        "retries": 0,
+        "totalMs": 1917.4,
         "bytes": 0
       },
       {
@@ -79,26 +79,26 @@
         "label": "Orphadata",
         "endpoint": "/rd-cross-referencing/orphacodes/:id",
         "method": "GET",
-        "calls": 21,
-        "ok": 21,
+        "calls": 1,
+        "ok": 1,
         "notFound": 0,
         "errors": 0,
         "retries": 0,
-        "totalMs": 7076.5,
-        "bytes": 19418
+        "totalMs": 936.3,
+        "bytes": 1548
       },
       {
         "service": "orphadata",
         "label": "Orphadata",
         "endpoint": "/rd-phenotypes/orphacodes/:id",
         "method": "GET",
-        "calls": 21,
-        "ok": 14,
-        "notFound": 7,
+        "calls": 1,
+        "ok": 0,
+        "notFound": 1,
         "errors": 0,
         "retries": 0,
-        "totalMs": 2782.2,
-        "bytes": 17107
+        "totalMs": 118.5,
+        "bytes": 104
       }
     ],
     "errors": {
