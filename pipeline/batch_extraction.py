@@ -19,6 +19,7 @@ from pipeline.anthropic_client import (
     _extraction_tool_blocks,
     _merge_tool_blocks,
     _record_thinking_trace,
+    _refusal_category,
     build_async_client,
 )
 from pipeline.api_telemetry import record_service_call
@@ -160,7 +161,9 @@ def results_by_custom_id(
         stop_reason = getattr(message, "stop_reason", None)
         if stop_reason == "refusal":
             logger.error(
-                "Batch entry %s was refused by the safety classifier", entry.custom_id
+                "Batch entry %s was refused by the safety classifier (category: %s)",
+                entry.custom_id,
+                _refusal_category(message),
             )
             continue
         if stop_reason == "max_tokens":

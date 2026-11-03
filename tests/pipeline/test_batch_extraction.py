@@ -1,4 +1,5 @@
 import logging
+from types import SimpleNamespace
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock
 
@@ -44,6 +45,7 @@ def _fake_batch_entry(
     input_tokens: int = 0,
     output_tokens: int = 0,
     thinking: str | None = None,
+    reported_thinking_tokens: int | None = None,
 ) -> Any:
     """Build a duck-typed stand-in for one MessageBatchIndividualResponse.
 
@@ -87,6 +89,13 @@ def _fake_batch_entry(
                                     "output_tokens": output_tokens,
                                     "cache_creation_input_tokens": 0,
                                     "cache_read_input_tokens": 0,
+                                    "output_tokens_details": (
+                                        None
+                                        if reported_thinking_tokens is None
+                                        else SimpleNamespace(
+                                            thinking_tokens=reported_thinking_tokens
+                                        )
+                                    ),
                                 },
                             )(),
                         },
@@ -116,14 +125,14 @@ def test_batch_sends_the_shared_config_tool() -> None:
     assert request["params"]["tool_choice"] == {"type": "auto"}
 
 
-def test_batch_transmits_effort_only_when_overridden() -> None:
-    """Effort "high" is the API default, so sending it is wire noise.
+def test_batch_transmits_effort_at_every_level() -> None:
+    """Claude Opus 5.5 defaults to "medium", so "high" must be stated.
 
-    And with the schema moved onto the tool, a default-effort run has
-    nothing left to put in output_config, so the block goes entirely.
+    The batch path shares _build_message_params, so it would drop to the
+    API default exactly as the streaming path would.
     """
     params = build_batch_request("1", "paper text", PipelineConfig())["params"]
-    assert "output_config" not in params
+    assert params["output_config"] == {"effort": "high"}
 
     params = build_batch_request(
         "1", "paper text", PipelineConfig(llm_effort="medium")
@@ -375,6 +384,15 @@ class TestBatchResultsAreAccountedLikeStreamedOnes:
         assert out == {}
         assert "refused" in caplog.text.lower()
         assert "No report_genes tool call" not in caplog.text
+        # The fake carries no stop_details, which the API may also omit.
+        assert "category: unspecified" in caplog.text
+
+    def test_a_refusal_names_the_classifier_that_declined(self, caplog) -> None:
+        entry = _fake_batch_entry("1", None, stop_reason="refusal")
+        entry.result.message.stop_details = SimpleNamespace(category="bio")
+        with caplog.at_level(logging.ERROR):
+            results_by_custom_id([entry], usage=TokenUsage())
+        assert "category: bio" in caplog.text
 
     def test_a_truncated_entry_counts_toward_the_ceiling_warning(self) -> None:
         usage = TokenUsage()
@@ -458,6 +476,26 @@ class TestBatchReasoningIsAccountedLikeStreamedReasoning:
 
         assert usage.thinking_tokens == 1_904
         assert usage.text_output_tokens == 96
+
+    def test_reported_thinking_tokens_replace_the_estimate(self) -> None:
+        """The API's split wins on the batch path too, as on the stream."""
+        usage = TokenUsage()
+
+        results_by_custom_id(
+            [
+                _fake_batch_entry(
+                    "1",
+                    _EMPTY_GENES,
+                    output_tokens=2_000,
+                    thinking=self._THINKING,
+                    reported_thinking_tokens=1_990,
+                )
+            ],
+            usage=usage,
+        )
+
+        assert usage.thinking_tokens == 1_990
+        assert usage.text_output_tokens == 10
 
     def test_the_trace_reaches_the_audit_event_log(self, mocker) -> None:
         event_log = mocker.patch("pipeline.anthropic_client.EventLog")

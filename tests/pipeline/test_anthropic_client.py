@@ -3,6 +3,7 @@ structured outputs, and retry logic."""
 
 import json
 import logging
+from types import SimpleNamespace
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock
 
@@ -179,7 +180,7 @@ class TestRequestSharedWithBatchPath:
 
         The equality test above is satisfied by any two payloads that
         agree, including two that agree on a manual budget. Adaptive is
-        the only mode Claude Opus 5 accepts -- budget_tokens is a 400 --
+        the only mode Claude Opus 5.5 accepts -- budget_tokens is a 400 --
         so the value itself is asserted rather than just the agreement.
         """
         from pipeline.batch_extraction import build_batch_request
@@ -292,7 +293,7 @@ def test_pricing_is_the_pinned_model_s_published_rate() -> None:
     of the run report with only a log line to say so. There is nothing
     left to miss; what is worth pinning is the published rate itself.
     """
-    assert MODEL_PRICING == (5.0, 25.0)
+    assert MODEL_PRICING == (4.0, 20.0)
 
 
 # ---------------------------------------------------------------------------
@@ -315,14 +316,16 @@ def test_the_request_asks_for_the_model_s_full_output_budget() -> None:
     assert kwargs["max_tokens"] == MODEL_MAX_OUTPUT_TOKENS
 
 
-def test_output_config_is_absent_entirely_at_the_api_default() -> None:
-    """An output_config carrying nothing but a default is wire noise.
+def test_the_default_effort_travels_on_the_wire() -> None:
+    """Our default effort is "high", and that is no longer the API's.
 
-    effort "high" is the API default and the schema now rides on the
-    tool, so at the default there is nothing left for the block to say.
+    Claude Opus 5.5 defaults to "medium", so the block that used to be
+    dropped at "high" as wire noise now carries the setting the run
+    report publishes.
     """
     config = PipelineConfig(llm_effort="high")
-    assert "output_config" not in _build_message_params("paper", "1", config)
+    kwargs = _build_message_params("paper", "1", config)
+    assert kwargs["output_config"] == {"effort": "high"}
 
 
 def test_a_non_default_effort_still_travels() -> None:
@@ -439,6 +442,44 @@ class TestAnthropicClientExtract:
         from pipeline.config import PipelineConfig
 
         with pytest.raises(ExtractionFailedError, match="Refused by safety"):
+            await client.extract("paper text", "12345678", PipelineConfig(), None)
+
+    async def test_a_refusal_names_the_classifier_that_declined(
+        self, mocker, mock_anthropic_response
+    ):
+        """Claude Opus 5.5 adds a `bio` classifier, and these are biology papers.
+
+        Which classifier declined is what tells a false positive on a
+        genetics paper from anything else, so it reaches the error.
+        """
+        response = mock_anthropic_response(text="")
+        response.stop_reason = "refusal"
+        response.stop_details = SimpleNamespace(category="bio")
+        mock_client = _make_mock_client(response)
+
+        client = AnthropicClient()
+        mocker.patch.object(client, "_get_client", return_value=mock_client)
+
+        from pipeline.config import PipelineConfig
+
+        with pytest.raises(ExtractionFailedError, match=r"\(category: bio\)"):
+            await client.extract("paper text", "12345678", PipelineConfig(), None)
+
+    async def test_a_refusal_without_stop_details_still_reports(
+        self, mocker, mock_anthropic_response
+    ):
+        """stop_details is informational and may be null."""
+        response = mock_anthropic_response(text="")
+        response.stop_reason = "refusal"
+        response.stop_details = None
+        mock_client = _make_mock_client(response)
+
+        client = AnthropicClient()
+        mocker.patch.object(client, "_get_client", return_value=mock_client)
+
+        from pipeline.config import PipelineConfig
+
+        with pytest.raises(ExtractionFailedError, match=r"category: unspecified"):
             await client.extract("paper text", "12345678", PipelineConfig(), None)
 
     async def test_unverified_quotes_are_kept_by_default(
@@ -1402,6 +1443,49 @@ class TestTransportErrorsAndAccounting:
             await client.extract("Paper", "12345678", PipelineConfig(), rate_limiter)
 
         rate_limiter.record_actual_usage.assert_awaited_once_with(7, 0)
+
+    async def test_reported_thinking_tokens_replace_the_estimate(
+        self, mocker, mock_anthropic_response
+    ):
+        """The API's own split wins; the character ratio is not added on top.
+
+        The response is half thinking by characters, so the estimate would
+        say 4,000 of 8,000. The API reports 7,500, and only that reaches
+        the run report: the content blocks cannot measure the split.
+        """
+        response = mock_anthropic_response(
+            text="y" * 12, include_thinking=True, output_tokens=8_000
+        )
+        response.usage.output_tokens_details = SimpleNamespace(thinking_tokens=7_500)
+        client = AnthropicClient()
+        mocker.patch.object(
+            client, "_get_client", return_value=_make_mock_client(response)
+        )
+
+        _, usage = await client.extract(
+            "Paper text", "12345678", PipelineConfig(), None
+        )
+
+        assert usage.thinking_tokens == 7_500
+        assert usage.text_output_tokens == 500
+
+    async def test_a_refused_response_still_counts_its_reported_thinking(
+        self, mocker, mock_anthropic_response
+    ):
+        """A refusal after reasoning is billed, so its thinking is counted."""
+        response = mock_anthropic_response(text="", output_tokens=900)
+        response.stop_reason = "refusal"
+        response.usage.output_tokens_details = SimpleNamespace(thinking_tokens=850)
+        client = AnthropicClient()
+        mocker.patch.object(
+            client, "_get_client", return_value=_make_mock_client(response)
+        )
+
+        with pytest.raises(ExtractionFailedError) as raised:
+            await client.extract("Paper text", "12345678", PipelineConfig(), None)
+
+        assert raised.value.token_usage is not None
+        assert raised.value.token_usage.thinking_tokens == 850
 
     async def test_thinking_estimate_is_per_response_across_retries(
         self, mocker, mock_anthropic_response

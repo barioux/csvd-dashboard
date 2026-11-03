@@ -41,10 +41,10 @@ def _cost(input_tokens: int, output_tokens: int) -> float:
 
 
 class TestEstimateCost:
-    def test_opus_5_pricing(self):
+    def test_opus_5_5_pricing(self):
         cost = _cost(1_000_000, 100_000)
-        # $5/M input + $25/M output -> 5 + 2.5 = 7.5
-        assert cost == pytest.approx(7.5)
+        # $4/M input + $20/M output -> 4 + 2 = 6
+        assert cost == pytest.approx(6.0)
 
     def test_zero_tokens(self):
         assert _cost(0, 0) == 0.0
@@ -85,7 +85,7 @@ class TestAnthropicClientReportMetadata:
     def test_anthropic_uses_llm_model(self):
         config = PipelineConfig()
         fields = AnthropicClient().report_metadata(config)
-        assert fields["model"] == "claude-opus-5"
+        assert fields["model"] == "claude-opus-5-5"
         assert fields["thinking_mode"] != "none"
         assert fields["effort"] is not None
 
@@ -125,7 +125,7 @@ class TestAnthropicReportMetadata:
             total_pmids_found=1,
             new_pmids_count=1,
         )
-        assert data["pipeline_config"]["model"] == "claude-opus-5"
+        assert data["pipeline_config"]["model"] == "claude-opus-5-5"
         assert data["pipeline_config"]["llm_provider"] == "anthropic"
         assert data["token_usage"]["estimated_cost_usd"] is not None
 

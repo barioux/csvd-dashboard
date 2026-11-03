@@ -108,6 +108,38 @@ class TestAccumulateUsage:
         assert usage.cache_creation_input_tokens == 30
         assert usage.cache_read_input_tokens == 20
 
+    def test_accumulate_takes_the_reported_thinking_tokens(self):
+        """`output_tokens_details.thinking_tokens` is the exact split.
+
+        It is the raw reasoning the model generated. Nothing in the
+        response's content measures it: the trace is a summary, and the
+        tool call's JSON is output that is neither thinking nor text.
+        """
+        usage = TokenUsage()
+
+        class ThinkingResponse:
+            class usage:
+                input_tokens = 100
+                output_tokens = 5_000
+                cache_creation_input_tokens = 0
+                cache_read_input_tokens = 0
+
+                class output_tokens_details:
+                    thinking_tokens = 4_200
+
+        accumulate_usage(usage, ThinkingResponse())
+        accumulate_usage(usage, ThinkingResponse())
+        assert usage.thinking_tokens == 8_400
+        assert usage.text_output_tokens == 1_600
+
+    def test_accumulate_leaves_an_unreported_split_at_zero(
+        self, mock_anthropic_response
+    ):
+        """No details is not a measurement; the caller estimates instead."""
+        usage = TokenUsage()
+        accumulate_usage(usage, mock_anthropic_response(output_tokens=500))
+        assert usage.thinking_tokens == 0
+
     def test_accumulate_multiple(self, mock_anthropic_response):
         usage = TokenUsage()
         for _ in range(3):

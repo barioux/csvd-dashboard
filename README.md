@@ -135,7 +135,7 @@ merges later upstream changes into a fork.
 | Styling           | One stylesheet (`assets/app.css`), OKLCH tokens, no framework; Barlow Condensed over Barlow self-hosted; [Heroicons v2](https://heroicons.com/) inlined                                                                                                                          |
 | Data pipeline     | [Python 3.14](https://www.python.org/) ([uv](https://docs.astral.sh/uv/)), [httpx](https://github.com/encode/httpx), [asyncpg](https://github.com/MagicStack/asyncpg), [Biopython](https://biopython.org/), [lxml](https://lxml.de/), [Rich](https://github.com/Textualize/rich) |
 | Validation        | [Pydantic v2](https://github.com/pydantic/pydantic), [Pandera](https://github.com/unionai-oss/pandera), [pandas](https://pandas.pydata.org/)                                                                                                                                     |
-| LLM extraction    | [Anthropic Claude Opus 5](https://platform.claude.com/docs/en/models/overview), pinned in `pipeline/config.py`                                                                                                                                                                   |
+| LLM extraction    | [Anthropic Claude Opus 5.5](https://platform.claude.com/docs/en/models/overview), pinned in `pipeline/config.py`                                                                                                                                                                 |
 | PDF fallback      | [Docling](https://github.com/docling-project/docling) + RapidOCR on ONNX Runtime                                                                                                                                                                                                 |
 | Database          | [PostgreSQL 18.6](https://www.postgresql.org/), [Alembic](https://alembic.sqlalchemy.org/) migrations; containers run [Docker Hardened Images](https://docs.docker.com/dhi/)                                                                                                     |
 | Print figures     | [pyCirclize](https://github.com/moshi4/pyCirclize) (trials radar), [matplotlib](https://matplotlib.org/) (phenogram)                                                                                                                                                             |
@@ -899,7 +899,7 @@ PubMed search (SVD_QUERY)
 Retrieve full text     Europe PMC JATS XML, Docling PDF fallback (~15%)
       │
       ▼
-Extract genes          Claude Opus 5, structured output
+Extract genes          Claude Opus 5.5, structured output
       │
       ▼
 Validate               NCBI Gene lookup, then the two confidence floors

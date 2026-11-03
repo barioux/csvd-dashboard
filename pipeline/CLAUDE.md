@@ -7,8 +7,8 @@ the root `CLAUDE.md`.
 ## Extraction
 
 **The extraction model is pinned in code, not configured.** `EXTRACTION_MODEL`
-in `pipeline/config.py` is `claude-opus-5`, and `PipelineConfig.llm_model` is a
-read-only property returning it — there is no `PIPELINE_LLM_MODEL`. Extraction
+in `pipeline/config.py` is `claude-opus-5-5`, and `PipelineConfig.llm_model` is
+a read-only property returning it — there is no `PIPELINE_LLM_MODEL`. Extraction
 output is compared across runs, against the recorded cassettes in
 `tests/pipeline/cassettes/`, and against a gold standard, so the model is part
 of the method rather than a deployment knob; a per-machine override would make
@@ -28,8 +28,14 @@ fingerprint, discarding a checkpoint whose papers had been extracted with the
 very same prompt. A run reports the prompt it ran.
 
 `thinking_config` is always `{"type": "adaptive", "display": "summarized"}` —
-`budget_tokens` is a 400 on 4.7 and later — and `estimate_cost` returns a
-number, never `None`.
+`budget_tokens` is a 400 on 4.7 and later, and Opus 5.5 rejects `disabled` at
+every effort — and `estimate_cost` returns a number, never `None`.
+
+**`output_config` always carries the effort, `high` included.** It used to be
+omitted at `high` as wire noise, because `high` was Claude Opus 5's API default.
+Claude Opus 5.5's default is `medium`, so the same omission would run every
+default-config paper a level below the `effort` the run report publishes and the
+checkpoint fingerprints, with nothing failing.
 
 A safety refusal is a normal 200 with `stop_reason: "refusal"`, not an error.
 `anthropic_client.py` checks for it _before_ reading any content: reading it
@@ -41,11 +47,21 @@ reading its content. It did not, so a refused entry was logged as a prose-only
 answer and a truncated one could never raise the token-ceiling warning; the
 batch path also accumulates each entry's usage and records each as an Anthropic
 call, which is what put a `--batch` run's tokens, cost and services row in the
-report at all. It shares the reasoning accounting too — `_account_reasoning`
-charges the trace its share of the entry's output tokens and
-`_record_thinking_trace` writes it to the event log — because a `--batch` run
-otherwise published `thinkingTokens: 0` beside the batch's real output count and
-left an auditor no trace to read for any paper the batch extracted.
+report at all. It shares the reasoning accounting too — the thinking count the
+API reports in `usage.output_tokens_details`, which `accumulate_usage` takes
+(`_account_reasoning` estimates from the character ratio only for a response
+that reports none), and `_record_thinking_trace` writing the trace to the event
+log — because a `--batch` run otherwise published `thinkingTokens: 0` beside the
+batch's real output count and left an auditor no trace to read for any paper the
+batch extracted.
+
+**A refusal names its classifier, and nothing retries it on another model.**
+Both paths log the `stop_details.category` (`_refusal_category`): Opus 5.5 runs
+a biology classifier Opus 5 did not, and on a corpus of genetics papers `bio` is
+the category a false positive would carry. The streaming path deliberately has
+no `fallbacks` opt-in either, although the API offers one there: a fallback
+would extract the refused paper with a different model under a run report that
+names this one, which is what pinning the model exists to prevent.
 
 **A failed entry is logged with the API's own reason.** A non-succeeded result
 was logged as its bare type (`Batch entry 37063705: errored`), and the `error`
@@ -137,6 +153,18 @@ a re-run could land either side. **`medium` is the lever** if cost or latency
 ever binds: 34% cheaper, 55% of the wall-clock, quote fidelity if anything
 better. `low` is not: 13 points, and it stops producing prose.
 
+**That sweep was measured on Claude Opus 5, and the pipeline now runs Opus
+5.5.** Effort names do not carry across models: Anthropic reports 5.5 at
+`medium` matching or exceeding 5 at `high` on its coding and knowledge-work
+evaluations, and 5.5 thinking more per turn than 5 at the same level (prompting
+guide, "Calibrate effort"). Neither is a measurement of this extraction task.
+`high` was kept as the default through the model change so that one step changes
+one variable; re-run the three arms on 5.5 before reading the table above as a
+statement about it. The recall and quote figures below are Opus 5.5's: the
+golden cassettes were re-recorded on it at `high` on 2026-11-02, where the same
+eight calls cost $2.48 against Opus 5's $3.72, on 77,177 output tokens against
+101,007.
+
 ### The prompt is v7: a template plus `disease/prompt.md`, and v4's guards were measured rather than assumed
 
 `pipeline/prompts.py` holds the methodology as a template with
@@ -173,17 +201,26 @@ the one field this work exists to make trustworthy -- so the schema guarantee
 moved from the decoder to validate-and-retry. The measurement (9/9 corrupt with
 the flag, 4/4 clean without, 2026-08-31) is in the `extraction_tool` docstring
 in `pipeline/config.py` and pinned by `tests/pipeline/test_config.py`; do not
-flip it back on the strength of how it reads.
+flip it back on the strength of how it reads. It has not been repeated on Opus
+5.5, so it stays off there until it is.
 
 **The two numbers this produced, and they are not the same number.** Across the
-140 genes in the golden cassettes, re-recorded 2026-09-11 against fixtures
-refetched through the current Europe PMC parser:
+124 genes in the golden cassettes, re-recorded 2026-11-02 on Claude Opus 5.5
+over the same fixture text as the Opus 5 recording before it:
 
-| Measure                                | Rate               |
-| -------------------------------------- | ------------------ |
-| quotes verbatim in the paper           | **140/140 = 100%** |
-| quotes matched to an API citation span | **61/140 = 44%**   |
-| quotes corrupted                       | 0/140              |
+| Measure                                | Rate              |
+| -------------------------------------- | ----------------- |
+| quotes verbatim in the paper           | **122/124 = 98%** |
+| quotes matched to an API citation span | **98/124 = 79%**  |
+| quotes corrupted                       | 0/124             |
+
+The two unverified quotes are one sentence, quoted for both `VCAN` and
+`SH3PXD2A` on PMID 33293549: the paper has it after a semicolon as "four WMH
+risk loci individually showed…", and the model capitalised it into a sentence of
+its own. That is a transcription edit the check is right to refuse, not invented
+prose. Opus 5.5 still writes its evidence as cited `text` blocks before the tool
+call, the same block shape as Opus 5 — the change that sends text _between_ tool
+calls to `thinking` blocks did not reach this single-call response.
 
 The gap between them is not a quality problem. The API returns spans only where
 the model wrote prose, because the instruction asks for supporting evidence in
@@ -192,10 +229,13 @@ volume rather than quote fidelity: papers with few genes verify near 100% and
 the gene-dense ones drag it down.
 
 **Both numbers move on every re-record, and neither move is a code change.** The
-two recordings before this one measured 137/138 = 99% then 130/134 = 97%
-verbatim, and 45/138 = 33% then 87/134 = 65% cited. The citation rate is the one
-that swings, because the model writes a different amount of prose each time (33%
-→ 65% → 44%); the verbatim rate reached 100% on 2026-09-11 because the refetched
+Opus 5 recordings measured 137/138 = 99%, 130/134 = 97% and 140/140 verbatim,
+and 45/138 = 33%, 87/134 = 65% and 61/140 = 44% cited; the last Opus 5
+cassettes, counted by the same replay as the Opus 5.5 ones, gave 139/139 and
+74/139 = 53%. The citation rate is the one that swings, because the model writes
+a different amount of prose each time; Opus 5.5 wrote more of it (about 20,100
+characters before the tool call against 13,100) and attached 56 citations
+against 43. The verbatim rate reached 100% on 2026-09-11 because the refetched
 fixtures no longer carry the artifact every earlier failure was: the model
 reproducing a sentence with a superscript reference marker spliced into it
 (`( Fig. 111 2 )` for the document's `( Fig. 2 )`, all on PMID 35511193), which
@@ -206,11 +246,11 @@ invented prose, and it is exactly what the verbatim check exists to surface.
 **So the gate turns on the verbatim check, not the citation match.**
 `require_verified_quotes` (`PIPELINE_REQUIRE_VERIFIED_QUOTES`) filters on
 `locate_quote`: gating on citations would discard between a third and two thirds
-of the genes for want of prose, while gating on the document has dropped one
-gene in 138 at worst and none of 140 on the current recording. The citation
-match is still computed and logged, because it is the stronger claim where it
-exists — the API attests the model used that span — but it cannot be the gate at
-33–65% coverage.
+of the genes for want of prose, while gating on the document has dropped at most
+two genes in 124, and those two for one capitalised letter. The citation match
+is still computed and logged, because it is the stronger claim where it exists —
+the API attests the model used that span — but it cannot be the gate at 33–79%
+coverage.
 
 It still defaults to `False`. This lands as measurement: a quote that fails is a
 finding worth seeing before it is a gene worth losing, and each failure is
@@ -497,8 +537,8 @@ measurement none of them acts on.
 **The two numbers are published as two numbers.** `quotesVerbatim` asks whether
 the sentence is in the paper, of every gene. `quotesCited` asks whether the API
 attested to that span — the stronger claim, but bounded by how much prose the
-model wrote rather than by quote quality, which is why it sits at 61/140 while
-verbatim sits at 140/140. One averaged rate would report a quality figure the
+model wrote rather than by quote quality, which is why it sits at 98/124 while
+verbatim sits at 122/124. One averaged rate would report a quality figure the
 second number cannot carry.
 
 **A failed paper's quotes are un-counted, by the rule its genes already
@@ -761,15 +801,20 @@ widening a term list in the belief that it helps recall fails loudly).
 `tests/pipeline/csvd/test_extraction_golden.py` replays ten cassettes and
 asserts recall over the gold genes a paper's retrieved text actually names,
 reported apart for the 13 gold genes the prompt itself names -- **quote the
-clean 88%, not the pooled 91%**. Its `_RECALL_BASELINE` is raised when the
-prompt is widened, never to turn a red run green. What neither proves:
+clean 81%, not the pooled 85%**. Its `_RECALL_BASELINE` is raised when the
+prompt is widened, never to turn a red run green; three floors came down with
+the move to Opus 5.5, to what that re-record measured, and the module records
+the genes they lost. Every one of those was a gene Opus 5 reported below the
+update floor, bar one: scored after the floor, Opus 5 and Opus 5.5 recover 38/46
+and 39/46. What neither proves:
 
 - **Precision, anywhere.** The gold standard is a curated table, not a per-paper
   answer key, so a gene absent from it is unreviewed rather than wrong (the
   recorded cassette holds 43 genes against 17 gold rows on PMID 37069360,
-  missing only the one not in the retrieved text); precision is reported, never
-  asserted. The MeSH branch of `SVD_QUERY` is likewise a volume argument, and
-  nothing says what fraction of the extra papers a year is signal.
+  missing the one not in the retrieved text and FOXF2, which that text names
+  only in a GWAS table row); precision is reported, never asserted. The MeSH
+  branch of `SVD_QUERY` is likewise a volume argument, and nothing says what
+  fraction of the extra papers a year is signal.
 - **The Docling PDF path.** No golden fixture takes it -- all 22 gold PMIDs
   resolve through Europe PMC or an abstract.
 - **Negative cases.** Every gold row reports at least one gene, and inventing

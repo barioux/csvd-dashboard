@@ -102,11 +102,16 @@ _retrieved text actually names_:
 
 | Subset                      | Recall          |
 | --------------------------- | --------------- |
-| genes named in the prompt   | 19/20 = **95%** |
-| genes the prompt never says | 23/26 = **88%** |
-| pooled                      | 42/46 = **91%** |
+| genes named in the prompt   | 18/20 = **90%** |
+| genes the prompt never says | 21/26 = **81%** |
+| pooled                      | 39/46 = **85%** |
 
-**Quote the 88%** -- the clean subset is the one that measures extraction rather
+Measured on Claude Opus 5.5 (re-recorded 2026-11-02). Opus 5 scored 88% clean
+and 93% pooled on the same text, but the genes it found and Opus 5.5 did not
+were ones it reported below the confidence floor a run applies; after that floor
+the two models recover 38/46 and 39/46 of the pooled genes.
+
+**Quote the 81%** -- the clean subset is the one that measures extraction rather
 than recall of the prompt. 13 of the 36 gold genes are named verbatim in the
 rendered v7 prompt -- the `<example>` blocks that name them live in `prompt.md`,
 not the template in `pipeline/prompts.py` -- six of them with their expected

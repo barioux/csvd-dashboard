@@ -286,6 +286,8 @@ class MockUsage:
     output_tokens: int = 500
     cache_creation_input_tokens: int = 0
     cache_read_input_tokens: int = 0
+    # The SDK types it optional; None is a response that reports no split.
+    output_tokens_details: Any = None
 
 
 @dataclass
@@ -349,6 +351,8 @@ class MockAnthropicResponse:
     content: list[Any] | None = None
     parsed_output: Any = None
     stop_reason: str = "end_turn"
+    # Populated by the API only when stop_reason is "refusal".
+    stop_details: Any = None
 
     def __post_init__(self):
         if self.usage is None:

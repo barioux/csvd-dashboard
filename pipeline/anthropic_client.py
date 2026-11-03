@@ -28,12 +28,16 @@ from pipeline.extraction_models import (
     GeneEntry,
 )
 from pipeline.prompts import build_extraction_prompt, prompt_sha256
-from pipeline.quality_metrics import TokenUsage, accumulate_usage
+from pipeline.quality_metrics import (
+    TokenUsage,
+    accumulate_usage,
+    reported_thinking_tokens,
+)
 from pipeline.rate_limiter import AsyncRateLimiter, compute_backoff, resolve_retry_delay
 
 # Pricing per 1M tokens (input, output) for EXTRACTION_MODEL. Bump when
 # Anthropic changes published rates.
-MODEL_PRICING: Final[tuple[float, float]] = (5.0, 25.0)
+MODEL_PRICING: Final[tuple[float, float]] = (4.0, 20.0)
 
 # Where the SDK's calls land in the run report's External services panel.
 # The SDK owns its own transport, so no httpx event hook fires for it and
@@ -51,9 +55,11 @@ _ANTHROPIC_SERVICE: Final[str] = "anthropic"
 _MESSAGES_ENDPOINT: Final[str] = "/v1/messages"
 
 # Prompt-caching multipliers applied to the base input price. The pipeline
-# writes 1h TTL caches (see prompts.py), so writes cost 2x base.
+# writes 1h TTL caches (see prompts.py), so writes cost 2x base. Claude
+# Opus 5.5 reads its cache at 0.05x base ($0.20/M), not the 0.1x the
+# earlier Opus models charged.
 _CACHE_WRITE_MULTIPLIER: float = 2.0  # 1h TTL
-_CACHE_READ_MULTIPLIER: float = 0.1
+_CACHE_READ_MULTIPLIER: float = 0.05
 # The Message Batches API bills every token at half the streaming rate.
 _BATCH_MULTIPLIER: float = 0.5
 
@@ -66,6 +72,19 @@ _BATCH_MULTIPLIER: float = 0.5
 _MAX_THINKING_CHARS_LOGGED: Final[int] = 20_000
 
 logger = logging.getLogger(__name__)
+
+
+def _refusal_category(response: Any) -> str:
+    """The classifier category a refusal names, for the log line.
+
+    Claude Opus 5.5 runs a biology classifier beside the cyber one Opus 5
+    had, and this pipeline reads biology papers, so which classifier
+    declined is the first thing an operator needs to tell a false positive
+    from a prompt problem. `stop_details` is informational and may be
+    null, so a missing category reads as "unspecified" rather than failing.
+    """
+    details = getattr(response, "stop_details", None)
+    return getattr(details, "category", None) or "unspecified"
 
 
 def _extract_response_text(response: Any) -> tuple[str, str]:
@@ -140,13 +159,19 @@ def _record_thinking_trace(
 
 def _account_reasoning(response: Any, usage: TokenUsage | None) -> tuple[str, str]:
     """Split one response into answer text and reasoning trace, and charge
-    the trace its estimated share of that response's output tokens.
+    the trace its share of the output tokens when the API did not.
 
-    The API bills thinking and text as one output number, so the split is
-    estimated from the character ratio. *This* response's own output
-    tokens, not the accumulated total: ``usage`` carries every attempt of a
-    retried paper, and applying one response's thinking ratio to all of
-    them overstated the estimate by the earlier attempts' whole output.
+    The API reports the split in `usage.output_tokens_details`, and
+    accumulate_usage has already taken it from there; this adds nothing
+    then. Only a response that reports none is estimated, from the
+    character ratio of its thinking and text blocks, and the estimate is
+    poor: the tool call's JSON -- most of an extraction's output -- is in
+    neither, so its tokens are charged to thinking in proportion. Over the
+    seven Opus 5 golden cassettes it gave 55,631 thinking tokens where the
+    API reported 24,958. *This* response's own output tokens, not the
+    accumulated total: ``usage`` carries every attempt of a retried paper,
+    and applying one response's thinking ratio to all of them overstated
+    the estimate by the earlier attempts' whole output.
 
     ``usage`` is optional because a caller parsing batch results on its own
     may not be counting; the split is returned either way. Shared with
@@ -154,10 +179,13 @@ def _account_reasoning(response: Any, usage: TokenUsage | None) -> tuple[str, st
     ``thinkingTokens: 0`` beside a real output count.
     """
     text_content, thinking_text = _extract_response_text(response)
+    response_usage = getattr(response, "usage", None)
+    if usage is None or reported_thinking_tokens(response_usage) is not None:
+        return text_content, thinking_text
     thinking_chars = len(thinking_text)
     total_chars = thinking_chars + len(text_content)
-    response_output = response.usage.output_tokens if response.usage else 0
-    if usage is not None and total_chars > 0 and response_output > 0:
+    response_output = response_usage.output_tokens if response_usage else 0
+    if total_chars > 0 and response_output > 0:
         usage.thinking_tokens += int(response_output * thinking_chars / total_chars)
     return text_content, thinking_text
 
@@ -231,10 +259,10 @@ def _build_message_params(
         # forced tool call emits none. Probed -- forcing the call returns
         # 200 with zero citation objects.
         "tool_choice": {"type": "auto"},
+        # Always present: Claude Opus 5.5 defaults to "medium", so leaving
+        # effort out is not the same as asking for "high".
+        "output_config": config.output_config,
     }
-    # "high" is the API default, so an empty block is wire noise.
-    if output_config := config.output_config:
-        kwargs["output_config"] = output_config
     return kwargs
 
 
@@ -299,9 +327,14 @@ async def _stream_and_parse(
     # `fallbacks` parameter is not available on the Message Batches API, so
     # this path stays client-side for both callers.
     if response.stop_reason == "refusal":
-        logger.error(f"Request refused by safety classifier for PMID {pmid}")
+        category = _refusal_category(response)
+        logger.error(
+            f"Request refused by safety classifier for PMID {pmid} "
+            f"(category: {category})"
+        )
         raise ExtractionFailedError(
-            f"Refused by safety classifier for PMID {pmid}", usage
+            f"Refused by safety classifier for PMID {pmid} (category: {category})",
+            usage,
         )
 
     # Truncation is a deterministic token-budget problem, so retrying the

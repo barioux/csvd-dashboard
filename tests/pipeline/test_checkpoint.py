@@ -28,7 +28,7 @@ class TestFingerprint:
         other = checkpoint.fingerprint(PipelineConfig(llm_effort="low"))
 
         assert base != other
-        assert base["model"] == "claude-opus-5"
+        assert base["model"] == "claude-opus-5-5"
         assert base["prompt_version"] == "v7"
 
     def test_it_covers_the_rendered_prompt_bytes(self) -> None:

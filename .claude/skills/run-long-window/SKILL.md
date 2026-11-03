@@ -13,8 +13,9 @@ uv run python -m pipeline.main --pubmed --days-back 365 --export
 reach the database and `record_processed_pmids_batch` writes the PMIDs only once
 every paper has been extracted. Measured against the runs in `logs/json/`, a
 year's window is ~795 papers (the live count for the committed `SVD_QUERY`), ~3
-hours and ~$70 of Opus 5 extraction, and a crash at hour two used to discard all
-of it and record nothing.
+hours and ~$70 of extraction at Claude Opus 5's prices (the pipeline now runs
+Opus 5.5, 20% cheaper per token; re-measure before quoting a new figure), and a
+crash at hour two used to discard all of it and record nothing.
 
 **`pipeline/checkpoint.py` is what makes that survivable.** Each paper is
 appended to `logs/pipeline_checkpoint.jsonl` as it finishes, through the

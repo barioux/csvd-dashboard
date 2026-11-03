@@ -52,7 +52,7 @@ class TestPipelineConfigDefaults:
 
     def test_default_model(self):
         cfg = PipelineConfig()
-        assert cfg.llm_model == "claude-opus-5"
+        assert cfg.llm_model == "claude-opus-5-5"
 
     def test_default_max_tokens_matches_model(self):
         cfg = PipelineConfig()
@@ -72,7 +72,7 @@ class TestPipelineConfigDefaults:
         same code incomparable without anything saying so.
         """
         monkeypatch.setenv("PIPELINE_LLM_MODEL", "claude-haiku-4-5")
-        assert PipelineConfig().llm_model == "claude-opus-5"
+        assert PipelineConfig().llm_model == "claude-opus-5-5"
 
     def test_effort_defaults_to_high_and_stays_overridable(
         self, monkeypatch
@@ -117,8 +117,15 @@ class TestPipelineConfigDefaults:
         """
         assert PipelineConfig().extraction_tool["strict"] is False
 
-    def test_output_config_is_empty_at_the_default_effort(self) -> None:
-        assert PipelineConfig().output_config == {}
+    def test_output_config_states_the_default_effort(self) -> None:
+        """Claude Opus 5.5's API default is "medium", not "high".
+
+        Omitting effort at the default used to be wire noise, when the
+        model's default and ours agreed. They no longer do, so an omitted
+        effort would run every paper one level below what the run report
+        and the checkpoint fingerprint claim.
+        """
+        assert PipelineConfig().output_config == {"effort": "high"}
 
     def test_output_config_carries_a_non_default_effort(self, monkeypatch) -> None:
         monkeypatch.setenv("PIPELINE_LLM_EFFORT", "medium")
@@ -153,7 +160,7 @@ class TestPipelineConfigDefaults:
         assert set(gene["properties"]["gwas_trait"]["items"]["enum"]) == expected
 
     def test_the_truncation_limit_is_sized_for_a_1m_context(self):
-        """100,000 chars was a 200K-context limit; Opus 5 has 1M.
+        """100,000 chars was a 200K-context limit; Opus 5.5 has 1M.
 
         Truncation is still wanted -- an unbounded paper is an unbounded
         bill, and _read_pdf_bytes already caps input at 100 MB -- but the
@@ -210,7 +217,7 @@ class TestPipelineConfigDefaults:
         """Non-LLM pipeline modes can still build config without Anthropic creds."""
         monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
         cfg = PipelineConfig()
-        assert cfg.llm_model == "claude-opus-5"
+        assert cfg.llm_model == "claude-opus-5-5"
 
 
 class TestPipelineConfigEnvOverrides:
@@ -393,7 +400,7 @@ def test_the_reported_model_identity_is_the_pinned_one() -> None:
     """
     cfg = PipelineConfig()
     assert cfg.llm_model == EXTRACTION_MODEL
-    assert cfg.model_version == "5"
+    assert cfg.model_version == "5.5"
     assert cfg.thinking_mode == "adaptive"
 
 

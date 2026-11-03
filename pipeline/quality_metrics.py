@@ -16,9 +16,10 @@ class TokenUsage:
     output_tokens: int = 0
     cache_creation_input_tokens: int = 0
     cache_read_input_tokens: int = 0
-    # Estimated thinking tokens (output_tokens minus text-block tokens).
-    # The API does not separate thinking from text in usage counts, so this
-    # is set by the caller after inspecting response content blocks.
+    # Thinking tokens, as the API reports them in
+    # usage.output_tokens_details.thinking_tokens (accumulate_usage). Only a
+    # response that reports no split is estimated instead, from the
+    # character ratio of its blocks -- see _account_reasoning.
     thinking_tokens: int = 0
     # Count of responses that hit the max_tokens ceiling
     # (stop_reason=max_tokens for Anthropic). Providers set this to 1 on
@@ -28,7 +29,7 @@ class TokenUsage:
 
     @property
     def text_output_tokens(self) -> int:
-        """Estimated non-thinking output tokens."""
+        """Non-thinking output tokens: output less the thinking count."""
         return max(0, self.output_tokens - self.thinking_tokens)
 
     @property
@@ -53,8 +54,29 @@ class TokenUsage:
         return self
 
 
+def reported_thinking_tokens(response_usage: Any) -> int | None:
+    """The thinking tokens the API reports for one response, or None.
+
+    `usage.output_tokens_details.thinking_tokens` counts the raw reasoning
+    the model generated -- billed as output, never shown -- so it is the
+    exact split. The character-ratio estimate it replaces overstated it
+    2.2x on the golden cassettes, by charging the tool call's JSON to
+    thinking. The SDK types the field optional, and None
+    means "not reported" rather than "no thinking", so the caller can
+    estimate instead of publishing a zero beside a real output count.
+    """
+    details = getattr(response_usage, "output_tokens_details", None)
+    reported = getattr(details, "thinking_tokens", None)
+    return reported if isinstance(reported, int) else None
+
+
 def accumulate_usage(usage: TokenUsage, response: Any) -> None:
-    """Extract token counts from an Anthropic response and accumulate into *usage*."""
+    """Extract token counts from an Anthropic response and accumulate into *usage*.
+
+    Thinking tokens are taken here when the API reports them, which is
+    before any refusal or truncation check: a response cut off or declined
+    after reasoning was still billed for that reasoning.
+    """
     response_usage = getattr(response, "usage", None)
     if response_usage is None:
         return
@@ -67,6 +89,7 @@ def accumulate_usage(usage: TokenUsage, response: Any) -> None:
         cache_read_input_tokens=(
             getattr(response_usage, "cache_read_input_tokens", 0) or 0
         ),
+        thinking_tokens=reported_thinking_tokens(response_usage) or 0,
     )
 
 

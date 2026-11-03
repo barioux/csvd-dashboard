@@ -246,7 +246,7 @@ PROJECT_ROOT: Final[Path] = Path(__file__).resolve().parent.parent
 # a code change with a re-recorded harness, not an environment variable.
 # Effort stays overridable -- see PipelineConfig.llm_effort.
 EFFORT_LEVELS: Final[tuple[str, ...]] = ("low", "medium", "high", "xhigh", "max")
-EXTRACTION_MODEL: Final[str] = "claude-opus-5"
+EXTRACTION_MODEL: Final[str] = "claude-opus-5-5"
 
 # Name of the strict tool the extraction schema rides on. The response
 # parser matches tool_use blocks against it by name.
@@ -254,7 +254,7 @@ EXTRACTION_TOOL_NAME: Final[str] = "report_genes"
 
 # Reported in the run metadata beside EXTRACTION_MODEL. A constant rather
 # than a regex over the model name, now that there is one name to parse.
-EXTRACTION_MODEL_VERSION: Final[str] = "5"
+EXTRACTION_MODEL_VERSION: Final[str] = "5.5"
 
 # Maximum output tokens for EXTRACTION_MODEL — from the Anthropic model
 # table.
@@ -277,6 +277,8 @@ class PipelineConfig:
         default_factory=lambda: _env_int("PIPELINE_LLM_MAX_TOKENS", 0)
     )
     # Effort level: "high" (default), "low", "medium", "xhigh", or "max".
+    # Always transmitted -- see output_config for why the default cannot
+    # be left to the API.
     llm_effort: str = field(
         default_factory=lambda: _env_str("PIPELINE_LLM_EFFORT", "high")
     )
@@ -715,7 +717,7 @@ class PipelineConfig:
         """Thinking-block mode used for this model.
 
         Constant now that the model is pinned: adaptive is the only mode
-        Claude Opus 5 accepts. Still reported, because the run report
+        Claude Opus 5.5 accepts. Still reported, because the run report
         records the method a run used rather than only what varies.
         """
         return "adaptive"
@@ -750,7 +752,8 @@ class PipelineConfig:
         the validation-retry branch in anthropic_client turns into a retry
         rather than a bad row. Enforcement moved from the decoder to
         validate-and-retry; it did not disappear. Do not "fix" this back to
-        True without re-running that measurement.
+        True without re-running that measurement -- which has not been
+        repeated on Claude Opus 5.5, so the finding above is still Opus 5's.
 
         Keeping one definition here — rather than one per API path — means
         a schema change can't invalidate Anthropic's 24h schema cache on
@@ -772,16 +775,22 @@ class PipelineConfig:
     def thinking_config(self) -> dict[str, Any]:
         """`thinking` block shared by the streaming and batch paths.
 
-        Adaptive is the only mode Claude Opus 5 accepts: manual thinking
-        with `budget_tokens` is a 400 on 4.7 and later. Hoisted here so the
+        Adaptive is the only mode Claude Opus 5.5 accepts: manual thinking
+        with `budget_tokens` is a 400 on 4.7 and later, and on Opus 5.5
+        `{"type": "disabled"}` is a 400 at every effort. Hoisted here so the
         streaming and batch paths cannot drift, which they once did --
         streaming reserved tokens for the response text while batch took
         half of max_tokens unconditionally, giving the same paper a
         different reasoning allowance depending on the API it went through.
 
-        display="summarized" keeps thinking blocks populated for the
-        thinking/text ratio estimator in _stream_and_parse. The API default
-        is "omitted", which would make that ratio always 0.
+        display="summarized" keeps thinking blocks populated for the audit
+        trace _record_thinking_trace writes; the API default is "omitted",
+        which returns them empty. Token accounting no longer depends on it:
+        the API reports the thinking count itself, and the character-ratio
+        estimate is only the fallback for a response that does not. On
+        Claude Opus 5.5 a "summarized" trace also holds any progress
+        updates the model wrote before a tool call, which the API does not
+        mark apart from reasoning.
         """
         return {"type": "adaptive", "display": "summarized"}
 
@@ -789,11 +798,13 @@ class PipelineConfig:
     def output_config(self) -> dict[str, Any]:
         """`output_config` block shared by the streaming and batch paths.
 
-        Carries effort only. "high" is the API default, so effort is
-        transmitted only when overridden; the schema moved to
-        extraction_tool, because `format` is the one parameter citations
-        refuse to sit beside.
+        Carries effort only, and always carries it. Effort used to be sent
+        only when overridden, because "high" was Claude Opus 5's API
+        default; Claude Opus 5.5's default is "medium", so omitting it would
+        run every default-config paper one level below the setting the run
+        report publishes and the checkpoint fingerprints. Stating it makes
+        the request say what the method is rather than inheriting whatever
+        the API defaults to. The schema moved to extraction_tool, because
+        `format` is the one parameter citations refuse to sit beside.
         """
-        if self.llm_effort != "high":
-            return {"effort": self.llm_effort}
-        return {}
+        return {"effort": self.llm_effort}
