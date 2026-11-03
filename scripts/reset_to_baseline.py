@@ -32,7 +32,10 @@ protein the export of the day published as the gene symbol becomes
   baseline, and losing it is the one outcome a reset must never have.
 
 A baseline row that already carries a quote or a confidence is refused too:
-that is an extraction, not curation.
+that is an extraction, not curation. So is a live gene the baseline lacks
+unless it carries both: the pipeline inserts a gene with the quote and the
+confidence it was extracted with, so a row missing either was added some other
+way -- by a curator, after the baseline -- and the reset would delete it.
 
 **With --write, one transaction:** every genes row is deleted (the three list
 tables cascade) and the baseline inserted with the restore's own
@@ -151,7 +154,9 @@ def build_reset(
     baseline: Sequence[Mapping[str, Any]], current: Sequence[Mapping[str, Any]]
 ) -> list[GeneRestore]:
     """The baseline as rows to insert, in its own order, or ResetRefused
-    listing every row that fails a check -- all of them, not the first."""
+    listing every row that fails a check -- all of them, not the first.
+    A current gene the baseline lacks is removed only if an extraction
+    inserted it, which its quote and confidence show."""
     live = {row["gene"]: row for row in current}
     seen: set[str] = set()
     failures: list[str] = []
@@ -174,6 +179,11 @@ def build_reset(
         elif keys := additions_only(row, live[symbol]):
             failures.append(f"{symbol}: changed: {', '.join(keys)}")
         genes.append(gene)
+    for symbol, row in live.items():
+        if symbol not in seen and (
+            row["sourceQuote"] == _NOT_EXTRACTED or row["confidence"] is None
+        ):
+            failures.append(f"{symbol}: not in the baseline and not an extraction")
     if failures:
         raise ResetRefused(
             "The baseline cannot replace the current genes without losing "

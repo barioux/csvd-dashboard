@@ -264,9 +264,10 @@ uv run python -m scripts.reset_to_baseline --baseline PATH            # check
 uv run python -m scripts.reset_to_baseline --baseline PATH --write    # reset
 ```
 
-It refuses unless every baseline row round-trips through the export and the
-live table holds it plus additions only, so no curation made after the
-baseline can be thrown away unnoticed. It prints its target from the
+It refuses unless every baseline row round-trips through the export, the live
+table holds it plus additions only, and every gene it would remove carries the
+quote and confidence of the extraction that inserted it, so no curation made
+after the baseline can be thrown away unnoticed. It prints its target from the
 environment first. Take a dump, then rehearse on a throwaway `container` copy:
 `pg_restore --no-owner` the dump into one, export **all five** `DB_*` variables
 at its address (one left unset comes from `.env`, which names production), and

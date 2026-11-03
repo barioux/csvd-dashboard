@@ -139,3 +139,28 @@ def test_build_reset_refuses_a_row_that_does_not_round_trip() -> None:
         ResetRefused, match="ABC1: does not round-trip: affectedPathway"
     ):
         build_reset([_august(affectedPathway="")], [_today(affectedPathway="")])
+
+
+def test_build_reset_removes_a_gene_an_extraction_inserted() -> None:
+    genes = build_reset(
+        [_august("ABC1")],
+        [_today("ABC1"), _today("XYZ9", sourceQuote="A sentence.", confidence=0.7)],
+    )
+    assert [g.columns["gene"] for g in genes] == ["ABC1"]
+
+
+@pytest.mark.parametrize(
+    "provenance",
+    [{}, {"sourceQuote": "A sentence."}, {"confidence": 0.7}],
+    ids=["neither", "quote only", "confidence only"],
+)
+def test_build_reset_refuses_to_remove_a_gene_no_extraction_inserted(
+    provenance: dict[str, Any],
+) -> None:
+    """The pipeline inserts a gene with the quote and the confidence it was
+    extracted with, so a row missing either was added some other way -- by a
+    curator, after the baseline -- and deleting it would lose that curation."""
+    with pytest.raises(
+        ResetRefused, match="XYZ9: not in the baseline and not an extraction"
+    ):
+        build_reset([_august("ABC1")], [_today("ABC1"), _today("XYZ9", **provenance)])
