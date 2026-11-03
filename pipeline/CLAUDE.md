@@ -794,19 +794,19 @@ unnoticed -- `009_add_run_report` was applied to no database any test could see.
 ## What is not proven
 
 Retrieval recall and extraction recall are both measured and pinned.
-`tests/pipeline/csvd/test_query_recall.py` intersects `SVD_QUERY` with the 111
-PMIDs the dashboard cites (106 retrieved; the five misses and the reason for
-each are in `_MISSED`, and the anchor-only and MeSH-branch figures are pinned so
-widening a term list in the belief that it helps recall fails loudly).
-`tests/pipeline/csvd/test_extraction_golden.py` replays ten cassettes and
-asserts recall over the gold genes a paper's retrieved text actually names,
-reported apart for the 13 gold genes the prompt itself names -- **quote the
-clean 81%, not the pooled 85%**. Its `_RECALL_BASELINE` is raised when the
-prompt is widened, never to turn a red run green; three floors came down with
-the move to Opus 5.5, to what that re-record measured, and the module records
-the genes they lost. Every one of those was a gene Opus 5 reported below the
-update floor, bar one: scored after the floor, Opus 5 and Opus 5.5 recover 38/46
-and 39/46. What neither proves:
+`tests/pipeline/csvd/test_query_recall.py` intersects `SVD_QUERY` with a gold
+set of 178 PMIDs, every one the dashboard cites among them (173 retrieved; the
+five misses and the reason for each are in `_MISSED`, and the anchor-only and
+MeSH-branch figures are pinned so widening a term list in the belief that it
+helps recall fails loudly). `tests/pipeline/csvd/test_extraction_golden.py`
+replays ten cassettes and asserts recall over the gold genes a paper's retrieved
+text actually names, reported apart for the 13 gold genes the prompt itself
+names -- **quote the clean 81%, not the pooled 85%**. Its `_RECALL_BASELINE` is
+raised when the prompt is widened, never to turn a red run green; three floors
+came down with the move to Opus 5.5, to what that re-record measured, and the
+module records the genes they lost. Every one of those was a gene Opus 5
+reported below the update floor, bar one: scored after the floor, Opus 5 and
+Opus 5.5 recover 38/46 and 39/46. What neither proves:
 
 - **Precision, anywhere.** The gold standard is a curated table, not a per-paper
   answer key, so a gene absent from it is unreviewed rather than wrong (the
