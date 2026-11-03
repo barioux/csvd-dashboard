@@ -56,6 +56,11 @@ tests/pipeline/csvd/fixtures/papers/*.txt
 !tests/pipeline/csvd/fixtures/papers/31430377.txt
 !tests/pipeline/csvd/fixtures/papers/34358307.txt
 tests/pipeline/csvd/cassettes/test_extraction_golden/
+# Superseded recordings kept for comparison or for returning to an earlier
+# model. A sibling, not a subdirectory, of test_extraction_golden/, because
+# the re-record recipe starts by deleting that directory. They embed the same
+# publisher text.
+tests/pipeline/csvd/cassettes/archive/
 # Their locations before 2026-09-20. A checkout that still holds the files
 # there must not be able to commit them either; move them into csvd/.
 tests/pipeline/fixtures/papers/
