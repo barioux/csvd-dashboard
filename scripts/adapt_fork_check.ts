@@ -12,8 +12,11 @@
  * and the production build.
  *
  *   deno run -A scripts/adapt_fork_check.ts [exampleitis] [hard] [--e2e] [--keep]
+ *                                            [--shard=K/N]
  *
- * With no answer set named, both run. The Python checks use the checkout's
+ * With no answer set named, both run. `--shard=K/N` keeps every N-th of the
+ * sets that would run, from the K-th, which is how CI runs them as parallel
+ * legs (see `shard`). The Python checks use the checkout's
  * virtual environment (or UV_PROJECT_ENVIRONMENT's) without syncing it, and
  * the database tests reach PostgreSQL the way the checkout's do.
  */
@@ -32,6 +35,24 @@ const ANSWER_SETS: Readonly<Record<string, Answers>> = {
   exampleitis: EXAMPLEITIS,
   hard: FORK_HARD,
 };
+
+/**
+ * The answer sets one leg of `--shard=K/N` runs: every N-th of `names`, from
+ * the K-th. It splits by position rather than by name so that a set added to
+ * `ANSWER_SETS` lands in some leg of the CI matrix without the matrix
+ * changing -- a matrix listing the names would quietly never run it.
+ */
+export function shard(names: readonly string[], spec: string): string[] {
+  const match = /^(\d+)\/(\d+)$/.exec(spec);
+  const k = Number(match?.[1]);
+  const n = Number(match?.[2]);
+  if (match === null || k < 1 || k > n) {
+    throw new RangeError(
+      `--shard takes K/N with 1 <= K <= N, as in --shard=1/2; got "${spec}".`,
+    );
+  }
+  return names.filter((_, i) => i % n === k - 1);
+}
 
 /** The trees and the cassettes checklist step 3 deletes. */
 const UPSTREAM_TESTS = [
@@ -164,8 +185,21 @@ if (import.meta.main) {
     );
     Deno.exit(2);
   }
+  let names = named.length > 0 ? named : Object.keys(ANSWER_SETS);
+  const shardArg = Deno.args.find((arg) => /^--shard(=|$)/.test(arg));
+  if (shardArg !== undefined) {
+    try {
+      names = shard(names, shardArg.slice("--shard=".length));
+    } catch (error) {
+      console.error((error as Error).message);
+      Deno.exit(2);
+    }
+    if (names.length === 0) {
+      console.log(`${shardArg}: no answer set falls here`);
+    }
+  }
   const failed: string[] = [];
-  for (const name of named.length > 0 ? named : Object.keys(ANSWER_SETS)) {
+  for (const name of names) {
     const answers = ANSWER_SETS[name];
     // A set the wizard would not let through proves nothing about a fork.
     const issues = validate(answers);
