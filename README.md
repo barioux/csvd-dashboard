@@ -622,13 +622,18 @@ interactions**: the `longtask` API only reports tasks over 50 ms.
 `.github/workflows/ci.yml` runs five jobs on every push to `main` and every pull
 request:
 
-| Job          | Steps                                                                                                                                      |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `check`      | `deno install`, `deno task check`, `deno task test:coverage`, `deno task test:perf`                                                        |
-| `python`     | `uv sync --locked`, Ruff, ty, pytest with branch coverage against a `postgres:18` service, then `tests/scripts` in a step of its own       |
-| `e2e`        | Playwright against the production build, report uploaded                                                                                   |
-| `empty-data` | `deno task data:empty`, `git rm` of the four `csvd/` trees, then every gate above — the proof that a fork for another disease starts green |
-| `adapt-fork` | `scripts/adapt_fork_check.ts --e2e`: two wizard bundles unpacked over copies of the tree, the checklist followed, every gate run on each   |
+| Job          | Steps                                                                                                                                                                                         |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `check`      | `deno install`, `deno task check`, `deno task test:coverage`, `deno task test:perf`                                                                                                           |
+| `python`     | `uv sync --locked`, Ruff, ty, pytest with branch coverage against a `postgres:18` service, then `tests/scripts` in a step of its own                                                          |
+| `e2e`        | Playwright against the production build, report uploaded                                                                                                                                      |
+| `empty-data` | `deno task data:empty`, `git rm` of the four `csvd/` trees, then every gate above — the proof that a fork for another disease starts green                                                    |
+| `adapt-fork` | `scripts/adapt_fork_check.ts --e2e`: two wizard bundles unpacked over copies of the tree, the checklist followed, every gate run on each, one per parallel leg (`--shard=1/2`, `--shard=2/2`) |
+
+They run on `ubuntu-latest` unless the repository sets a `CI_RUNNER` variable
+naming a self-hosted runner label, which is how this project's private
+repository sends them to a machine of its own (the `ci-runner` skill,
+`.claude/skills/ci-runner/SKILL.md`). A fork sets nothing and needs nothing.
 
 `uv sync --locked` fails the build if `uv.lock` has drifted from
 `pyproject.toml` rather than silently re-resolving. CI does not gate the deploy
