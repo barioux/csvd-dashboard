@@ -419,6 +419,10 @@ _WRITTEN_TABLES: Final = (
     "sync_runs",
 )
 
+# A cache timestamp older than any TTL: the row was not fetched by this
+# database, and when it was fetched before the loss is not published.
+_NEVER_FETCHED: Final = datetime(1970, 1, 1)
+
 _GENE_LISTS: Final = (
     ("gene_gwas_traits", "trait", "traits"),
     ("gene_monogenic_links", "omim_id", "links"),
@@ -484,8 +488,20 @@ async def write_plan(plan: RestorePlan) -> dict[str, int]:
             ),
             plan.ncbi,
         )
+        # protein_info.json carries no protein name or GO terms, so these rows
+        # are incomplete -- and get_cached_uniprot_info treats any row younger
+        # than DB_CACHE_TTL_DAYS as a hit, NULL columns or not. Stamped with
+        # the epoch, they are stale to the sync's first read and refetched,
+        # while the export, which reads with no TTL, still publishes them.
+        # (ncbi_gene_info needs no stamp: a NULL map_location already makes
+        # get_cached_ncbi_genes withhold the row.) The trigger fires on
+        # UPDATE only, so the INSERT keeps these values.
         await conn.executemany(
-            _insert("uniprot_info", ["gene_symbol", "accession", "url"]), plan.uniprot
+            _insert(
+                "uniprot_info",
+                ["gene_symbol", "accession", "url", "fetched_at", "updated_at"],
+            ),
+            [(*row, _NEVER_FETCHED, _NEVER_FETCHED) for row in plan.uniprot],
         )
         await conn.executemany(
             _insert(
