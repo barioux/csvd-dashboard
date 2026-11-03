@@ -855,10 +855,14 @@ against the floor and the evidence beside it are one extraction.
 
 ## Long windows
 
-A `--days-back 365` run is ~795 papers, ~3 hours and ~$70 of extraction, and
-`pipeline/checkpoint.py` is what makes a crash at hour two survivable. The
-resume semantics, the `--batch` exception and `scripts.backfill_pubmed` are in
-"Commands" in the root `CLAUDE.md`; the checkpoint's own invariants (the
+The 2026-11-03 `--days-back 730` run under Opus 5.5 was 1,570 papers, ~4 hours
+and $116 of extraction (about $0.074 a paper, refusals included, since a
+pre-output refusal is billed), and `pipeline/checkpoint.py` is what makes a
+crash at hour two survivable. `--test-mode` gives a window's count for free;
+multiply before starting, and check the API credit balance covers it with room
+to spare -- see the `run-long-window` skill for what an exhausted balance does.
+The resume semantics, the `--batch` exception and `scripts.backfill_pubmed` are
+in "Commands" in the root `CLAUDE.md`; the checkpoint's own invariants (the
 fingerprint, the `flock`, the request-order merge) are in the `run-long-window`
 skill (`.claude/skills/run-long-window/SKILL.md`).
 
@@ -939,22 +943,23 @@ the sentence it was extracted with, so `merge_genes_transactional` guards both
 on the same predicate -- the stored quote being absent and this extraction
 carrying one -- in the `UPDATE` and in the `ON CONFLICT` branch alike. Filling
 them independently (two `COALESCE`s, as they were) would put the next paper's
-score beside this paper's sentence the first time a run touched `NOTCH3` or
-`COL4A1/2`, the two rows that carry a quote and no confidence: a number
-describing an extraction the reader cannot see. The consequence is that those
-two rows will **not** be backfilled by a run; their scores have to be read off
-the log of the run that produced their quotes and written by hand, or left null.
+score beside this paper's sentence the first time a run touched a row that
+carries a quote and no confidence: a number describing an extraction the reader
+cannot see. The consequence is that such a row is **not** backfilled by a run;
+its score has to be read off the log of the run that produced its quote and
+written by hand, or left null.
 
-Both were resolved on 2026-09-02, and differently, which is the rule working.
-`NOTCH3` was set to **0.9** by hand: run 7's stored report carries that score
-for PMID 42650130 beside the byte-identical quote the row holds, so the number
-and the sentence still describe one extraction and the pair invariant is intact.
-`COL4A1/2` is **left null**. Its quote came from PMID 42437605 in a run whose
-`pipeline_runs` row has since been pruned, so no record of that extraction's
-score survives; re-extracting the paper would produce a _different_ extraction's
-number to sit beside this extraction's sentence, which is the exact substitution
-the paired guard exists to prevent. A null confidence beside a quote is honest,
-and self-correcting — the next run that reads that paper fills both together.
+`NOTCH3` and `COL4A1/2` were the two such rows, and on 2026-09-02 they were
+resolved differently, which is the rule working. `NOTCH3` was set to 0.9 by
+hand, because run 7's stored report carried that score for PMID 42650130 beside
+the byte-identical quote; `COL4A1/2` was left null, because the run that quoted
+PMID 42437605 had been pruned and re-extracting the paper would have put a
+_different_ extraction's number beside that sentence. Neither stands now. On
+2026-11-03 the table was reset to its curated 31 August baseline, which carries
+no quote and no confidence (`scripts/reset_to_baseline.py` refuses a baseline
+row that does), and the 730-day re-extraction under Opus 5.5 filled each pair
+from one extraction: `NOTCH3` with PMID 41895274's sentence at 1.0, `COL4A1/2`
+with PMID 42607872's at 0.95. No pair in the table was written by hand.
 `tests/pipeline/test_database_integration.py` merges the pair both ways round
 against a real database.
 

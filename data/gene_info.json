@@ -378,52 +378,16 @@
     "otheraliases": "A3GALNT, A3GALT1, GTA, GTB, NAGAT"
   },
   {
-    "name": "ABCC6",
-    "uid": "368",
-    "description": "ATP binding cassette subfamily C member 6",
-    "otheraliases": "ABC34, ARA, EST349056, GACI2, MLP1, MOAT-E, MOATE, MRP6, PXE, PXE1, URG7"
+    "name": "ICOSLG",
+    "uid": "23308",
+    "description": "inducible T cell costimulator ligand",
+    "otheraliases": "B7-H2, B7H2, B7RP-1, B7RP1, B7h, CD275, GL50, ICOS-L, ICOSL, IMD119, LICOS"
   },
   {
-    "name": "MYH11",
-    "uid": "4629",
-    "description": "myosin heavy chain 11",
-    "otheraliases": "AAT4, FAA4, SMHC, SMMHC, SMMS-1, VSCM2"
-  },
-  {
-    "name": "NOTCH1",
-    "uid": "4851",
-    "description": "notch receptor 1",
-    "otheraliases": "AOS5, AOVD1, TAN1, hN1"
-  },
-  {
-    "name": "GLA",
-    "uid": "2717",
-    "description": "galactosidase alpha",
-    "otheraliases": "GALA"
-  },
-  {
-    "name": "AQP4",
-    "uid": "361",
-    "description": "aquaporin 4",
-    "otheraliases": "MIWC, MLC4, WCH4, hAQP4"
-  },
-  {
-    "name": "CST3",
-    "uid": "1471",
-    "description": "cystatin C",
-    "otheraliases": "ADLDWA, ARMD11, HEL-S-2"
-  },
-  {
-    "name": "ADA2",
-    "uid": "51816",
-    "description": "adenosine deaminase 2",
-    "otheraliases": "ADGF, CECR1, IDGFL, PAN, SNEDS, VAIHS"
-  },
-  {
-    "name": "APP",
-    "uid": "351",
-    "description": "amyloid beta precursor protein",
-    "otheraliases": "AAA, ABETA, ABPP, AD1, APPI, CTFgamma, CVAP, PN-II, PN2, alpha-sAPP, preA4"
+    "name": "WBP2",
+    "uid": "23558",
+    "description": "WW domain binding protein 2",
+    "otheraliases": "DFNB107, GRAMD6, WBP-2"
   },
   {
     "name": "TRIM65",
@@ -432,28 +396,82 @@
     "otheraliases": "4732463G12Rik"
   },
   {
+    "name": "UNK",
+    "uid": "85451",
+    "description": "unk zinc finger",
+    "otheraliases": "UNKEMPT, ZC3H5, ZC3HDC5"
+  },
+  {
+    "name": "GALK1",
+    "uid": "2584",
+    "description": "galactokinase 1",
+    "otheraliases": "GALK, GK1, HEL-S-19"
+  },
+  {
+    "name": "NEURL1",
+    "uid": "9148",
+    "description": "neuralized E3 ubiquitin protein ligase 1",
+    "otheraliases": "NEUR1, NEURL, RNF67, bA416N2.1, neu, neu-1"
+  },
+  {
+    "name": "STN1",
+    "uid": "79991",
+    "description": "STN1 subunit of CST complex",
+    "otheraliases": "AAF-44, AAF44, CRMCC2, OBFC1, RPA-32, bA541N10.2"
+  },
+  {
+    "name": "RPL12P16",
+    "uid": "100130447",
+    "description": "ribosomal protein L12 pseudogene 16",
+    "otheraliases": "RPL12_4_315"
+  },
+  {
+    "name": "ZSCAN9",
+    "uid": "7746",
+    "description": "zinc finger and SCAN domain containing 9",
+    "otheraliases": "PRD51, ZNF193"
+  },
+  {
+    "name": "FAM117B",
+    "uid": "150864",
+    "description": "family with sequence similarity 117 member B",
+    "otheraliases": "ALS2CR13"
+  },
+  {
+    "name": "GLA",
+    "uid": "2717",
+    "description": "galactosidase alpha",
+    "otheraliases": "GALA"
+  },
+  {
+    "name": "ABCC6",
+    "uid": "368",
+    "description": "ATP binding cassette subfamily C member 6",
+    "otheraliases": "ABC34, ARA, EST349056, GACI2, MLP1, MOAT-E, MOATE, MRP6, PXE, PXE1, URG7"
+  },
+  {
+    "name": "DCAKD",
+    "uid": "79877",
+    "description": "dephospho-CoA kinase domain containing",
+    "otheraliases": ""
+  },
+  {
+    "name": "APP",
+    "uid": "351",
+    "description": "amyloid beta precursor protein",
+    "otheraliases": "AAA, ABETA, ABPP, AD1, APPI, CTFgamma, CVAP, PN-II, PN2, alpha-sAPP, preA4"
+  },
+  {
+    "name": "ADA2",
+    "uid": "51816",
+    "description": "adenosine deaminase 2",
+    "otheraliases": "ADGF, CECR1, IDGFL, PAN, SNEDS, VAIHS"
+  },
+  {
     "name": "FBF1",
     "uid": "85302",
     "description": "Fas binding factor 1",
     "otheraliases": "Alb, FBF-1"
-  },
-  {
-    "name": "FMNL1",
-    "uid": "752",
-    "description": "formin like 1",
-    "otheraliases": "C17orf1, C17orf1B, FHOD4, FMNL, KW-13"
-  },
-  {
-    "name": "SLC12A2",
-    "uid": "6558",
-    "description": "solute carrier family 12 member 2",
-    "otheraliases": "BSC, BSC-2, BSC2, CCC1, KILQS, NKCC1, PPP1R141, hNKCC1"
-  },
-  {
-    "name": "CTC1",
-    "uid": "80169",
-    "description": "CST telomere replication complex component 1",
-    "otheraliases": "AAF-132, AAF132, C17orf68, CRMCC, tmp494178"
   },
   {
     "name": "MAPK7",
@@ -472,5 +490,35 @@
     "uid": "54986",
     "description": "unc-51 like kinase 4",
     "otheraliases": "FAM7C1, REC01035"
+  },
+  {
+    "name": "SLK",
+    "uid": "9748",
+    "description": "STE20 like kinase",
+    "otheraliases": "LOSK, STK2, bA16H23.1, se20-9"
+  },
+  {
+    "name": "ALCAM",
+    "uid": "214",
+    "description": "activated leukocyte cell adhesion molecule",
+    "otheraliases": "CD166, MEMD"
+  },
+  {
+    "name": "GJC1",
+    "uid": "10052",
+    "description": "gap junction protein gamma 1",
+    "otheraliases": "CX45, GJA7"
+  },
+  {
+    "name": "SLC25A44",
+    "uid": "9673",
+    "description": "solute carrier family 25 member 44",
+    "otheraliases": ""
+  },
+  {
+    "name": "EPHA2",
+    "uid": "1969",
+    "description": "EPH receptor A2",
+    "otheraliases": "ARCC2, CTPA, CTPP1, CTRCT6, ECK"
   }
 ]

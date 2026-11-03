@@ -45,7 +45,7 @@
     "gene": "NBEAL1",
     "protein": "NBEL1",
     "chromosomalLocation": "2q33.2",
-    "gwasTrait": ["BG-PVS", "WMH", "SVS"],
+    "gwasTrait": ["BG-PVS", "WMH", "SVS", "stroke", "FA"],
     "mendelianRandomization": "No",
     "evidenceFromOtherOmicsStudies": [
       "TWAS;cross tissue",
@@ -62,21 +62,27 @@
       "36180795",
       "34358307",
       "37069360",
-      "41400577"
+      "42907737",
+      "42890341",
+      "41400577",
+      "40770913",
+      "40141087",
+      "39965059"
     ],
-    "sourceQuote": "CSVD-associated polymorphisms at this  locus  correlate  with  increased  expression  of ICA1L and NBEAL1 in brain and vascular tissues, where they are hypothesized  to  exert  protective  effects  by  suppressing excitotoxicity  and  inflammation  [33].",
-    "confidence": 0.7
+    "sourceQuote": "At 2q33.1, NBEAL1 received dual MAGMA/TWAS validation and was previously associated with non-lobar ICH combined with SVS as a significant arterial cis-eQTL [ 42 ], with an independent WMH meta-analysis confirming this locus [ 43 ].",
+    "confidence": 0.8
   },
   {
     "gene": "ICA1L",
-    "protein": "Islet cell autoantigen 1-like protein",
+    "protein": "Islet cell autoantigen 1 like",
     "chromosomalLocation": "2q33.2",
-    "gwasTrait": ["BG-PVS", "WMH", "SVS"],
+    "gwasTrait": ["BG-PVS", "WMH", "stroke", "SVS", "FA"],
     "mendelianRandomization": "No",
     "evidenceFromOtherOmicsStudies": [
       "TWAS;cross tissue",
       "PWAS;brain tissue",
-      "TWAS"
+      "TWAS",
+      "PWAS"
     ],
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "EC",
@@ -90,10 +96,14 @@
       "34358307",
       "36180795",
       "37069360",
-      "41400577"
+      "42890341",
+      "41400577",
+      "40770913",
+      "40141087",
+      "39965059"
     ],
-    "sourceQuote": "CSVD-associated polymorphisms at this  locus  correlate  with  increased  expression  of ICA1L and NBEAL1 in brain and vascular tissues, where they are hypothesized  to  exert  protective  effects  by  suppressing excitotoxicity  and  inflammation  [33].",
-    "confidence": 0.7
+    "sourceQuote": "Transcriptome wide association study (TWAS) framework – testing for the genes whose change in the expression levels explain the trait-association strength for a genetic variant – has identified genes such as NBEAL1 and ICA1L (chr2q33.2), where their higher expression levels are linked to lower white matter integrity (FA), larger WMH burden, and increased stroke risk ( Table 2 ).",
+    "confidence": 0.75
   },
   {
     "gene": "LAMC1",
@@ -141,8 +151,8 @@
     "gene": "TRIM47",
     "protein": "TRI47",
     "chromosomalLocation": "17q25.1",
-    "gwasTrait": ["WMH", "extreme-cSVD", "PSMD", "DWMH"],
-    "mendelianRandomization": "Yes",
+    "gwasTrait": ["WMH", "extreme-cSVD", "PSMD", "SVS", "DWMH"],
+    "mendelianRandomization": "No",
     "evidenceFromOtherOmicsStudies": [
       "TWAS;cross tissue",
       "PWAS;brain tissue",
@@ -152,43 +162,43 @@
     "brainCellTypes": "EC>MG>SMC",
     "affectedPathway": "protein binding",
     "references": [
+      "42907737",
+      "42454751",
       "42403363",
-      "42253958",
-      "42039925",
       "41667829",
       "41554961",
       "41400577"
     ],
-    "sourceQuote": "This study establishes a critical role for TRIM47 in brain physiology and implicates dysregulation of the TRIM47–NRF2 axis in the pathogenesis of cSVD.",
+    "sourceQuote": "In this study, we report that the cSVD risk gene TRIM47 activates the NRF2 pathway in vitro and in vivo.",
     "confidence": 1.0
   },
   {
     "gene": "ITGB5",
     "protein": "ITB5",
     "chromosomalLocation": "3q21.2",
-    "gwasTrait": ["WM-PVS", "BG-PVS"],
+    "gwasTrait": ["WM-PVS"],
     "mendelianRandomization": "No",
-    "evidenceFromOtherOmicsStudies": ["TWAS;cross tissue", "TWAS", "PWAS"],
+    "evidenceFromOtherOmicsStudies": ["TWAS;cross tissue"],
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "MG>FB>SMC",
     "affectedPathway": "extracellular matrix organization",
     "references": ["37069360", "41400577"],
-    "sourceQuote": "Significant polymorphisms correlate with reduced expression of LPAR1 (encoding a lysophosphatidic acid receptor) in vascular tissues and decreased ITGB5 (encoding  integrin  subunit  beta  5)  levelsin  blood  [31].",
-    "confidence": 0.7
+    "sourceQuote": "Significant polymorphisms correlate with reduced expression of LPAR1 (encoding a lysophosphatidic acid receptor) in vascular tissues and decreased ITGB5 (encoding integrin subunit beta 5) levelsin blood [31].",
+    "confidence": 0.6
   },
   {
     "gene": "LPAR1",
-    "protein": "Lysophosphatidic acid receptor 1",
+    "protein": "(unknown)",
     "chromosomalLocation": "9q31.3",
-    "gwasTrait": ["WM-PVS", "BG-PVS"],
+    "gwasTrait": ["WM-PVS"],
     "mendelianRandomization": "No",
-    "evidenceFromOtherOmicsStudies": ["TWAS;cross tissue", "TWAS"],
+    "evidenceFromOtherOmicsStudies": ["TWAS;cross tissue"],
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "OL>FB",
     "affectedPathway": "cell surface",
     "references": ["37069360", "39805841", "41400577"],
-    "sourceQuote": "Significant polymorphisms correlate with reduced expression of LPAR1 (encoding a lysophosphatidic acid receptor) in vascular tissues and decreased ITGB5 (encoding  integrin  subunit  beta  5)  levelsin  blood  [31].",
-    "confidence": 0.7
+    "sourceQuote": "Significant polymorphisms correlate with reduced expression of LPAR1 (encoding a lysophosphatidic acid receptor) in vascular tissues and decreased ITGB5 (encoding integrin subunit beta 5) levelsin blood [31].",
+    "confidence": 0.6
   },
   {
     "gene": "LRRC25",
@@ -236,15 +246,22 @@
     "gene": "NMT1",
     "protein": "N-myristoyltransferase 1",
     "chromosomalLocation": "17q21.31",
-    "gwasTrait": ["WMH", "extreme-cSVD"],
+    "gwasTrait": ["WMH", "extreme-cSVD", "PSMD"],
     "mendelianRandomization": "Yes",
-    "evidenceFromOtherOmicsStudies": ["TWAS;brain"],
+    "evidenceFromOtherOmicsStudies": ["TWAS;brain", "TWAS"],
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "all<40",
     "affectedPathway": "apoptotic process",
-    "references": ["32358547", "33293549", "41512030", "41266628"],
-    "sourceQuote": "Two cis- pQTLs were associated with WMH volume at genome-wide significance 20 : for FBLN3 (encoded by EFEMP1 , chr2p16.1) and NMT1 (chr17q21.31), lower genetically determined plasma levels were associated with larger WMH volume.",
-    "confidence": 0.65
+    "references": [
+      "32358547",
+      "33293549",
+      "41512030",
+      "41266628",
+      "40770913",
+      "40141087"
+    ],
+    "sourceQuote": "NMT1 | ENSG00000136448 | 17 | 43035360 | 43186384 | N-myristoyltransferase 1 | HGNC:7857",
+    "confidence": 0.7
   },
   {
     "gene": "CCDC88C",
@@ -262,7 +279,7 @@
   },
   {
     "gene": "DEGS2",
-    "protein": "Delta 4-desaturase, sphingolipid 2",
+    "protein": "(unknown)",
     "chromosomalLocation": "14q32.2",
     "gwasTrait": ["WMH"],
     "mendelianRandomization": "No",
@@ -270,27 +287,36 @@
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "EC",
     "affectedPathway": "integral to membrane",
-    "references": ["32358547", "33293549", "37069360", "35943854", "42039925"],
-    "sourceQuote": "| DEGS2 | rs7157599 | 14 | 100625902 | −0.286 | 0.0537 | 28.37 | 1.01E‐07 | 0.0001",
-    "confidence": 0.5
+    "references": ["32358547", "33293549", "37069360", "35943854", "42907737"],
+    "sourceQuote": "Of the 101 genes significant at the latent-factor level, 6 ( PGBD1 , PPP1R18 , HIST1H2AA , DEGS2 , HIST1H4A , TUBB ) were not significant in any single constituent trait, whereas genes such as SH3PXD2A were significant in both the multivariate and single-trait analyses, confirming consistency between the two approaches.",
+    "confidence": 0.55
   },
   {
     "gene": "KLHL24",
-    "protein": "Kelch-like family member 24",
+    "protein": "(unknown)",
     "chromosomalLocation": "3q27.1",
-    "gwasTrait": ["WMH"],
+    "gwasTrait": ["WMH", "SVS", "PSMD"],
     "mendelianRandomization": "Yes",
     "evidenceFromOtherOmicsStudies": ["TWAS;brain", "TWAS"],
     "linkToMonogenicDisease": ["617294", "620236"],
     "brainCellTypes": "SMC>EC>PC",
     "affectedPathway": "protein binding",
-    "references": ["32358547", "33293549", "39114924", "42039925", "41554961"],
+    "references": [
+      "32358547",
+      "33293549",
+      "39114924",
+      "42907737",
+      "42039925",
+      "41554961",
+      "40770913",
+      "40141087"
+    ],
     "sourceQuote": "In addition, KLHL24 on chromosome 3 correlated across six brain regions for trans-ethnic meta-analysis of WMH-GWAS.",
     "confidence": 0.75
   },
   {
     "gene": "SLC13A3",
-    "protein": "Solute carrier family 13 member 3",
+    "protein": "(unknown)",
     "chromosomalLocation": "20q13.12",
     "gwasTrait": ["WM-PVS"],
     "mendelianRandomization": "No",
@@ -298,13 +324,13 @@
     "linkToMonogenicDisease": ["618384"],
     "brainCellTypes": "FB>AC",
     "affectedPathway": "transmembrane transport",
-    "references": ["37069360", "41400577"],
-    "sourceQuote": "GWAS  profiles  for enlarged PVS implicate genes associated with hereditary leukodystrophies ( GFAP, SLC13A3,  PNPT1 ),  ECM organization, and endothelial differentiation [31].",
-    "confidence": 0.55
+    "references": ["37069360", "40770913"],
+    "sourceQuote": "Similarly, several risk loci for white matter PVS burden in older adults ( OPA1 [chr3q29], SLC13A3 [chr20q13.12], and CENPF/KCNK2 [chr1q41]) show significant associations with PVS burden in individuals in their twenties.",
+    "confidence": 0.45
   },
   {
     "gene": "WNT7A",
-    "protein": "Wnt family member 7A",
+    "protein": "(unknown)",
     "chromosomalLocation": "3p25.1",
     "gwasTrait": ["WM-PVS"],
     "mendelianRandomization": "No",
@@ -312,9 +338,9 @@
     "linkToMonogenicDisease": ["228930", "276820", "613005"],
     "brainCellTypes": "AC",
     "affectedPathway": "wnt signaling pathway",
-    "references": ["34358307", "37069360", "42039925"],
-    "sourceQuote": "| WNT7A | rs9310431 | 3 | 13811594 | 0.1454 | 0.0302 | 23.18 | 1.43E‐06 | 0.0040",
-    "confidence": 0.5
+    "references": ["34358307", "37069360"],
+    "sourceQuote": "(not yet extracted)",
+    "confidence": null
   },
   {
     "gene": "PLEKHG1",
@@ -374,12 +400,13 @@
   },
   {
     "gene": "SH3PXD2A",
-    "protein": "SH3 and PX domain-containing protein 2A (TKS5)",
+    "protein": "SH3 and PX domains 2A",
     "chromosomalLocation": "10q24.33",
     "gwasTrait": ["WMH", "PSMD", "SVS"],
     "mendelianRandomization": "No",
     "evidenceFromOtherOmicsStudies": [
       "mutation effect prediction on ncRNA transcription",
+      "TWAS",
       "EWAS"
     ],
     "linkToMonogenicDisease": ["(none found)"],
@@ -391,19 +418,26 @@
       "33773637",
       "35511193",
       "34358307",
+      "42907737",
       "41554961",
-      "41400577"
+      "41400577",
+      "40770913",
+      "39965059"
     ],
-    "sourceQuote": "Two of the GWS-loci showed significant association with the nearest genes, SH3PXD2A and COL4A2 , while the other loci influenced the expression of different genes, not the genes nearest in position.",
-    "confidence": 0.75
+    "sourceQuote": "At 10q24.33, SH3PXD2A occupied the top rank in both MAGMA and TWAS.",
+    "confidence": 0.8
   },
   {
     "gene": "EFEMP1",
     "protein": "FBLN3",
     "chromosomalLocation": "2p16.1",
-    "gwasTrait": ["WMH", "extreme-cSVD", "WM-PVS", "HIP-PVS"],
+    "gwasTrait": ["WMH", "extreme-cSVD", "WM-PVS", "HIP-PVS", "SVS"],
     "mendelianRandomization": "Yes",
-    "evidenceFromOtherOmicsStudies": ["proteomics", "TWAS;brain tissue"],
+    "evidenceFromOtherOmicsStudies": [
+      "proteomics",
+      "TWAS;brain tissue",
+      "TWAS"
+    ],
     "linkToMonogenicDisease": ["126600", "611276", "620780"],
     "brainCellTypes": "FB",
     "affectedPathway": "extracellular matrix",
@@ -413,11 +447,13 @@
       "35511193",
       "37069360",
       "39114924",
+      "42907737",
       "42039925",
-      "41266628"
+      "41266628",
+      "40141087"
     ],
-    "sourceQuote": "Two cis- pQTLs were associated with WMH volume at genome-wide significance 20 : for FBLN3 (encoded by EFEMP1 , chr2p16.1) and NMT1 (chr17q21.31), lower genetically determined plasma levels were associated with larger WMH volume.",
-    "confidence": 0.6
+    "sourceQuote": "rs7596872 (2p16.1, PIP = 1.00) is located within an intron of EFEMP1 (CADD = 9.27) in a genomic segment with an active-transcription-associated chromatin state.",
+    "confidence": 0.75
   },
   {
     "gene": "FBN2",
@@ -437,32 +473,42 @@
     "gene": "FOXF2",
     "protein": "Forkhead box protein F2",
     "chromosomalLocation": "6p25.3",
-    "gwasTrait": ["stroke", "WM-PVS", "PSMD", "SVS"],
+    "gwasTrait": ["stroke", "WM-PVS", "PSMD", "SVS", "WMH"],
     "mendelianRandomization": "Yes",
-    "evidenceFromOtherOmicsStudies": ["PWAS"],
+    "evidenceFromOtherOmicsStudies": ["proteomics"],
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "EC>PC>FB",
     "affectedPathway": "extracellular matrix organization",
-    "references": ["33773637", "37069360", "41789880", "41398477", "41398476"],
-    "sourceQuote": "In conclusion, our findings demonstrate that Foxf2 , a major risk gene for stroke and SVD, maintains EC function through Tie2 signaling.",
+    "references": [
+      "33773637",
+      "37069360",
+      "41789880",
+      "41398477",
+      "41398476",
+      "40770913"
+    ],
+    "sourceQuote": "Here we show that Foxf2 , a major risk gene for stroke and SVD, acts as a transcriptional activator of Tie2 and other endothelial lineage-specific genes and maintains BEC function through Tie2 signaling.",
     "confidence": 0.9
   },
   {
     "gene": "HTRA1",
-    "protein": "HtrA serine peptidase 1",
+    "protein": "HtrA serine protease 1",
     "chromosomalLocation": "10q26.13",
     "gwasTrait": [
       "stroke",
       "SVS",
+      "PVWMH",
       "WMH",
-      "lacunes",
       "CMB",
-      "lacunar stroke",
+      "lacunes",
       "HIP-PVS",
-      "FA"
+      "FA",
+      "DWMH",
+      "BG-PVS",
+      "extreme-cSVD"
     ],
     "mendelianRandomization": "Yes",
-    "evidenceFromOtherOmicsStudies": ["TWAS;cross-tissue", "WES/WGS"],
+    "evidenceFromOtherOmicsStudies": ["TWAS;cross-tissue", "WES/WGS", "TWAS"],
     "linkToMonogenicDisease": ["600142", "616779"],
     "brainCellTypes": "AC>OL>FB",
     "affectedPathway": "extracellular matrix",
@@ -470,18 +516,24 @@
       "26063658",
       "33773636",
       "33773637",
-      "42246940",
-      "42169653",
       "42116316",
       "41371679",
       "41266628",
       "41200916",
       "41142321",
       "41062325",
-      "40898560"
+      "40898560",
+      "40866829",
+      "40770913",
+      "40632435",
+      "40607620",
+      "40343074",
+      "40141087",
+      "40017561",
+      "39965059"
     ],
-    "sourceQuote": "Here we derived iPSC from skin biopsies obtained from patients with two of the most common monogenic forms of cSVD, HTRA1 mutations and COL4A1/2 mutations.",
-    "confidence": 0.95
+    "sourceQuote": "METHODS: We identified 21 unrelated Taiwanese subjects carrying 15 heterozygous HTRA1 variants, all functionally validated as pathogenic through in vitro protease activity assays.",
+    "confidence": 1.0
   },
   {
     "gene": "C6orf195",
@@ -499,17 +551,17 @@
   },
   {
     "gene": "GFAP",
-    "protein": "glial fibrillary acidic protein",
+    "protein": "(unknown)",
     "chromosomalLocation": "17q21.31",
-    "gwasTrait": ["WM-PVS"],
+    "gwasTrait": ["WM-PVS", "WMH"],
     "mendelianRandomization": "No",
     "evidenceFromOtherOmicsStudies": ["(none found)"],
     "linkToMonogenicDisease": ["203450"],
     "brainCellTypes": "OL",
     "affectedPathway": "astrocyte development",
-    "references": ["37069360", "41554961", "41400577"],
+    "references": ["37069360", "41554961"],
     "sourceQuote": "Lead SNPs of two GWS-loci on chromosome 17 were missense variants, suggesting they may cause WMH risk through effects on protein function, but the SNPs also appeared to affect the expression of other genes.",
-    "confidence": 0.6
+    "confidence": 0.68
   },
   {
     "gene": "CENPF",
@@ -537,15 +589,15 @@
     "linkToMonogenicDisease": ["225100"],
     "brainCellTypes": "OL>FB>SMC",
     "affectedPathway": "extracellular matrix organization",
-    "references": ["33293549", "32358547", "42236496"],
-    "sourceQuote": "Other loci include rs34580448 (near VCAN), and rs11259505 (regulated the ADAMTSL4 by eQTL).",
-    "confidence": 0.6
+    "references": ["33293549", "32358547"],
+    "sourceQuote": "(not yet extracted)",
+    "confidence": null
   },
   {
     "gene": "APOE",
     "protein": "Apo E",
     "chromosomalLocation": "19q13.32",
-    "gwasTrait": ["WMH", "CMB", "MD", "PSMD", "FA"],
+    "gwasTrait": ["WMH", "CMB", "SVS", "MD", "FA"],
     "mendelianRandomization": "Yes",
     "evidenceFromOtherOmicsStudies": ["(none found)"],
     "linkToMonogenicDisease": ["617347", "269600", "611771", "104310"],
@@ -553,17 +605,16 @@
     "affectedPathway": "artery morphogenesis",
     "references": [
       "32913026",
-      "42626038",
-      "42621038",
+      "42907737",
+      "42304169",
       "42039925",
       "41400577",
-      "41395713",
       "41266628",
-      "41089070",
-      "41074918"
+      "39965059",
+      "39818967"
     ],
-    "sourceQuote": "Elevated vascular permeability and reduced RI within WMHs relative to NAWM were observed only in APOE ε4 carriers, whereas reduced RD and increased IF within WMHs were observed in both genotypes.",
-    "confidence": 0.55
+    "sourceQuote": "BTN3A2 (6p22.1) reached significance in both methods, supporting innate immune involvement, and MAGMA additionally identified APOE and APOC1 at 19q13.32, confirming a genetic intersection with CAA and lipid metabolism consistent with the Alzheimer’s disease gene-set enrichment.",
+    "confidence": 0.65
   },
   {
     "gene": "VCAN",
@@ -581,14 +632,14 @@
       "34358307",
       "38811690",
       "42236496",
-      "41400577"
+      "40770913"
     ],
-    "sourceQuote": "Among these, we replicated 126 of 413 and 56 of 137 MAGMA-identified genes from two previous studies of FA,, such as GMNC, MAPT, VCAN, and PTCH.",
+    "sourceQuote": "For example, risk variants for WMH burden – particularly at KLHL24 (chr3q27.1), VCAN (chr5q14.2), SH3PXD2A (chr10q24.33), and NMT1 (chr17q21.31) – identified in older adults are also associated with variation in DTI metrics in young adults, including PSMD.",
     "confidence": 0.6
   },
   {
     "gene": "HBEGF",
-    "protein": "Heparin-binding EGF-like growth factor",
+    "protein": "(unknown)",
     "chromosomalLocation": "5q31.3",
     "gwasTrait": ["FA", "MD"],
     "mendelianRandomization": "No",
@@ -596,17 +647,17 @@
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "EC>SMC>AC",
     "affectedPathway": "extracellular space",
-    "references": ["32358547", "41400577"],
-    "sourceQuote": "The  most  significant polymorphisms associated with DTI metrics are located at the  5q14 ( VCAN )  and 5q31 ( HBEGF )  loci.",
-    "confidence": 0.6
+    "references": ["32358547"],
+    "sourceQuote": "(not yet extracted)",
+    "confidence": null
   },
   {
     "gene": "CALCRL",
     "protein": "Calcitonin receptor-like receptor",
     "chromosomalLocation": "2q32.1",
-    "gwasTrait": ["WMH", "PSMD"],
+    "gwasTrait": ["WMH", "PSMD", "FA", "MD"],
     "mendelianRandomization": "Yes",
-    "evidenceFromOtherOmicsStudies": ["TWAS;cross tissue"],
+    "evidenceFromOtherOmicsStudies": ["TWAS;cross tissue", "TWAS"],
     "linkToMonogenicDisease": ["618773"],
     "brainCellTypes": "EC>MG>FB",
     "affectedPathway": "angiogenesis",
@@ -615,19 +666,19 @@
       "33293549",
       "35511193",
       "35943854",
-      "42039925",
-      "41512030"
+      "41512030",
+      "40141087"
     ],
-    "sourceQuote": "Taken together, these multilevel analyses indicate that both CALCRL and ERK5 are causally linked to WMH, but ERK5 shows more consistent biological effects and a more favorable safety profile.",
-    "confidence": 0.65
+    "sourceQuote": "CALCRL | ENSG00000064989 | 2 | 188206691 | 188313187 | Calcitonin receptor like receptor | HGNC:16709",
+    "confidence": 0.7
   },
   {
     "gene": "CARF",
-    "protein": "(unknown)",
+    "protein": "Calcium responsive transcription factor",
     "chromosomalLocation": "2q33.2",
-    "gwasTrait": ["WMH", "FA", "lacunar stroke", "PSMD"],
+    "gwasTrait": ["WMH", "FA", "lacunar stroke", "PSMD", "stroke", "SVS"],
     "mendelianRandomization": "No",
-    "evidenceFromOtherOmicsStudies": ["TWAS;cross tissue"],
+    "evidenceFromOtherOmicsStudies": ["TWAS;cross tissue", "TWAS"],
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "all<40",
     "affectedPathway": "cellular response to calcium ion",
@@ -637,10 +688,12 @@
       "33773637",
       "36180795",
       "34358307",
-      "37069360"
+      "37069360",
+      "42890341",
+      "39965059"
     ],
-    "sourceQuote": "(not yet extracted)",
-    "confidence": null
+    "sourceQuote": "The 2q33 module-comprising ICA1L, NBEAL1, FAM117B, and CARF-provided the most coherent gene set linking ICH to cSVD-related and non-lobar vulnerability.",
+    "confidence": 0.68
   },
   {
     "gene": "COL4A1/2",
@@ -652,18 +705,16 @@
       "MD",
       "lacunes",
       "CMB",
-      "FA",
+      "stroke",
       "BG-PVS",
-      "extreme-cSVD",
-      "lacunar stroke",
-      "stroke"
+      "lacunar stroke"
     ],
     "mendelianRandomization": "No",
     "evidenceFromOtherOmicsStudies": [
       "WES/WGS",
-      "proteomics",
       "WES/WGS",
-      "TWAS"
+      "TWAS",
+      "proteomics"
     ],
     "linkToMonogenicDisease": [
       "175780",
@@ -683,12 +734,13 @@
       "36180795",
       "34358307",
       "42437605",
+      "42921483",
+      "42890341",
+      "42886875",
+      "42661427",
       "42607872",
       "42438399",
-      "42253958",
-      "42246940",
       "42237372",
-      "42225261",
       "42103335",
       "42065832",
       "41784710",
@@ -700,10 +752,20 @@
       "41311701",
       "41200916",
       "41052699",
-      "41001161"
+      "41001161",
+      "40846110",
+      "40770913",
+      "40555665",
+      "40343074",
+      "40261521",
+      "40123492",
+      "39976879",
+      "39965059",
+      "39743006",
+      "39543785"
     ],
-    "sourceQuote": "Genetic testing identified a heterozygous pathogenic COL4A1 3' untranslated region variant (c.*31G>T), confirming the diagnosis of PADMAL.",
-    "confidence": null
+    "sourceQuote": "The studies revealed that Col4a1+/Svc mice have reduced myelinating oligodendrocyte pools, axonal myelination defects, and altered white matter structural integrity as well as cognitive impairments.",
+    "confidence": 0.95
   },
   {
     "gene": "NOTCH3",
@@ -714,9 +776,16 @@
       "stroke",
       "lacunar stroke",
       "lacunes",
+      "DWMH",
+      "PVWMH",
       "CMB",
+      "WM-PVS",
       "SVS",
-      "PVWMH"
+      "PSMD",
+      "MD",
+      "extreme-cSVD",
+      "BG-PVS",
+      "FA"
     ],
     "mendelianRandomization": "No",
     "evidenceFromOtherOmicsStudies": ["WES/WGS", "proteomics"],
@@ -732,41 +801,75 @@
     "references": [
       "19539236",
       "30859180",
+      "42684564",
+      "42661427",
       "42650130",
       "42533185",
       "42421401",
+      "42295277",
+      "42290888",
       "42249339",
-      "42246940",
       "42237372",
+      "42236108",
       "42177738",
       "42147988",
       "42012365",
       "42006602",
-      "42002114",
       "41951984",
       "41947304",
+      "41925165",
       "41895274",
       "41841652",
-      "41806331",
       "41776534",
       "41669960",
       "41669348",
+      "41622715",
       "41614465",
       "41595517",
-      "41327223",
+      "41356923",
       "41300806",
-      "41222721",
       "41196431",
       "41139503",
       "41110835",
       "41018180",
-      "42684564",
       "40999599",
       "40982447",
-      "40908978"
+      "40908978",
+      "40882175",
+      "40879038",
+      "40854260",
+      "40770913",
+      "40607620",
+      "40518582",
+      "40470487",
+      "40456481",
+      "40379656",
+      "40343074",
+      "40319408",
+      "40301727",
+      "40270244",
+      "40265482",
+      "40176124",
+      "40145673",
+      "40117968",
+      "40067051",
+      "40016442",
+      "39983483",
+      "41222721",
+      "40764588",
+      "39965059",
+      "39924233",
+      "39919799",
+      "39864627",
+      "39806999",
+      "39689282",
+      "39610302",
+      "39588856",
+      "39547790",
+      "39543785"
     ],
-    "sourceQuote": "The pathogenic NOTCH3 variant NM_000435.2:c.3016C>T, p.(Arg1006Cys) was identified in a heterozygous state in the proband and in his father, and a genetic diagnosis of CADASIL was made in both.",
-    "confidence": 0.9
+    "sourceQuote": "Thus, we show that pathogenic NOTCH3 variants lead to phenotypic changes in VSMCs upon interaction with ECs, which can be reversed by targeting NOTCH3 cleavage.",
+    "confidence": 1.0
   },
   {
     "gene": "CTSA",
@@ -784,21 +887,21 @@
   },
   {
     "gene": "TREX1",
-    "protein": "(unknown)",
+    "protein": "Three prime repair exonuclease 1",
     "chromosomalLocation": "3p21.31",
-    "gwasTrait": ["(none found)"],
+    "gwasTrait": ["WMH", "MD", "lacunes"],
     "mendelianRandomization": "No",
     "evidenceFromOtherOmicsStudies": ["(none found)"],
     "linkToMonogenicDisease": ["192315"],
     "brainCellTypes": "MG>FB>EC",
     "affectedPathway": "cell death",
-    "references": ["30859180"],
-    "sourceQuote": "(not yet extracted)",
-    "confidence": null
+    "references": ["30859180", "41719494", "40343074"],
+    "sourceQuote": "It is unclear how mutations in TREX1 result in vascular dementia, but neuropathologic studies implicate chronic ischemia via arteriolar wall thickening, luminal narrowing and vessel destruction.",
+    "confidence": 0.8
   },
   {
     "gene": "ARSB",
-    "protein": "Arylsulfatase B",
+    "protein": "(unknown)",
     "chromosomalLocation": "5q14.1",
     "gwasTrait": ["(none found)"],
     "mendelianRandomization": "Yes",
@@ -808,7 +911,7 @@
     "affectedPathway": "central nervous system development",
     "references": ["41266628"],
     "sourceQuote": "While ARSB deficiency causes a lysosomal storage disorder 54 , here higher CSF and plasma ARSB levels were associated with greater WMH volume (2SMR and observational), making ARSB a compelling candidate to explore as a potential biomarker of cSVD.",
-    "confidence": 0.6
+    "confidence": 0.5
   },
   {
     "gene": "GP1BA",
@@ -848,26 +951,27 @@
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "(unknown)",
     "affectedPathway": "integral to plasma membrane",
-    "references": ["41266628"],
-    "sourceQuote": "Nominal associations were observed for four additional proteins (BT2A1, CTSB, TNC and PSMP (WMH); Figs.",
-    "confidence": 0.45
+    "references": ["(reference needed)"],
+    "sourceQuote": "(not yet extracted)",
+    "confidence": null
   },
   {
     "gene": "BTN3A2",
     "protein": "BT3A2",
     "chromosomalLocation": "6p22.2",
-    "gwasTrait": ["(none found)"],
+    "gwasTrait": ["WMH", "SVS", "FA", "MD"],
     "mendelianRandomization": "Yes",
     "evidenceFromOtherOmicsStudies": [
       "proteomics",
-      "TWAS;whole blood and artery coronary"
+      "TWAS;whole blood and artery coronary",
+      "TWAS"
     ],
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "(unknown)",
     "affectedPathway": "integral to membrane",
-    "references": ["32358547", "39114924", "42039925", "41266628"],
-    "sourceQuote": "Consistent with the 2024 cSVD druggable 2SMR by Yang et al., 17 our exploratory analysis of vascular imaging markers identified significant eQTLs for KLHL24, BTN3A2 , and EFEMP1 , with additional genes— PTGDR and MICA —showing significance in at least two tissues.",
-    "confidence": 0.55
+    "references": ["32358547", "39114924", "42907737", "42039925", "41266628"],
+    "sourceQuote": "BTN3A2 (6p22.1) reached significance in both methods, supporting innate immune involvement, and MAGMA additionally identified APOE and APOC1 at 19q13.32, confirming a genetic intersection with CAA and lipid metabolism consistent with the Alzheimer’s disease gene-set enrichment.",
+    "confidence": 0.75
   },
   {
     "gene": "BTN3A3",
@@ -885,7 +989,7 @@
   },
   {
     "gene": "COL6A1",
-    "protein": "Collagen type VI alpha 1 chain",
+    "protein": "(unknown)",
     "chromosomalLocation": "21q22.3",
     "gwasTrait": ["(none found)"],
     "mendelianRandomization": "Yes",
@@ -895,7 +999,7 @@
     "affectedPathway": "extracellular matrix",
     "references": ["41266628"],
     "sourceQuote": "We identified such drugs for EPO, lactoferrin (LTF), TFPI and EPHB4 for WMHs; GPNMB and PCSK9 for WM-PVSs and COL6A1 for BG-PVSs ( Figs.",
-    "confidence": 0.5
+    "confidence": 0.45
   },
   {
     "gene": "CTSB",
@@ -903,35 +1007,35 @@
     "chromosomalLocation": "8p23.1",
     "gwasTrait": [
       "WMH",
+      "BG-PVS",
+      "HIP-PVS",
+      "WM-PVS",
       "FA",
       "MD",
-      "BG-PVS",
-      "WM-PVS",
-      "HIP-PVS",
       "lacunar stroke"
     ],
     "mendelianRandomization": "Yes",
-    "evidenceFromOtherOmicsStudies": ["proteomics", "PWAS"],
+    "evidenceFromOtherOmicsStudies": ["proteomics", "proteomics"],
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "MG>AC>FB",
     "affectedPathway": "extracellular space",
-    "references": ["42040931", "41266628"],
-    "sourceQuote": "In combination, these results suggest that CTSB lies upstream of WMH in the causal pathway and mediates part of the polygenic effect on WMH volume.",
-    "confidence": 0.85
+    "references": ["42885481", "42040931", "41266628"],
+    "sourceQuote": "We observed robust and consistent results of the effect of CTSB expression on WMH volume, with all 5 sets of instruments indicating that a higher mRNA expression or protein levels of CTSB were associated with lower WMH volume ( Fig.",
+    "confidence": 0.78
   },
   {
     "gene": "CTSS",
-    "protein": "Cathepsin S",
+    "protein": "(unknown)",
     "chromosomalLocation": "1q21.3",
-    "gwasTrait": ["WMH"],
+    "gwasTrait": ["(none found)"],
     "mendelianRandomization": "Yes",
     "evidenceFromOtherOmicsStudies": ["proteomics"],
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "MG",
     "affectedPathway": "extracellular region",
-    "references": ["42039925", "41266628"],
+    "references": ["41266628"],
     "sourceQuote": "Using 2SMR, three associations were observed ( P FDR < 0.05) with evidence for colocalization: lower expression of TLR1 in oligodendrocytes and CTSS in smooth muscle cells was associated with larger WMH volume (same direction as in CSF); higher expression of ABO , encoding BGAT, in pericytes was protective for extensive WM-PVSs (opposite direction compared to CSF).",
-    "confidence": 0.65
+    "confidence": 0.55
   },
   {
     "gene": "CST6",
@@ -959,7 +1063,7 @@
     "affectedPathway": "angiogenesis",
     "references": ["35325079", "41266628"],
     "sourceQuote": "We identified such drugs for EPO, lactoferrin (LTF), TFPI and EPHB4 for WMHs; GPNMB and PCSK9 for WM-PVSs and COL6A1 for BG-PVSs ( Figs.",
-    "confidence": 0.5
+    "confidence": 0.45
   },
   {
     "gene": "EPO",
@@ -973,7 +1077,7 @@
     "affectedPathway": "extracellular space",
     "references": ["41266628"],
     "sourceQuote": "Based on the protective effect of higher genetically determined CSF EPO levels on WMH volume, potential repositioning of EPO analogs crossing the BBB and studied in phase II clinical trials for other indications (depression, neuropathy) is a compelling example.",
-    "confidence": 0.55
+    "confidence": 0.5
   },
   {
     "gene": "IL6",
@@ -987,11 +1091,11 @@
     "affectedPathway": "regulation of angiogenesis",
     "references": ["37684694", "41266628"],
     "sourceQuote": "IL-6 was previously associated with WMH volume 17 , but its association with HIP-PVS was not shown before.",
-    "confidence": 0.55
+    "confidence": 0.45
   },
   {
     "gene": "LTF",
-    "protein": "Lactotransferrin",
+    "protein": "(unknown)",
     "chromosomalLocation": "3p21.31",
     "gwasTrait": ["(none found)"],
     "mendelianRandomization": "Yes",
@@ -999,13 +1103,13 @@
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "all<40",
     "affectedPathway": "extracellular region",
-    "references": ["42039925", "41266628"],
-    "sourceQuote": "In the further analyses of the imaging markers, there were four significant gene associations between pQTLs and WMH ( TFPI, TOMM40, CTSS , APOE ), three for SVS ( RUVBL2, SNRPA, LTF ), two for CMBs ( TOMM40, APOE ), one for FA ( MICA ), three for MD ( APOE, MICA, HCG27 ), and two for ePVS ( PI4KA, DGKQ ; Table 4 ).",
-    "confidence": 0.5
+    "references": ["41266628"],
+    "sourceQuote": "LTF, of which higher genetically determined CSF levels were associated with smaller WMH volume, also has neuroprotective and anti-inflammatory properties 67 , 68 and, interestingly, shows strong protein–protein interactions and collaborative anti-inflammatory properties with EPO 63 .",
+    "confidence": 0.45
   },
   {
     "gene": "PCSK9",
-    "protein": "Proprotein convertase subtilisin/kexin type 9",
+    "protein": "(unknown)",
     "chromosomalLocation": "1p32.3",
     "gwasTrait": ["(none found)"],
     "mendelianRandomization": "Yes",
@@ -1015,13 +1119,13 @@
     "affectedPathway": "neurogenesis",
     "references": ["41266628"],
     "sourceQuote": "In addition to significant 2SMR associations between higher CSF PCSK9 levels and larger WM-PVS burden, higher plasma PCSK9 levels were also associated with extensive WM-PVS in observational analyses in the East Asian Nagahama cohort and the UK Biobank, independent of lipid levels in the latter.",
-    "confidence": 0.6
+    "confidence": 0.5
   },
   {
     "gene": "PILRA",
-    "protein": "Paired immunoglobulin-like type 2 receptor alpha",
+    "protein": "(unknown)",
     "chromosomalLocation": "7q22.1",
-    "gwasTrait": ["WMH", "WM-PVS"],
+    "gwasTrait": ["(none found)"],
     "mendelianRandomization": "Yes",
     "evidenceFromOtherOmicsStudies": ["proteomics"],
     "linkToMonogenicDisease": ["(none found)"],
@@ -1029,11 +1133,11 @@
     "affectedPathway": "extracellular region",
     "references": ["41266628"],
     "sourceQuote": "Higher CSF levels of PILRA-M14 and PILRA-deltaTM (2SMR, SomaScan) were associated with larger WMH volume, whereas higher CSF and plasma PILRA-M14/deltaTM (2SMR, SomaScan) and plasma PILRA (observational, Olink) were associated with smaller WM-PVS burden, potentially reflecting a protective effect on the cerebral amyloid angiopathy subtype of cSVD, of which WM-PVS is a marker 46 .",
-    "confidence": 0.65
+    "confidence": 0.55
   },
   {
     "gene": "PRSS8",
-    "protein": "Serine protease 8 (prostasin)",
+    "protein": "(unknown)",
     "chromosomalLocation": "16p11.2",
     "gwasTrait": ["(none found)"],
     "mendelianRandomization": "Yes",
@@ -1043,7 +1147,7 @@
     "affectedPathway": "extracellular region",
     "references": ["41266628"],
     "sourceQuote": "PRSS8, associated with WMH, also shows a highly significant association with risk of incident stroke and dementia in observational analyses.",
-    "confidence": 0.5
+    "confidence": 0.45
   },
   {
     "gene": "TFPI",
@@ -1055,13 +1159,13 @@
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "PC>FB>SMC",
     "affectedPathway": "blood coagulation",
-    "references": ["15905468", "42039925", "41457966", "41266628"],
+    "references": ["15905468", "42039925", "41457966", "41266628", "40770913"],
     "sourceQuote": "Interestingly, the TFPI was consistently significant for both CSF pQTLs and CSF eQTLs WMH 2SMR analysis and the DCAKD gene was significant for both CSF eQTLs for WMH and MD 2SMR analyses.",
-    "confidence": 0.55
+    "confidence": 0.5
   },
   {
     "gene": "TIMP3",
-    "protein": "(unknown)",
+    "protein": "Tissue inhibitor of metalloproteinases 3",
     "chromosomalLocation": "22q12.3",
     "gwasTrait": ["(none found)"],
     "mendelianRandomization": "Yes",
@@ -1069,9 +1173,9 @@
     "linkToMonogenicDisease": ["136900"],
     "brainCellTypes": "FB>SMC>AC",
     "affectedPathway": "extracellular matrix",
-    "references": ["23649698"],
-    "sourceQuote": "(not yet extracted)",
-    "confidence": null
+    "references": ["23649698", "40145673"],
+    "sourceQuote": "A series of functional studies combined with pharmacological and genetic interaction experiments identified an excess of tissue inhibitor of metalloproteinases‐3 (TIMP3)—which coaccumulates with Notch3 ECD in GOM deposits—as a causal factor in cerebrovascular functional deficits observed in CADASIL mouse models.",
+    "confidence": 0.45
   },
   {
     "gene": "TLR1",
@@ -1083,9 +1187,9 @@
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "all<40",
     "affectedPathway": "inflammatory response",
-    "references": ["42039925", "41266628"],
+    "references": ["41266628"],
     "sourceQuote": "Using 2SMR, three associations were observed ( P FDR < 0.05) with evidence for colocalization: lower expression of TLR1 in oligodendrocytes and CTSS in smooth muscle cells was associated with larger WMH volume (same direction as in CSF); higher expression of ABO , encoding BGAT, in pericytes was protective for extensive WM-PVSs (opposite direction compared to CSF).",
-    "confidence": 0.62
+    "confidence": 0.5
   },
   {
     "gene": "ABO",
@@ -1099,149 +1203,229 @@
     "affectedPathway": "extracellular region",
     "references": ["36180795", "41266628"],
     "sourceQuote": "Using 2SMR, three associations were observed ( P FDR < 0.05) with evidence for colocalization: lower expression of TLR1 in oligodendrocytes and CTSS in smooth muscle cells was associated with larger WMH volume (same direction as in CSF); higher expression of ABO , encoding BGAT, in pericytes was protective for extensive WM-PVSs (opposite direction compared to CSF).",
-    "confidence": 0.6
+    "confidence": 0.5
   },
   {
-    "gene": "ABCC6",
-    "protein": "ATP-binding cassette sub-family C member 6",
-    "chromosomalLocation": "16p13.11",
-    "gwasTrait": [
-      "extreme-cSVD",
-      "WMH",
-      "lacunes",
-      "CMB",
-      "lacunar stroke",
-      "SVS"
-    ],
+    "gene": "ICOSLG",
+    "protein": "ICOS ligand",
+    "chromosomalLocation": "21q22.3",
+    "gwasTrait": ["WMH", "SVS"],
     "mendelianRandomization": "No",
-    "evidenceFromOtherOmicsStudies": ["WES/WGS"],
+    "evidenceFromOtherOmicsStudies": ["(none found)"],
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "(unknown)",
     "affectedPathway": "(unknown)",
-    "references": ["42481886", "41751611", "41595517", "41577745"],
-    "sourceQuote": "The allele frequency of p.M848fs in our CSVD cohort (0.052) was significantly higher than that in the general Japanese population (0.014 in the 14KJPN dataset of 14,000 individuals, 28,000 alleles; P = 0.001) and in the amyotrophic lateral sclerosis cohort from our institute (0.010 in our dataset of 145 individuals, 290 alleles; P = 0.011), supporting its potential relevance.",
-    "confidence": 0.8
-  },
-  {
-    "gene": "MYH11",
-    "protein": "Myosin heavy chain 11 (smooth muscle myosin)",
-    "chromosomalLocation": "16p13.11",
-    "gwasTrait": ["extreme-cSVD"],
-    "mendelianRandomization": "No",
-    "evidenceFromOtherOmicsStudies": ["WES/WGS"],
-    "linkToMonogenicDisease": ["(none found)"],
-    "brainCellTypes": "(unknown)",
-    "affectedPathway": "(unknown)",
-    "references": ["42481886"],
-    "sourceQuote": "Significant associations with the CSVD cohort were identified for two genes, MYH11 and NOTCH1, compared with controls (Fig. 3).",
-    "confidence": 0.65
-  },
-  {
-    "gene": "NOTCH1",
-    "protein": "Neurogenic locus notch homolog protein 1",
-    "chromosomalLocation": "9q34.3",
-    "gwasTrait": ["extreme-cSVD"],
-    "mendelianRandomization": "No",
-    "evidenceFromOtherOmicsStudies": ["WES/WGS"],
-    "linkToMonogenicDisease": ["(none found)"],
-    "brainCellTypes": "(unknown)",
-    "affectedPathway": "(unknown)",
-    "references": ["42481886"],
-    "sourceQuote": "Significant associations with the CSVD cohort were identified for two genes, MYH11 and NOTCH1, compared with controls (Fig. 3).",
-    "confidence": 0.65
-  },
-  {
-    "gene": "GLA",
-    "protein": "alpha-galactosidase A",
-    "chromosomalLocation": "Xq22.1",
-    "gwasTrait": ["WMH", "stroke", "lacunar stroke"],
-    "mendelianRandomization": "No",
-    "evidenceFromOtherOmicsStudies": ["WES/WGS"],
-    "linkToMonogenicDisease": ["(none found)"],
-    "brainCellTypes": "(unknown)",
-    "affectedPathway": "(unknown)",
-    "references": ["42243880", "41645213", "41596592", "41204227"],
-    "sourceQuote": "Stroke predominantly occurred in patients with severe GLA variants for both sexes.",
+    "references": ["42907737"],
+    "sourceQuote": "rs8127114 (21q22.3, PIP = 1.00), the variant detectable only at the latent-factor level, maps to the 3′ untranslated region of ICOSLG (RegulomeDB = 5), indicating regulatory potential and providing a plausible post-transcriptional link between the fine-mapped signal and ICOSLG expression.",
     "confidence": 0.7
   },
   {
-    "gene": "AQP4",
-    "protein": "Aquaporin-4",
-    "chromosomalLocation": "18q11.2",
-    "gwasTrait": ["WMH", "FA"],
-    "mendelianRandomization": "No",
-    "evidenceFromOtherOmicsStudies": ["WES/WGS"],
-    "linkToMonogenicDisease": ["(none found)"],
-    "brainCellTypes": "(unknown)",
-    "affectedPathway": "(unknown)",
-    "references": ["41900914", "41566527"],
-    "sourceQuote": "While the meta-analysis revealed significant associations between CSVD presence (Rothwell criteria) and rs335929 (OR, 1.13 [95% CI 1.03–1.25]), rs335930 (OR, 1.16 [95% CI 1.04–1.28]), rs335931 (OR, 1.15 [95% CI 1.04–1.27]), and rs455671 (OR, 1.15 [95% CI 1.04–1.27]) (Fig.",
-    "confidence": 0.85
-  },
-  {
-    "gene": "CST3",
-    "protein": "Cystatin C",
-    "chromosomalLocation": "20p11.21",
-    "gwasTrait": ["WMH"],
-    "mendelianRandomization": "No",
-    "evidenceFromOtherOmicsStudies": ["WES/WGS"],
-    "linkToMonogenicDisease": ["(none found)"],
-    "brainCellTypes": "(unknown)",
-    "affectedPathway": "(unknown)",
-    "references": ["41870654"],
-    "sourceQuote": "Here, we report a Chinese family harboring a novel heterozygous nonsense variant of CST3 (c.327C > A; p.Cys109*), which represents the most 5’ pathogenic mutation identified to date.",
-    "confidence": 0.7
-  },
-  {
-    "gene": "ADA2",
-    "protein": "Adenosine deaminase 2",
-    "chromosomalLocation": "22q11.1",
-    "gwasTrait": [
-      "SVS",
-      "lacunar stroke",
-      "lacunes",
-      "WMH",
-      "PVWMH",
-      "DWMH",
-      "CMB",
-      "stroke"
-    ],
-    "mendelianRandomization": "No",
-    "evidenceFromOtherOmicsStudies": ["WES/WGS"],
-    "linkToMonogenicDisease": ["(none found)"],
-    "brainCellTypes": "(unknown)",
-    "affectedPathway": "(unknown)",
-    "references": ["41595517", "41413740"],
-    "sourceQuote": "The diagnosis of DADA2 was confirmed by both identification of pathogenic variants in the ADA2 gene through sequencing and demonstration of reduced ADA2 enzymatic activity in all patients, except for one individual diagnosed solely based on genetic confirmation of compound heterozygous pathogenic ADA2 mutations (Table S1 in the supplementary material).",
-    "confidence": 0.8
-  },
-  {
-    "gene": "APP",
-    "protein": "Amyloid-beta precursor protein",
-    "chromosomalLocation": "21q21.3",
-    "gwasTrait": ["SVS"],
-    "mendelianRandomization": "No",
-    "evidenceFromOtherOmicsStudies": ["WES/WGS", "TWAS"],
-    "linkToMonogenicDisease": ["(none found)"],
-    "brainCellTypes": "(unknown)",
-    "affectedPathway": "(unknown)",
-    "references": ["41595517", "41592617"],
-    "sourceQuote": "Here, we report a novel APP p.V742L variant in the APP intracellular domain (AICD) in a patient with a clinical and neuroradiological ischemic small vessel disease phenotype and a positive family history.",
-    "confidence": 0.8
-  },
-  {
-    "gene": "TRIM65",
-    "protein": "Tripartite motif-containing protein 65",
+    "gene": "WBP2",
+    "protein": "(unknown)",
     "chromosomalLocation": "17q25.1",
-    "gwasTrait": ["WMH", "DWMH"],
+    "gwasTrait": ["WMH", "SVS"],
     "mendelianRandomization": "No",
     "evidenceFromOtherOmicsStudies": ["TWAS"],
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "(unknown)",
     "affectedPathway": "(unknown)",
-    "references": ["41554961", "41400577"],
-    "sourceQuote": "In particular, TRIM47 , TRIM65 , and FBF1 showed significant correlations with expression levels across multiple brain regions.",
-    "confidence": 0.75
+    "references": ["42907737", "40141087"],
+    "sourceQuote": "WBP2 | ENSG00000132471 | 17 | 73841780 | 73852588 | WW domain binding protein 2 | HGNC:12738",
+    "confidence": 0.7
+  },
+  {
+    "gene": "TRIM65",
+    "protein": "(unknown)",
+    "chromosomalLocation": "17q25.1",
+    "gwasTrait": ["WMH", "SVS", "DWMH"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["TWAS"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["42907737", "41554961", "41400577"],
+    "sourceQuote": "TRIM65 exhibited the strongest TWAS association among all causal genes (Z = -9.40, P = 5.67 × 10⁻²¹, PIP = 1.00) and belongs to the same tripartite motif protein family as the MAGMA-captured TRIM47 .",
+    "confidence": 0.7
+  },
+  {
+    "gene": "UNK",
+    "protein": "(unknown)",
+    "chromosomalLocation": "17q25.1",
+    "gwasTrait": ["WMH", "SVS"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["TWAS"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["42907737"],
+    "sourceQuote": "UNK (Z = -7.10, PIP = 1.00) and GALK1 (Z = 10.99, PIP = 0.991) also mapped to this region.",
+    "confidence": 0.72
+  },
+  {
+    "gene": "GALK1",
+    "protein": "Galactokinase 1",
+    "chromosomalLocation": "17q25.1",
+    "gwasTrait": ["WMH", "SVS"],
+    "mendelianRandomization": "Yes",
+    "evidenceFromOtherOmicsStudies": ["TWAS"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["42907737", "41512030"],
+    "sourceQuote": "UNK (Z = -7.10, PIP = 1.00) and GALK1 (Z = 10.99, PIP = 0.991) also mapped to this region.",
+    "confidence": 0.65
+  },
+  {
+    "gene": "NEURL1",
+    "protein": "Neuralized E3 ubiquitin protein ligase 1 (NEURL)",
+    "chromosomalLocation": "10q24.33",
+    "gwasTrait": ["WMH", "SVS"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["TWAS"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["42907737", "40141087"],
+    "sourceQuote": "NEURL | ENSG00000107954 | 10 | 105253462 | 105352303 | Neuralized E3 ubiquitin protein ligase 1 | HGNC:7761",
+    "confidence": 0.7
+  },
+  {
+    "gene": "STN1",
+    "protein": "(unknown)",
+    "chromosomalLocation": "10q24.33",
+    "gwasTrait": ["WMH", "SVS"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["TWAS"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["42907737"],
+    "sourceQuote": "SH3PXD2A (Z = 6.51, PIP = 1.00) provided independent cross-validation with the MAGMA results, NEURL1 (Z = 5.66, PIP = 1.00) encodes an E3 ubiquitin ligase involved in Notch signaling, and STN1 (Z = -5.70, PIP = 0.995) encodes a component of the CST telomere maintenance complex, suggesting that telomere biology may also contribute to the pleiotropic mechanisms at this locus.",
+    "confidence": 0.65
+  },
+  {
+    "gene": "RPL12P16",
+    "protein": "(unknown)",
+    "chromosomalLocation": "2q33.2",
+    "gwasTrait": ["WMH", "SVS"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["TWAS"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["42907737"],
+    "sourceQuote": "NBEAL1 (2q33.1, PIP = 0.857 and 1.00 across panels), RPL12P16 (2q33.1, PIP = 0.990), and ZSCAN9 (6p22.1, PIP = 0.942) also met the high-confidence causal gene threshold.",
+    "confidence": 0.65
+  },
+  {
+    "gene": "ZSCAN9",
+    "protein": "(unknown)",
+    "chromosomalLocation": "6p22.1",
+    "gwasTrait": ["WMH", "SVS"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["TWAS"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["42907737"],
+    "sourceQuote": "NBEAL1 (2q33.1, PIP = 0.857 and 1.00 across panels), RPL12P16 (2q33.1, PIP = 0.990), and ZSCAN9 (6p22.1, PIP = 0.942) also met the high-confidence causal gene threshold.",
+    "confidence": 0.68
+  },
+  {
+    "gene": "FAM117B",
+    "protein": "Family with sequence similarity 117 member B",
+    "chromosomalLocation": "2q33.2",
+    "gwasTrait": ["stroke", "SVS", "FA"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["TWAS"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["42890341", "40770913", "39965059"],
+    "sourceQuote": "Similar associations have been found for FAM117B (lower FA values) and SLK (larger WMH burden), with stroke risk.",
+    "confidence": 0.7
+  },
+  {
+    "gene": "GLA",
+    "protein": "Alpha-galactosidase A",
+    "chromosomalLocation": "Xq22.1",
+    "gwasTrait": ["WMH", "stroke", "lacunar stroke", "lacunes"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["(none found)"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": [
+      "42512885",
+      "42379398",
+      "42243880",
+      "41402951",
+      "41204227",
+      "40362636",
+      "40343074",
+      "40002499",
+      "39859188",
+      "39859185",
+      "39620496"
+    ],
+    "sourceQuote": "Second, cysteine-alerting NOTCH3 variants and pathogenic variants in HTRA1, TREX1, COL4A1 , and GLA contribute to the spectrum of genetic SVD among patients without the NOTCH3 p.R544C variant.",
+    "confidence": 0.7
+  },
+  {
+    "gene": "ABCC6",
+    "protein": "ATP-binding cassette sub-family C member 6",
+    "chromosomalLocation": "16p13.11",
+    "gwasTrait": ["extreme-cSVD", "CMB", "DWMH", "lacunes", "WMH", "BG-PVS"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["WES/WGS"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["42481886", "41577745", "40725385"],
+    "sourceQuote": "The allele frequency of p.M848fs in our CSVD cohort (0.052) was significantly higher than that in the general Japanese population (0.014 in the 14KJPN dataset of 14,000 individuals, 28,000 alleles; P = 0.001) and in the amyotrophic lateral sclerosis cohort from our institute (0.010 in our dataset of 145 individuals, 290 alleles; P = 0.011), supporting its potential relevance.",
+    "confidence": 0.7
+  },
+  {
+    "gene": "DCAKD",
+    "protein": "(unknown)",
+    "chromosomalLocation": "17q21.31",
+    "gwasTrait": ["WMH", "MD"],
+    "mendelianRandomization": "Yes",
+    "evidenceFromOtherOmicsStudies": ["TWAS"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["42039925", "40141087"],
+    "sourceQuote": "DCAKD | ENSG00000172992 | 17 | 43100706 | 43138499 | Dephospho-CoA kinase domain containing | HGNC:26238",
+    "confidence": 0.7
+  },
+  {
+    "gene": "APP",
+    "protein": "Amyloid-beta precursor protein",
+    "chromosomalLocation": "21q21.3",
+    "gwasTrait": ["stroke", "SVS", "WM-PVS"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["(none found)"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["41595517", "41592617", "40209571"],
+    "sourceQuote": "All participants underwent genetic testing for the Glu693Gln point mutation in the APP gene.",
+    "confidence": 0.8
+  },
+  {
+    "gene": "ADA2",
+    "protein": "Adenosine deaminase 2",
+    "chromosomalLocation": "22q11.1",
+    "gwasTrait": ["SVS", "lacunes", "lacunar stroke", "PVWMH", "DWMH", "CMB"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["(none found)"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["41595517", "41413740"],
+    "sourceQuote": "Deficiency of adenosine deaminase 2 (DADA2), first described in 2014, is a rare monogenic autoinflammatory disorder caused by loss-of-function mutations in the ADA2 gene (also known as CECR1 ) [ 1 , 2 ].",
+    "confidence": 0.8
   },
   {
     "gene": "FBF1",
@@ -1255,10 +1439,80 @@
     "affectedPathway": "(unknown)",
     "references": ["41554961"],
     "sourceQuote": "In particular, TRIM47 , TRIM65 , and FBF1 showed significant correlations with expression levels across multiple brain regions.",
-    "confidence": 0.75
+    "confidence": 0.7
   },
   {
-    "gene": "FMNL1",
+    "gene": "MAPK7",
+    "protein": "Extracellular signal-regulated kinase 5 (ERK5)",
+    "chromosomalLocation": "17p11.2",
+    "gwasTrait": ["WMH", "FA", "MD"],
+    "mendelianRandomization": "Yes",
+    "evidenceFromOtherOmicsStudies": ["(none found)"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["41512030"],
+    "sourceQuote": "The high support of colocalization evidence was observed for CALCRL (PPH4 = 88.6%) and ERK5 (PPH4 = 84.0%) with WMH ( SI Appendix , Table S3 and Fig.",
+    "confidence": 0.8
+  },
+  {
+    "gene": "ZCCHC14",
+    "protein": "Zinc finger CCHC-type containing 14",
+    "chromosomalLocation": "16q24.2",
+    "gwasTrait": ["SVS", "lacunes", "WMH"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["TWAS"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["41400577", "39965059"],
+    "sourceQuote": "This association remains significant after adjustment for vascular risk factors and influences the expression of the transcriptional regulator ZCCHC14 in small vessels [50,61].",
+    "confidence": 0.65
+  },
+  {
+    "gene": "ULK4",
+    "protein": "Unc-51 like kinase 4",
+    "chromosomalLocation": "3p22.1",
+    "gwasTrait": ["SVS", "lacunes"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["TWAS"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["41400577", "39965059"],
+    "sourceQuote": "Beyond the 2q33 and 16q24 loci shared with WMH, lacunar infarcts show significant associations with polymorphisms at the 3p22 locus, which are associated with reduced expression of the nearby gene ULK4 in brain tissue and vessels [50].",
+    "confidence": 0.65
+  },
+  {
+    "gene": "SLK",
+    "protein": "(unknown)",
+    "chromosomalLocation": "10q24.33-q25.1",
+    "gwasTrait": ["WMH"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["TWAS"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["40770913"],
+    "sourceQuote": "Similar associations have been found for FAM117B (lower FA values) and SLK (larger WMH burden), with stroke risk.",
+    "confidence": 0.7
+  },
+  {
+    "gene": "ALCAM",
+    "protein": "(unknown)",
+    "chromosomalLocation": "3q13.11",
+    "gwasTrait": ["WMH"],
+    "mendelianRandomization": "No",
+    "evidenceFromOtherOmicsStudies": ["WES/WGS"],
+    "linkToMonogenicDisease": ["(none found)"],
+    "brainCellTypes": "(unknown)",
+    "affectedPathway": "(unknown)",
+    "references": ["40770913"],
+    "sourceQuote": "WES-based studies of WMH burden identified novel rare variants in genes such as ALCAM and GBA3 .",
+    "confidence": 0.65
+  },
+  {
+    "gene": "GJC1",
     "protein": "(unknown)",
     "chromosomalLocation": "17q21.31",
     "gwasTrait": ["WMH"],
@@ -1267,78 +1521,36 @@
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "(unknown)",
     "affectedPathway": "(unknown)",
-    "references": ["41554961"],
-    "sourceQuote": "For Japanese meta-analysis, six genes, RP11-552F3.9 , TRIM47 , TRIM65 , FMNL1 , FBF1 , CTD-2020K17.4 , on chromosome 17, and SLC12A2 on chromosome 5 showed transcriptome-wide significant association with WMH after the Bonferroni correction ( P Bon < 0.05).",
-    "confidence": 0.65
+    "references": ["40141087"],
+    "sourceQuote": "GJC1 | ENSG00000182963 | 17 | 42875816 | 42908184 | Gap junction protein gamma 1 | HGNC:4280",
+    "confidence": 0.7
   },
   {
-    "gene": "SLC12A2",
-    "protein": "NKCC1",
-    "chromosomalLocation": "5q23.3",
-    "gwasTrait": ["WMH"],
+    "gene": "SLC25A44",
+    "protein": "Solute carrier family 25 member 44",
+    "chromosomalLocation": "1q22",
+    "gwasTrait": ["SVS", "WMH"],
     "mendelianRandomization": "No",
     "evidenceFromOtherOmicsStudies": ["TWAS"],
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "(unknown)",
     "affectedPathway": "(unknown)",
-    "references": ["41554961"],
-    "sourceQuote": "It also showed an association with SLC12A2 expression in the cerebellar hemisphere.",
-    "confidence": 0.7
+    "references": ["39965059"],
+    "sourceQuote": "Such approaches identified association of genetically elevated expression of SLC25A44, ULK4, ICA1L, FAM117B, CARF, NBEAL1, with lacunar stroke ().",
+    "confidence": 0.72
   },
   {
-    "gene": "CTC1",
-    "protein": "CST telomere replication complex component 1",
-    "chromosomalLocation": "17p13.1",
-    "gwasTrait": ["WMH"],
-    "mendelianRandomization": "No",
-    "evidenceFromOtherOmicsStudies": ["WES/WGS"],
-    "linkToMonogenicDisease": ["(none found)"],
-    "brainCellTypes": "(unknown)",
-    "affectedPathway": "(unknown)",
-    "references": ["41554616"],
-    "sourceQuote": "Exome sequencing identified a homozygous pathogenic variant c.775G>A p.(Val259Met) in the CTC1 gene, confirming CRMCC.",
-    "confidence": 0.8
-  },
-  {
-    "gene": "MAPK7",
-    "protein": "Extracellular signal-regulated kinase 5 (MAPK7)",
-    "chromosomalLocation": "17p11.2",
+    "gene": "EPHA2",
+    "protein": "Ephrin type-A receptor 2",
+    "chromosomalLocation": "1p36.13",
     "gwasTrait": ["WMH", "MD", "FA"],
     "mendelianRandomization": "Yes",
     "evidenceFromOtherOmicsStudies": ["(none found)"],
     "linkToMonogenicDisease": ["(none found)"],
     "brainCellTypes": "(unknown)",
     "affectedPathway": "(unknown)",
-    "references": ["41512030"],
-    "sourceQuote": "The high support of colocalization evidence was observed for CALCRL (PPH4 = 88.6%) and ERK5 (PPH4 = 84.0%) with WMH (SI Appendix, Table S3 and Fig.",
-    "confidence": 0.9
-  },
-  {
-    "gene": "ZCCHC14",
-    "protein": "Zinc finger CCHC domain-containing protein 14",
-    "chromosomalLocation": "16q24.2",
-    "gwasTrait": ["SVS", "lacunes"],
-    "mendelianRandomization": "No",
-    "evidenceFromOtherOmicsStudies": ["TWAS"],
-    "linkToMonogenicDisease": ["(none found)"],
-    "brainCellTypes": "(unknown)",
-    "affectedPathway": "(unknown)",
-    "references": ["41400577"],
-    "sourceQuote": "This association remains  significant  after  adjustment  for  vascular  risk factors and influences the expression of the transcriptional regulator ZCCHC14 in small vessels [50,61].",
-    "confidence": 0.7
-  },
-  {
-    "gene": "ULK4",
-    "protein": "Serine/threonine-protein kinase ULK4",
-    "chromosomalLocation": "3p22.1",
-    "gwasTrait": ["SVS", "lacunes"],
-    "mendelianRandomization": "No",
-    "evidenceFromOtherOmicsStudies": ["TWAS"],
-    "linkToMonogenicDisease": ["(none found)"],
-    "brainCellTypes": "(unknown)",
-    "affectedPathway": "(unknown)",
-    "references": ["41400577"],
-    "sourceQuote": "Beyond the 2q33 and 16q24 loci shared with WMH, lacunar infarcts show significant associations with polymorphisms at the 3p22 locus, which are associated with reduced expression of the nearby gene ULK4 in brain tissue and vessels [50].",
-    "confidence": 0.75
+    "references": ["39818967"],
+    "sourceQuote": "We found the most consistent evidence for EPHA2 and APOE with the support of both MR and conventional epidemiological analyses (Figure 5 A).",
+    "confidence": 0.65
   }
 ]

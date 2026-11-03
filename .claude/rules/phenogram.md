@@ -23,7 +23,9 @@ paths:
 `islands/Phenogram.tsx` draws the karyogram from `data/table1.json` and
 `data/cytobands_hg38.json` (UCSC hg38, 862 bands, written by
 `scripts/fetch_cytobands.py`). A gene is placed at the midpoint of the band its
-`chromosomalLocation` names — exact match only, in `lib/cytobands.ts`;
+`chromosomalLocation` names — exact bands only, in `lib/cytobands.ts`, where
+NCBI's range for a gene across a band edge (`10q24.33-q25.1`) spans its two
+exact ends;
 `tests/cytobands_test.ts` fails if any committed location stops resolving, and
 the island lists such genes instead of guessing.
 
@@ -70,7 +72,13 @@ Two renderers, one contract, as for the timeline:
   `margin * 2 + columns * (chromosomeWidth + leaderGap + labelColumn)`. The
   365-day run broke the first (chromosome 17 reached ten genes, 498 units
   against a 400 row) and then the second (X made row 2 eleven columns, 1,732
-  against 1,600). `rowHeight` is 520 and the viewBox 1732x1160. The layout test
+  against 1,600). The 2026-11-03 re-extraction broke the first again:
+  chromosome 17 reached thirteen genes and 736 units, chromosome 2 666, against
+  a 520 row, because genes now carry more trait pills (2.2 a gene against 1.8).
+  `rowHeight` is 760 and the viewBox 1732x1640 (`2 * margin + 2 * rowHeight +
+  rowGap`). A band range such as `10q24.33-q25.1`, which NCBI writes for a gene
+  across a band edge, is placed at the middle of its span in both renderers;
+  any other inexact band is still unplaced. The layout test
   catches only the vertical case -- it asserts blocks stay inside their _row_ --
   so the horizontal one was found by measuring every `li` in
   `ul.phenogram-genes` against the list's own bounding box in a browser. A

@@ -170,6 +170,8 @@ Deno.test("chromosomeOf reads the chromosome off a cytogenetic band", () => {
   assertEquals(chromosomeOf(" 2q33.2 "), "2");
   assertEquals(chromosomeOf("Xq28"), "X");
   assertEquals(chromosomeOf("xp11.23"), "X");
+  // NCBI's spelling for a gene across a band edge.
+  assertEquals(chromosomeOf("10q24.33-q25.1"), "10");
 });
 
 Deno.test("chromosomeOf rejects values that are not chromosomes", () => {
@@ -181,6 +183,8 @@ Deno.test("chromosomeOf rejects values that are not chromosomes", () => {
   assertEquals(chromosomeOf("1garbage"), null);
   assertEquals(chromosomeOf("Xylophone"), null);
   assertEquals(chromosomeOf("22q1junk"), null);
+  assertEquals(chromosomeOf("10q24.33-"), null);
+  assertEquals(chromosomeOf("10q24.33-11q25.1"), null);
 });
 
 Deno.test("every committed gene lands on a real chromosome", () => {
