@@ -65,7 +65,6 @@
     "NCT06643013",
     "NCT06674460",
     "NCT06814730",
-    "NCT07012629",
     "NCT07026994",
     "NCT07111559",
     "NCT07128212",
@@ -78,7 +77,7 @@
     "NCT07700615",
     "NCT07716865"
   ],
-  "generatedAt": "2026-09-08T16:19:34Z",
+  "generatedAt": "2026-11-05T14:10:46Z",
   "locations": [
     {
       "nctId": "NCT00099216",
@@ -330,8 +329,8 @@
       "country": "Canada",
       "trialTitle": "Efficacy and Safety of Rivastigmine Capsules in Patients With Probable Vascular Dementia",
       "status": "COMPLETED",
-      "lat": 43.70643,
-      "lon": -79.39564
+      "lat": 43.65333,
+      "lon": -79.38089
     },
     {
       "nctId": "NCT00099216",
@@ -517,8 +516,8 @@
       "country": "Germany",
       "trialTitle": "Efficacy and Safety of Rivastigmine Capsules in Patients With Probable Vascular Dementia",
       "status": "COMPLETED",
-      "lat": 52.27264,
-      "lon": 8.0498
+      "lat": 52.27411,
+      "lon": 8.05056
     },
     {
       "nctId": "NCT00099216",
@@ -836,8 +835,8 @@
       "country": "Canada",
       "trialTitle": "Safety of Donepezil in Patients With Dementia Associated With Cerebrovascular Disease",
       "status": "COMPLETED",
-      "lat": 43.709283,
-      "lon": -79.397713
+      "lat": 43.656183,
+      "lon": -79.382963
     },
     {
       "nctId": "NCT00457769",
@@ -1276,8 +1275,8 @@
       "country": "United States",
       "trialTitle": "Study Evaluating the Safety,Tolerability and Efficacy of PF-04360365 in Adults With Probable Cerebral Amyloid Angiopathy",
       "status": "COMPLETED",
-      "lat": 40.717123,
-      "lon": -74.005043
+      "lat": 40.716868,
+      "lon": -74.00447
     },
     {
       "nctId": "NCT01821118",
@@ -1298,8 +1297,8 @@
       "country": "Canada",
       "trialTitle": "Study Evaluating the Safety,Tolerability and Efficacy of PF-04360365 in Adults With Probable Cerebral Amyloid Angiopathy",
       "status": "COMPLETED",
-      "lat": 43.708193,
-      "lon": -79.401067
+      "lat": 43.655093,
+      "lon": -79.386317
     },
     {
       "nctId": "NCT01821118",
@@ -1397,8 +1396,8 @@
       "country": "South Korea",
       "trialTitle": "Efficacy Study of Cilostazol and Aspirin on Cerebral Small Vessel Disease",
       "status": "UNKNOWN",
-      "lat": 35.96089,
-      "lon": 128.54576
+      "lat": 36.9577,
+      "lon": 127.1464
     },
     {
       "nctId": "NCT01932203",
@@ -1430,8 +1429,8 @@
       "country": "South Korea",
       "trialTitle": "Efficacy Study of Cilostazol and Aspirin on Cerebral Small Vessel Disease",
       "status": "UNKNOWN",
-      "lat": 36.34913,
-      "lon": 127.38793
+      "lat": 36.35022,
+      "lon": 127.3878
     },
     {
       "nctId": "NCT01932203",
@@ -1441,8 +1440,8 @@
       "country": "South Korea",
       "trialTitle": "Efficacy Study of Cilostazol and Aspirin on Cerebral Small Vessel Disease",
       "status": "UNKNOWN",
-      "lat": 36.34913,
-      "lon": 127.38193
+      "lat": 36.35022,
+      "lon": 127.3818
     },
     {
       "nctId": "NCT01932203",
@@ -1485,8 +1484,8 @@
       "country": "South Korea",
       "trialTitle": "Efficacy Study of Cilostazol and Aspirin on Cerebral Small Vessel Disease",
       "status": "UNKNOWN",
-      "lat": 35.13951,
-      "lon": 128.46782
+      "lat": 36.3809,
+      "lon": 128.3711
     },
     {
       "nctId": "NCT01932203",
@@ -1496,8 +1495,8 @@
       "country": "South Korea",
       "trialTitle": "Efficacy Study of Cilostazol and Aspirin on Cerebral Small Vessel Disease",
       "status": "UNKNOWN",
-      "lat": 35.13951,
-      "lon": 128.46182
+      "lat": 36.3809,
+      "lon": 128.3651
     },
     {
       "nctId": "NCT01932203",
@@ -1760,8 +1759,8 @@
       "country": "United Kingdom",
       "trialTitle": "Perfusion by Arterial Spin Labelling Following Single Dose Tadalafil in Small Vessel Disease (PASTIS) Trial",
       "status": "COMPLETED",
-      "lat": 51.511383,
-      "lon": -0.124813
+      "lat": 51.511128,
+      "lon": -0.12424
     },
     {
       "nctId": "NCT02481323",
@@ -1947,8 +1946,8 @@
       "country": "Canada",
       "trialTitle": "Memory and Antioxidants in Vascular Impairment Trial",
       "status": "COMPLETED",
-      "lat": 43.704667,
-      "lon": -79.401067
+      "lat": 43.651567,
+      "lon": -79.386317
     },
     {
       "nctId": "NCT03451591",
@@ -2783,8 +2782,8 @@
       "country": "Denmark",
       "trialTitle": "Improving Cerebral Blood Flow and Cognition in Patients with Cerebral Small Vessel Disease. the ETLAS-2 Trial",
       "status": "ACTIVE_NOT_RECRUITING",
-      "lat": 55.726258,
-      "lon": 12.43848
+      "lat": 55.72366,
+      "lon": 12.43698
     },
     {
       "nctId": "NCT05173896",
@@ -2992,8 +2991,8 @@
       "country": "China",
       "trialTitle": "Stellate Ganglion Block in Patients With Cerebral Small Vessel Disease",
       "status": "COMPLETED",
-      "lat": 31.32022,
-      "lon": 119.01224
+      "lat": 30.40072,
+      "lon": 105.2288
     },
     {
       "nctId": "NCT06226415",
@@ -3042,6 +3041,17 @@
     {
       "nctId": "NCT06393712",
       "facilityName": "Clinical Trial Site",
+      "city": "Orange",
+      "state": "California",
+      "country": "United States",
+      "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
+      "status": "ACTIVE_NOT_RECRUITING",
+      "lat": 33.78779,
+      "lon": -117.85311
+    },
+    {
+      "nctId": "NCT06393712",
+      "facilityName": "Clinical Trial Site",
       "city": "Palo Alto",
       "state": "California",
       "country": "United States",
@@ -3071,6 +3081,28 @@
       "status": "ACTIVE_NOT_RECRUITING",
       "lat": 37.77493,
       "lon": -122.42242
+    },
+    {
+      "nctId": "NCT06393712",
+      "facilityName": "Clinical Trial Site",
+      "city": "Aurora",
+      "state": "Colorado",
+      "country": "United States",
+      "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
+      "status": "ACTIVE_NOT_RECRUITING",
+      "lat": 39.72943,
+      "lon": -104.83192
+    },
+    {
+      "nctId": "NCT06393712",
+      "facilityName": "Clinical Trial Site",
+      "city": "New Haven",
+      "state": "Connecticut",
+      "country": "United States",
+      "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
+      "status": "ACTIVE_NOT_RECRUITING",
+      "lat": 41.30815,
+      "lon": -72.92816
     },
     {
       "nctId": "NCT06393712",
@@ -3163,6 +3195,17 @@
     {
       "nctId": "NCT06393712",
       "facilityName": "Clinical Trial Site",
+      "city": "Plymouth",
+      "state": "Massachusetts",
+      "country": "United States",
+      "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
+      "status": "ACTIVE_NOT_RECRUITING",
+      "lat": 41.95844,
+      "lon": -70.66726
+    },
+    {
+      "nctId": "NCT06393712",
+      "facilityName": "Clinical Trial Site",
       "city": "Rochester",
       "state": "Minnesota",
       "country": "United States",
@@ -3185,13 +3228,13 @@
     {
       "nctId": "NCT06393712",
       "facilityName": "Clinical Trial Site",
-      "city": "New York",
-      "state": "New York",
+      "city": "Hackensack",
+      "state": "New Jersey",
       "country": "United States",
       "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
       "status": "ACTIVE_NOT_RECRUITING",
-      "lat": 40.716033,
-      "lon": -74.008397
+      "lat": 40.88593,
+      "lon": -74.04347
     },
     {
       "nctId": "NCT06393712",
@@ -3201,8 +3244,8 @@
       "country": "United States",
       "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
       "status": "ACTIVE_NOT_RECRUITING",
-      "lat": 40.712507,
-      "lon": -74.008397
+      "lat": 40.716868,
+      "lon": -74.00747
     },
     {
       "nctId": "NCT06393712",
@@ -3212,8 +3255,30 @@
       "country": "United States",
       "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
       "status": "ACTIVE_NOT_RECRUITING",
-      "lat": 40.711417,
-      "lon": -74.005043
+      "lat": 40.71427,
+      "lon": -74.00897
+    },
+    {
+      "nctId": "NCT06393712",
+      "facilityName": "Clinical Trial Site",
+      "city": "New York",
+      "state": "New York",
+      "country": "United States",
+      "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
+      "status": "ACTIVE_NOT_RECRUITING",
+      "lat": 40.711672,
+      "lon": -74.00747
+    },
+    {
+      "nctId": "NCT06393712",
+      "facilityName": "Clinical Trial Site",
+      "city": "New York",
+      "state": "New York",
+      "country": "United States",
+      "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
+      "status": "ACTIVE_NOT_RECRUITING",
+      "lat": 40.711672,
+      "lon": -74.00447
     },
     {
       "nctId": "NCT06393712",
@@ -3225,6 +3290,17 @@
       "status": "ACTIVE_NOT_RECRUITING",
       "lat": 35.99403,
       "lon": -78.89862
+    },
+    {
+      "nctId": "NCT06393712",
+      "facilityName": "Clinical Trial Site",
+      "city": "Canton",
+      "state": "Ohio",
+      "country": "United States",
+      "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
+      "status": "ACTIVE_NOT_RECRUITING",
+      "lat": 40.79895,
+      "lon": -81.37845
     },
     {
       "nctId": "NCT06393712",
@@ -3306,6 +3382,17 @@
     {
       "nctId": "NCT06393712",
       "facilityName": "Clinical Trial Site",
+      "city": "San Antonio",
+      "state": "Texas",
+      "country": "United States",
+      "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
+      "status": "ACTIVE_NOT_RECRUITING",
+      "lat": 29.42412,
+      "lon": -98.49363
+    },
+    {
+      "nctId": "NCT06393712",
+      "facilityName": "Clinical Trial Site",
       "city": "Seattle",
       "state": "Washington",
       "country": "United States",
@@ -3361,6 +3448,17 @@
     {
       "nctId": "NCT06393712",
       "facilityName": "Clinical Trial Site",
+      "city": "Parkville",
+      "state": null,
+      "country": "Australia",
+      "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
+      "status": "ACTIVE_NOT_RECRUITING",
+      "lat": -37.78333,
+      "lon": 144.95
+    },
+    {
+      "nctId": "NCT06393712",
+      "facilityName": "Clinical Trial Site",
       "city": "Calgary",
       "state": null,
       "country": "Canada",
@@ -3368,6 +3466,17 @@
       "status": "ACTIVE_NOT_RECRUITING",
       "lat": 51.05011,
       "lon": -114.08829
+    },
+    {
+      "nctId": "NCT06393712",
+      "facilityName": "Clinical Trial Site",
+      "city": "Hamilton",
+      "state": null,
+      "country": "Canada",
+      "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
+      "status": "ACTIVE_NOT_RECRUITING",
+      "lat": 43.25011,
+      "lon": -79.84963
     },
     {
       "nctId": "NCT06393712",
@@ -3399,8 +3508,19 @@
       "country": "Canada",
       "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
       "status": "ACTIVE_NOT_RECRUITING",
-      "lat": 45.50884,
-      "lon": -73.59081
+      "lat": 45.511438,
+      "lon": -73.58931
+    },
+    {
+      "nctId": "NCT06393712",
+      "facilityName": "Clinical Trial Site",
+      "city": "Montreal",
+      "state": null,
+      "country": "Canada",
+      "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
+      "status": "ACTIVE_NOT_RECRUITING",
+      "lat": 45.506242,
+      "lon": -73.58931
     },
     {
       "nctId": "NCT06393712",
@@ -3421,8 +3541,8 @@
       "country": "Canada",
       "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
       "status": "ACTIVE_NOT_RECRUITING",
-      "lat": 43.703577,
-      "lon": -79.397713
+      "lat": 43.650477,
+      "lon": -79.382963
     },
     {
       "nctId": "NCT06393712",
@@ -3477,7 +3597,7 @@
       "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
       "status": "ACTIVE_NOT_RECRUITING",
       "lat": 46.94809,
-      "lon": 7.45044
+      "lon": 7.44744
     },
     {
       "nctId": "NCT06393712",
@@ -3504,13 +3624,35 @@
     {
       "nctId": "NCT06393712",
       "facilityName": "Clinical Trial Site",
+      "city": "Glasgow",
+      "state": null,
+      "country": "United Kingdom",
+      "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
+      "status": "ACTIVE_NOT_RECRUITING",
+      "lat": 55.86515,
+      "lon": -4.25763
+    },
+    {
+      "nctId": "NCT06393712",
+      "facilityName": "Clinical Trial Site",
       "city": "London",
       "state": null,
       "country": "United Kingdom",
       "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
       "status": "ACTIVE_NOT_RECRUITING",
-      "lat": 51.510293,
-      "lon": -0.128167
+      "lat": 51.511128,
+      "lon": -0.12724
+    },
+    {
+      "nctId": "NCT06393712",
+      "facilityName": "Clinical Trial Site",
+      "city": "London",
+      "state": null,
+      "country": "United Kingdom",
+      "trialTitle": "A Phase 2 Trial of ALN-APP in Patients With Cerebral Amyloid Angiopathy",
+      "status": "ACTIVE_NOT_RECRUITING",
+      "lat": 51.50853,
+      "lon": -0.12874
     },
     {
       "nctId": "NCT06421532",
@@ -3564,8 +3706,8 @@
       "country": "United Kingdom",
       "trialTitle": "Targeting 18kDa Translocator Protein (TSPO) to Improve Brain Endothelial Cell Function in Cerebral Small Vessel Disease",
       "status": "RECRUITING",
-      "lat": 51.506767,
-      "lon": -0.128167
+      "lat": 51.505932,
+      "lon": -0.12724
     },
     {
       "nctId": "NCT06674460",
@@ -3619,162 +3761,8 @@
       "country": "United Kingdom",
       "trialTitle": "A Study to Assess THN391 in Subjects With Alzheimer's Disease",
       "status": "ACTIVE_NOT_RECRUITING",
-      "lat": 51.505677,
-      "lon": -0.124813
-    },
-    {
-      "nctId": "NCT07012629",
-      "facilityName": "Aalborg Universitetshospital",
-      "city": "Aalborg",
-      "state": null,
-      "country": "Denmark",
-      "trialTitle": "A EUROpean Randomized Study on Blood-thinners and Cholesterol-lowering Treatments to Prevent Future Vascular Events in People With Covert Brain Infarcts (CBI)",
-      "status": "RECRUITING",
-      "lat": 57.048,
-      "lon": 9.9187
-    },
-    {
-      "nctId": "NCT07012629",
-      "facilityName": "Aarhus Universitetshospital",
-      "city": "Aarhus",
-      "state": null,
-      "country": "Denmark",
-      "trialTitle": "A EUROpean Randomized Study on Blood-thinners and Cholesterol-lowering Treatments to Prevent Future Vascular Events in People With Covert Brain Infarcts (CBI)",
-      "status": "RECRUITING",
-      "lat": 56.15674,
-      "lon": 10.21376
-    },
-    {
-      "nctId": "NCT07012629",
-      "facilityName": "Aarhus University Hospital",
-      "city": "Aarhus",
-      "state": null,
-      "country": "Denmark",
-      "trialTitle": "A EUROpean Randomized Study on Blood-thinners and Cholesterol-lowering Treatments to Prevent Future Vascular Events in People With Covert Brain Infarcts (CBI)",
-      "status": "RECRUITING",
-      "lat": 56.15674,
-      "lon": 10.20776
-    },
-    {
-      "nctId": "NCT07012629",
-      "facilityName": "Rigshospitalet",
-      "city": "Copenhagen",
-      "state": null,
-      "country": "Denmark",
-      "trialTitle": "A EUROpean Randomized Study on Blood-thinners and Cholesterol-lowering Treatments to Prevent Future Vascular Events in People With Covert Brain Infarcts (CBI)",
-      "status": "RECRUITING",
-      "lat": 55.67594,
-      "lon": 12.56853
-    },
-    {
-      "nctId": "NCT07012629",
-      "facilityName": "Bispebjerg og Frederiksberg Hospital",
-      "city": "Copenhagen",
-      "state": null,
-      "country": "Denmark",
-      "trialTitle": "A EUROpean Randomized Study on Blood-thinners and Cholesterol-lowering Treatments to Prevent Future Vascular Events in People With Covert Brain Infarcts (CBI)",
-      "status": "RECRUITING",
-      "lat": 55.67594,
-      "lon": 12.56253
-    },
-    {
-      "nctId": "NCT07012629",
-      "facilityName": "Herlev Hospital",
-      "city": "Herlev",
-      "state": null,
-      "country": "Denmark",
-      "trialTitle": "A EUROpean Randomized Study on Blood-thinners and Cholesterol-lowering Treatments to Prevent Future Vascular Events in People With Covert Brain Infarcts (CBI)",
-      "status": "RECRUITING",
-      "lat": 55.721062,
-      "lon": 12.43848
-    },
-    {
-      "nctId": "NCT07012629",
-      "facilityName": "Regionshospitalet Gødstrup",
-      "city": "Herning",
-      "state": null,
-      "country": "Denmark",
-      "trialTitle": "A EUROpean Randomized Study on Blood-thinners and Cholesterol-lowering Treatments to Prevent Future Vascular Events in People With Covert Brain Infarcts (CBI)",
-      "status": "RECRUITING",
-      "lat": 56.13615,
-      "lon": 8.97662
-    },
-    {
-      "nctId": "NCT07012629",
-      "facilityName": "Kolding Hospital",
-      "city": "Kolding",
-      "state": null,
-      "country": "Denmark",
-      "trialTitle": "A EUROpean Randomized Study on Blood-thinners and Cholesterol-lowering Treatments to Prevent Future Vascular Events in People With Covert Brain Infarcts (CBI)",
-      "status": "RECRUITING",
-      "lat": 55.4904,
-      "lon": 9.47216
-    },
-    {
-      "nctId": "NCT07012629",
-      "facilityName": "Odense Universitetshospital",
-      "city": "Odense",
-      "state": null,
-      "country": "Denmark",
-      "trialTitle": "A EUROpean Randomized Study on Blood-thinners and Cholesterol-lowering Treatments to Prevent Future Vascular Events in People With Covert Brain Infarcts (CBI)",
-      "status": "RECRUITING",
-      "lat": 55.39594,
-      "lon": 10.38831
-    },
-    {
-      "nctId": "NCT07012629",
-      "facilityName": "Roskilde Hospital",
-      "city": "Roskilde",
-      "state": null,
-      "country": "Denmark",
-      "trialTitle": "A EUROpean Randomized Study on Blood-thinners and Cholesterol-lowering Treatments to Prevent Future Vascular Events in People With Covert Brain Infarcts (CBI)",
-      "status": "RECRUITING",
-      "lat": 55.64152,
-      "lon": 12.08035
-    },
-    {
-      "nctId": "NCT07012629",
-      "facilityName": "University Medical Center Hamburg-Eppendorf",
-      "city": "Hamburg",
-      "state": null,
-      "country": "Germany",
-      "trialTitle": "A EUROpean Randomized Study on Blood-thinners and Cholesterol-lowering Treatments to Prevent Future Vascular Events in People With Covert Brain Infarcts (CBI)",
-      "status": "RECRUITING",
-      "lat": 53.55073,
-      "lon": 9.99302
-    },
-    {
-      "nctId": "NCT07012629",
-      "facilityName": "Oslo University Hospital",
-      "city": "Oslo",
-      "state": null,
-      "country": "Norway",
-      "trialTitle": "A EUROpean Randomized Study on Blood-thinners and Cholesterol-lowering Treatments to Prevent Future Vascular Events in People With Covert Brain Infarcts (CBI)",
-      "status": "RECRUITING",
-      "lat": 59.91273,
-      "lon": 10.74609
-    },
-    {
-      "nctId": "NCT07012629",
-      "facilityName": "Skånes Universitetssjukhus",
-      "city": "Lund",
-      "state": null,
-      "country": "Sweden",
-      "trialTitle": "A EUROpean Randomized Study on Blood-thinners and Cholesterol-lowering Treatments to Prevent Future Vascular Events in People With Covert Brain Infarcts (CBI)",
-      "status": "RECRUITING",
-      "lat": 55.70584,
-      "lon": 13.19321
-    },
-    {
-      "nctId": "NCT07012629",
-      "facilityName": "Universitätsspital - Inselspital - University of Bern",
-      "city": "Bern",
-      "state": null,
-      "country": "Switzerland",
-      "trialTitle": "A EUROpean Randomized Study on Blood-thinners and Cholesterol-lowering Treatments to Prevent Future Vascular Events in People With Covert Brain Infarcts (CBI)",
-      "status": "RECRUITING",
-      "lat": 46.94809,
-      "lon": 7.44444
+      "lat": 51.505932,
+      "lon": -0.12424
     },
     {
       "nctId": "NCT07026994",
