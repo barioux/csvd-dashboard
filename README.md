@@ -95,6 +95,7 @@ merges later upstream changes into a fork.
 ## Technology Stack
 
 <!-- markdownlint-disable MD013 MD033 -->
+
 <p align="center">
 <a href="https://deno.com/"><img src="https://img.shields.io/badge/-Deno-000000?logo=deno&logoColor=white" alt="Deno" /></a>
 <a href="https://usefresh.dev/"><img src="https://img.shields.io/badge/-Fresh-FFDB1E?logo=deno&logoColor=black" alt="Fresh" /></a>
@@ -124,23 +125,23 @@ merges later upstream changes into a fork.
 </p>
 <!-- markdownlint-enable MD013 MD033 -->
 
-| Layer             | Technology                                                                                                                                                                                                                                                                       |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Runtime           | [Deno 2.9](https://deno.com/)                                                                                                                                                                                                                                                    |
-| Web framework     | [Fresh 2.3](https://usefresh.dev/) ([Preact 10](https://preactjs.com/) islands) + [Vite 7.3](https://vite.dev/)                                                                                                                                                                  |
-| Tables            | [TanStack Table 9](https://tanstack.com/table) (`@tanstack/preact-table`)                                                                                                                                                                                                        |
-| Map               | [Leaflet 1.9.4](https://leafletjs.com/) + [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster)                                                                                                                                                              |
-| Tooltips          | Native `[popover]` panels positioned by [Floating UI](https://floating-ui.com/)                                                                                                                                                                                                  |
-| Figures (in app)  | Hand-drawn SVG from `lib/timeline.ts` and `lib/phenogram.ts`                                                                                                                                                                                                                     |
-| Styling           | One stylesheet (`assets/app.css`), OKLCH tokens, no framework; Barlow Condensed over Barlow self-hosted; [Heroicons v2](https://heroicons.com/) inlined                                                                                                                          |
+| Layer             | Technology                                                                                                                                                                                                                                                                |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Runtime           | [Deno 2.9](https://deno.com/)                                                                                                                                                                                                                                              |
+| Web framework     | [Fresh 2.3](https://usefresh.dev/) ([Preact 10](https://preactjs.com/) islands) + [Vite 7.3](https://vite.dev/)                                                                                                                                                              |
+| Tables            | [TanStack Table 9](https://tanstack.com/table) (`@tanstack/preact-table`)                                                                                                                                                                                                |
+| Map               | [Leaflet 1.9.4](https://leafletjs.com/) + [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster)                                                                                                                                                         |
+| Tooltips          | Native `[popover]` panels positioned by [Floating UI](https://floating-ui.com/)                                                                                                                                                                                          |
+| Figures (in app)  | Hand-drawn SVG from `lib/timeline.ts` and `lib/phenogram.ts`                                                                                                                                                                                                          |
+| Styling           | One stylesheet (`assets/app.css`), OKLCH tokens, no framework; Barlow Condensed over Barlow self-hosted; [Heroicons v2](https://heroicons.com/) inlined                                                                                                                  |
 | Data pipeline     | [Python 3.14](https://www.python.org/) ([uv](https://docs.astral.sh/uv/)), [httpx](https://github.com/encode/httpx), [asyncpg](https://github.com/MagicStack/asyncpg), [Biopython](https://biopython.org/), [lxml](https://lxml.de/), [Rich](https://github.com/Textualize/rich) |
-| Validation        | [Pydantic v2](https://github.com/pydantic/pydantic), [Pandera](https://github.com/unionai-oss/pandera), [pandas](https://pandas.pydata.org/)                                                                                                                                     |
-| LLM extraction    | [Anthropic Claude Opus 5.5](https://platform.claude.com/docs/en/models/overview), pinned in `pipeline/config.py`                                                                                                                                                                 |
-| PDF fallback      | [Docling](https://github.com/docling-project/docling) + RapidOCR on ONNX Runtime                                                                                                                                                                                                 |
-| Database          | [PostgreSQL 18.6](https://www.postgresql.org/), [Alembic](https://alembic.sqlalchemy.org/) migrations; containers run [Docker Hardened Images](https://docs.docker.com/dhi/)                                                                                                     |
-| Print figures     | [pyCirclize](https://github.com/moshi4/pyCirclize) (trials radar), [matplotlib](https://matplotlib.org/) (phenogram)                                                                                                                                                             |
-| Testing           | `deno test`, [pytest](https://github.com/pytest-dev/pytest), [Playwright](https://playwright.dev/)                                                                                                                                                                               |
-| Lint & type-check | `deno fmt` / `deno lint` / `deno check`, [Ruff](https://github.com/astral-sh/ruff), [ty](https://github.com/astral-sh/ty)                                                                                                                                                        |
+| Validation        | [Pydantic v2](https://github.com/pydantic/pydantic), [Pandera](https://github.com/unionai-oss/pandera), [pandas](https://pandas.pydata.org/)                                                                                                                                 |
+| LLM extraction    | [Anthropic Claude Opus 5.5](https://platform.claude.com/docs/en/models/overview), pinned in `pipeline/config.py`                                                                                                                                                         |
+| PDF fallback      | [Docling](https://github.com/docling-project/docling) + RapidOCR on ONNX Runtime                                                                                                                                                                                           |
+| Database          | [PostgreSQL 18.6](https://www.postgresql.org/), [Alembic](https://alembic.sqlalchemy.org/) migrations; containers run [Docker Hardened Images](https://docs.docker.com/dhi/)                                                                                                 |
+| Print figures     | [pyCirclize](https://github.com/moshi4/pyCirclize) (trials radar), [matplotlib](https://matplotlib.org/) (phenogram)                                                                                                                                                        |
+| Testing           | `deno test`, [pytest](https://github.com/pytest-dev/pytest), [Playwright](https://playwright.dev/)                                                                                                                                                                        |
+| Lint & type-check | `deno fmt` / `deno lint` / `deno check`, [Ruff](https://github.com/astral-sh/ruff), [ty](https://github.com/astral-sh/ty)                                                                                                                                             |
 
 Vite is pinned to 7.x because `@fresh/plugin-vite` requires `vite@^7.1.4`.
 
@@ -284,6 +285,7 @@ recaptures all six from a fresh production build; rerun it when the data or a
 page changes, and in a fork after its first live run.
 
 <!-- markdownlint-disable MD013 MD033 -->
+
 <table>
   <tr valign="top">
     <td width="50%"><strong>About</strong> — the four totals, then the last pipeline run: its six timed steps and the funnel from papers fetched to genes accepted.</td>
@@ -317,6 +319,7 @@ page changes, and in a fork after its first live run.
 ## Project Structure
 
 <!-- markdownlint-disable MD033 -->
+
 <details>
 <summary><strong>Click to expand project structure</strong></summary>
 
@@ -433,7 +436,7 @@ page changes, and in a fork after its first live run.
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/mathieubpoiriericm/csvd-dashboard.git
+git clone https://github.com/bariouxcsvd-dashboard.git
 cd csvd-dashboard
 
 # 2. Resolve dependencies (nodeModulesDir is "manual" — never implicit)
@@ -460,15 +463,15 @@ either variable unset every page answers 503 rather than opening.
 
 ### Prerequisites
 
-| Tool                | Needed for                                                  | Version |
-| ------------------- | ----------------------------------------------------------- | ------- |
-| Deno                | the web app (always)                                        | 2.9+    |
-| Node.js + npm       | the Playwright suite, the perf harness, the screenshots     | 26+     |
-| uv                  | the Python pipeline and the print figures                   | 0.12+   |
-| PostgreSQL          | regenerating `data/` only                                   | 18.6    |
-| Apple's `container` | optional: a containerised PostgreSQL, the pytest database   | 1.3+    |
-| libwebp (`cwebp`)   | recapturing the screenshots                                 | 1.0+    |
-| Tracy               | `deno task perf` (`tracy-import-chrome`, `tracy-csvexport`) | 0.14.1  |
+| Tool                  | Needed for                                                        | Version |
+| --------------------- | ----------------------------------------------------------------- | ------- |
+| Deno                  | the web app (always)                                              | 2.9+    |
+| Node.js + npm         | the Playwright suite, the perf harness, the screenshots           | 26+     |
+| uv                    | the Python pipeline and the print figures                         | 0.12+   |
+| PostgreSQL            | regenerating `data/` only                                       | 18.6    |
+| Apple's `container` | optional: a containerised PostgreSQL, the pytest database         | 1.3+    |
+| libwebp (`cwebp`)   | recapturing the screenshots                                       | 1.0+    |
+| Tracy                 | `deno task perf` (`tracy-import-chrome`, `tracy-csvexport`) | 0.14.1  |
 
 ### Web application
 
@@ -568,28 +571,28 @@ table that cannot be rebuilt, why the image is glibc — is in
 
 Tasks live in `deno.json`.
 
-| Task                      | What it does                                    |
-| ------------------------- | ----------------------------------------------- |
-| `deno task dev`           | Vite dev server with HMR on `:5173`             |
-| `deno task build`         | production build into `_fresh/`                 |
-| `deno task start`         | serve the build on `127.0.0.1:8000` with `.env` |
+| Task                        | What it does                                          |
+| --------------------------- | ----------------------------------------------------- |
+| `deno task dev`           | Vite dev server with HMR on `:5173`                 |
+| `deno task build`         | production build into `_fresh/`                     |
+| `deno task start`         | serve the build on `127.0.0.1:8000` with `.env`   |
 | `deno task check`         | `deno fmt --check` + `deno lint` + `deno check` |
-| `deno task test`          | unit tests                                      |
-| `deno task test:coverage` | unit tests plus enforced coverage floors        |
-| `deno task e2e:install`   | `npm ci` + download the Chromium build          |
-| `deno task test:e2e`      | build, serve, and drive the app                 |
-| `deno task test:e2e:ui`   | the same suite in Playwright's UI mode          |
-| `deno task perf`          | throttled responsiveness measurement            |
-| `deno task test:perf`     | the perf harness's metric tests, no browser     |
-| `deno task screenshots`   | build, then recapture the README's screenshots  |
-| `deno task data`          | regenerate `data/` except the map and cytobands |
-| `deno task data:empty`    | write the empty `data/` a fork starts from      |
-| `deno task geocode`       | regenerate `data/geocoded_trials.json`          |
-| `deno task cytobands`     | regenerate `data/cytobands_hg38.json` from UCSC |
-| `deno task figure`        | draw both print figures into `figures/`         |
-| `deno task fixtures`      | fetch the golden suite's paper fixtures         |
-| `deno task models`        | prefetch the Docling model weights              |
-| `deno task update`        | run Fresh's own updater against the checkout    |
+| `deno task test`          | unit tests                                            |
+| `deno task test:coverage` | unit tests plus enforced coverage floors              |
+| `deno task e2e:install`   | `npm ci` + download the Chromium build              |
+| `deno task test:e2e`      | build, serve, and drive the app                       |
+| `deno task test:e2e:ui`   | the same suite in Playwright's UI mode                |
+| `deno task perf`          | throttled responsiveness measurement                  |
+| `deno task test:perf`     | the perf harness's metric tests, no browser           |
+| `deno task screenshots`   | build, then recapture the README's screenshots        |
+| `deno task data`          | regenerate `data/` except the map and cytobands     |
+| `deno task data:empty`    | write the empty `data/` a fork starts from          |
+| `deno task geocode`       | regenerate `data/geocoded_trials.json`              |
+| `deno task cytobands`     | regenerate `data/cytobands_hg38.json` from UCSC     |
+| `deno task figure`        | draw both print figures into `figures/`             |
+| `deno task fixtures`      | fetch the golden suite's paper fixtures               |
+| `deno task models`        | prefetch the Docling model weights                    |
+| `deno task update`        | run Fresh's own updater against the checkout          |
 
 The pipeline is linted and type-checked through uv; its tests are under
 [Testing](#testing).
@@ -622,12 +625,12 @@ interactions**: the `longtask` API only reports tasks over 50 ms.
 `.github/workflows/ci.yml` runs five jobs on every push to `main` and every pull
 request:
 
-| Job          | Steps                                                                                                                                                                                         |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `check`      | `deno install`, `deno task check`, `deno task test:coverage`, `deno task test:perf`                                                                                                           |
+| Job            | Steps                                                                                                                                                                                               |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `check`      | `deno install`, `deno task check`, `deno task test:coverage`, `deno task test:perf`                                                                                                         |
 | `python`     | `uv sync --locked`, Ruff, ty, pytest with branch coverage against a `postgres:18` service, then `tests/scripts` in a step of its own                                                          |
-| `e2e`        | Playwright against the production build, report uploaded                                                                                                                                      |
-| `empty-data` | `deno task data:empty`, `git rm` of the four `csvd/` trees, then every gate above — the proof that a fork for another disease starts green                                                    |
+| `e2e`        | Playwright against the production build, report uploaded                                                                                                                                            |
+| `empty-data` | `deno task data:empty`, `git rm` of the four `csvd/` trees, then every gate above — the proof that a fork for another disease starts green                                                   |
 | `adapt-fork` | `scripts/adapt_fork_check.ts --e2e`: two wizard bundles unpacked over copies of the tree, the checklist followed, every gate run on each, one per parallel leg (`--shard=1/2`, `--shard=2/2`) |
 
 They run on `ubuntu-latest` unless the repository sets a `CI_RUNNER` variable
@@ -643,7 +646,7 @@ repository sends them to a machine of its own (the `ci-runner` skill,
 
 ## Deployment
 
-The dashboard is hosted at **<https://csvd-dashboard.fly.dev>**. It is built
+The dashboard is hosted at [cure-csvd-atlas.fly.dev](https://cure-csvd-atlas.fly.dev/phenogram.). It is built
 into a container image by the root `Dockerfile` and runs on
 [Fly.io](https://fly.io) as one always-on machine in Paris, configured by
 `fly.toml`. It moved there on 2 November 2026 from Deno Deploy, which Deno
@@ -658,12 +661,12 @@ deploy nothing, and there are no preview URLs. Because `data/*.json` is
 committed and bundled at build time, regenerating data and pushing it to `main`
 republishes the site.
 
-| Where           | What it holds                                                                                                   |
-| --------------- | --------------------------------------------------------------------------------------------------------------- |
+| Where             | What it holds                                                                                                         |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------- |
 | `fly.toml`      | the app name (also the host name, `<app>.fly.dev`), region `cdg`, one 512 MB `shared-cpu-1x` machine, always on |
-| `Dockerfile`    | `denoland/deno:2.9.8`; `deno install --frozen`, `deno task build`, then `deno serve --cached-only`              |
-| `.dockerignore` | an allowlist of what the build reads                                                                            |
-| `FLY_API_TOKEN` | a GitHub Actions secret (`fly tokens create deploy`); without it the deploy job skips                           |
+| `Dockerfile`    | `denoland/deno:2.9.8`; `deno install --frozen`, `deno task build`, then `deno serve --cached-only`            |
+| `.dockerignore` | an allowlist of what the build reads                                                                                  |
+| `FLY_API_TOKEN` | a GitHub Actions secret (`fly tokens create deploy`); without it the deploy job skips                               |
 
 The machine costs about $3.69 a month at Fly's November 2026 prices.
 
@@ -734,26 +737,26 @@ web app needs only the first two**, the only two set as Fly secrets (see
 [Deployment](#deployment)); `fly.toml` sets the third, and the rest are the
 pipeline's.
 
-| Variable                                                               | Purpose                                                                 |
-| ---------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `DASHBOARD_PASSPHRASE`                                                 | what collaborators type on `/login`                                     |
-| `DASHBOARD_SESSION_SECRET`                                             | signs the 30-day session cookie; rotate to log everyone out             |
-| `LOGIN_CLIENT_IP_HEADER`                                               | behind a proxy, the header naming the visitor; unset locally            |
-| `DB_HOST` … `DB_PASSWORD`                                              | PostgreSQL connection, for the pipeline and Alembic                     |
-| `ANTHROPIC_API_KEY`                                                    | LLM gene extraction                                                     |
-| `ANTHROPIC_WORKSPACE_ID`                                               | only for an identity-linked key                                         |
-| `ENTREZ_EMAIL`                                                         | NCBI E-utilities contact, required by NCBI policy                       |
-| `NCBI_API_KEY`                                                         | optional: ten NCBI requests a second rather than three                  |
-| `UNPAYWALL_EMAIL`                                                      | open-access PDF lookup                                                  |
-| `PIPELINE_LLM_EFFORT`                                                  | cost lever; defaults to `high`                                          |
-| `PIPELINE_CONFIDENCE_*`                                                | the two confidence floors (update / insert)                             |
-| `PIPELINE_REQUIRE_VERIFIED_QUOTES`                                     | reject a gene whose quote is not verbatim in the paper; off by default  |
-| `PIPELINE_MAX_PAPER_TEXT_CHARS`                                        | truncation cap on retrieved full text                                   |
-| `PIPELINE_PDF_*`                                                       | Docling OCR, device, threads, page and time caps, model-weights path    |
-| `PIPELINE_CLINVAR_*`, `PIPELINE_ORPHADATA_*`, `PIPELINE_OPENTARGETS_*` | annotation rate limits, caps, and the expected Open Targets release     |
-| `PIPELINE_NOTIFY_URLS`                                                 | [Apprise](https://github.com/caronc/apprise) URLs for run notifications |
-| `PIPELINE_LOG_DIR`                                                     | where run logs go; defaults to `<root>/logs`                            |
-| `SSL_CERT_FILE`                                                        | TLS certificate bundle; the pipeline falls back to certifi's            |
+| Variable                                                                     | Purpose                                                                |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `DASHBOARD_PASSPHRASE`                                                     | what collaborators type on `/login`                                  |
+| `DASHBOARD_SESSION_SECRET`                                                 | signs the 30-day session cookie; rotate to log everyone out            |
+| `LOGIN_CLIENT_IP_HEADER`                                                   | behind a proxy, the header naming the visitor; unset locally           |
+| `DB_HOST` … `DB_PASSWORD`                                               | PostgreSQL connection, for the pipeline and Alembic                    |
+| `ANTHROPIC_API_KEY`                                                        | LLM gene extraction                                                    |
+| `ANTHROPIC_WORKSPACE_ID`                                                   | only for an identity-linked key                                        |
+| `ENTREZ_EMAIL`                                                             | NCBI E-utilities contact, required by NCBI policy                      |
+| `NCBI_API_KEY`                                                             | optional: ten NCBI requests a second rather than three                 |
+| `UNPAYWALL_EMAIL`                                                          | open-access PDF lookup                                                 |
+| `PIPELINE_LLM_EFFORT`                                                      | cost lever; defaults to `high`                                       |
+| `PIPELINE_CONFIDENCE_*`                                                    | the two confidence floors (update / insert)                            |
+| `PIPELINE_REQUIRE_VERIFIED_QUOTES`                                         | reject a gene whose quote is not verbatim in the paper; off by default |
+| `PIPELINE_MAX_PAPER_TEXT_CHARS`                                            | truncation cap on retrieved full text                                  |
+| `PIPELINE_PDF_*`                                                           | Docling OCR, device, threads, page and time caps, model-weights path   |
+| `PIPELINE_CLINVAR_*`, `PIPELINE_ORPHADATA_*`, `PIPELINE_OPENTARGETS_*` | annotation rate limits, caps, and the expected Open Targets release    |
+| `PIPELINE_NOTIFY_URLS`                                                     | [Apprise](https://github.com/caronc/apprise) URLs for run notifications |
+| `PIPELINE_LOG_DIR`                                                         | where run logs go; defaults to `<root>/logs`                         |
+| `SSL_CERT_FILE`                                                            | TLS certificate bundle; the pipeline falls back to certifi's           |
 
 **The extraction model is not an environment variable.** It is pinned in
 `pipeline/config.py` as `EXTRACTION_MODEL`, because extraction output is
@@ -770,21 +773,21 @@ pool sizes, ClinicalTrials.gov paging) is declared with its default in
 
 The app reads static JSON from `data/`, imported at build time.
 
-| File                    | Shape                                | Source                              |
-| ----------------------- | ------------------------------------ | ----------------------------------- |
-| `table1.json`           | array of gene rows                   | `genes` table (+ three join tables) |
-| `table2.json`           | array of curated trial rows          | `clinical_trials` table (curated)   |
-| `gene_info.json`        | one row per Table 1 gene             | `ncbi_gene_info` cache              |
-| `gene_info_table2.json` | one row per Table 2 genetic target   | `ncbi_gene_info` cache              |
-| `protein_info.json`     | one row per Table 1 gene             | `uniprot_info` cache                |
-| `refs.json`             | one row per cited PMID               | `pubmed_citations` cache            |
-| `omim_info.json`        | one row per OMIM entry               | `disease/omim_info.csv`             |
-| `gene_annotations.json` | one row per `(gene, disease)`        | `gene_annotations` table (pivoted)  |
-| `pipeline_status.json`  | one object, or `null` until a run    | `pipeline_runs` table               |
-| `pipeline_run.json`     | one report, or `null` until a run    | `pipeline_runs.run_report`          |
-| `pipeline_syncs.json`   | one entry per sync mode              | `sync_runs` table                   |
-| `geocoded_trials.json`  | `nctIds`, `generatedAt`, `locations` | ClinicalTrials.gov                  |
-| `cytobands_hg38.json`   | 862 hg38 bands                       | UCSC Genome Browser                 |
+| File                      | Shape                                      | Source                                |
+| ------------------------- | ------------------------------------------ | ------------------------------------- |
+| `table1.json`           | array of gene rows                         | `genes` table (+ three join tables) |
+| `table2.json`           | array of curated trial rows                | `clinical_trials` table (curated)   |
+| `gene_info.json`        | one row per Table 1 gene                   | `ncbi_gene_info` cache              |
+| `gene_info_table2.json` | one row per Table 2 genetic target         | `ncbi_gene_info` cache              |
+| `protein_info.json`     | one row per Table 1 gene                   | `uniprot_info` cache                |
+| `refs.json`             | one row per cited PMID                     | `pubmed_citations` cache            |
+| `omim_info.json`        | one row per OMIM entry                     | `disease/omim_info.csv`             |
+| `gene_annotations.json` | one row per `(gene, disease)`            | `gene_annotations` table (pivoted)  |
+| `pipeline_status.json`  | one object, or `null` until a run        | `pipeline_runs` table               |
+| `pipeline_run.json`     | one report, or `null` until a run        | `pipeline_runs.run_report`          |
+| `pipeline_syncs.json`   | one entry per sync mode                    | `sync_runs` table                   |
+| `geocoded_trials.json`  | `nctIds`, `generatedAt`, `locations` | ClinicalTrials.gov                    |
+| `cytobands_hg38.json`   | 862 hg38 bands                             | UCSC Genome Browser                   |
 
 The row counts of this repository's data are in
 [`disease/README.md`](disease/README.md). `deno task data:empty` writes the
@@ -862,11 +865,11 @@ the `nctIds` set.
 `pipeline/export/writer.py`'s `to_camel()` derives JSON keys from display column
 names (`"Registry ID"` → `registryId`). Three layers stay in sync:
 
-| Concern               | Lives in                                 |
-| --------------------- | ---------------------------------------- |
+| Concern               | Lives in                                     |
+| --------------------- | -------------------------------------------- |
 | Wire keys             | `pipeline/export/writer.py` (`to_camel`) |
-| TypeScript shapes     | `lib/types.ts`                           |
-| Human-readable labels | `islands/*View.tsx` column definitions   |
+| TypeScript shapes     | `lib/types.ts`                             |
+| Human-readable labels | `islands/*View.tsx` column definitions     |
 
 Two invariants the TypeScript side depends on:
 
@@ -918,20 +921,20 @@ Merge  ────────────>   PostgreSQL   <────  ClinV
 uv run python -m pipeline.main [flags]
 ```
 
-| Flag                   | Effect                                                         |
-| ---------------------- | -------------------------------------------------------------- |
-| `--pubmed`             | PubMed gene extraction (also the default with no selector)     |
-| `--days-back N`        | lookback window for new papers (default 7)                     |
-| `--batch`              | submit every paper in one Batch API request at half price      |
-| `--clinical-trials`    | the ClinicalTrials.gov discovery pipeline                      |
-| `--sync-external-data` | NCBI Gene, UniProt and PubMed citations for every gene         |
-| `--sync-annotations`   | ClinVar, Orphadata and Open Targets annotations                |
+| Flag                     | Effect                                                           |
+| ------------------------ | ---------------------------------------------------------------- |
+| `--pubmed`             | PubMed gene extraction (also the default with no selector)       |
+| `--days-back N`        | lookback window for new papers (default 7)                       |
+| `--batch`              | submit every paper in one Batch API request at half price        |
+| `--clinical-trials`    | the ClinicalTrials.gov discovery pipeline                        |
+| `--sync-external-data` | NCBI Gene, UniProt and PubMed citations for every gene           |
+| `--sync-annotations`   | ClinVar, Orphadata and Open Targets annotations                  |
 | `--export`             | regenerate `data/*.json` when the selected pipelines finish    |
-| `--local-pdfs PATH`    | extract from a local PDF or directory (no PubMed, no database) |
-| `--pmids FILE`         | process specific PMIDs from a text file (no database)          |
-| `--skip-validation`    | skip NCBI validation (only with `--local-pdfs` or `--pmids`)   |
-| `--dry-run`            | extract but write nothing to the database (still billed)       |
-| `--test-mode`          | search and deduplicate only: no retrieval, LLM or merge        |
+| `--local-pdfs PATH`    | extract from a local PDF or directory (no PubMed, no database)   |
+| `--pmids FILE`         | process specific PMIDs from a text file (no database)            |
+| `--skip-validation`    | skip NCBI validation (only with `--local-pdfs` or `--pmids`) |
+| `--dry-run`            | extract but write nothing to the database (still billed)         |
+| `--test-mode`          | search and deduplicate only: no retrieval, LLM or merge          |
 
 The four pipeline selectors combine and run in sequence. `--days-back`,
 `--batch`, `--dry-run` and `--test-mode` apply to the PubMed pipeline only, and
@@ -1041,8 +1044,8 @@ deno task figure   # figures/{timeline,phenogram}.{svg,pdf,png}
 uv run --group figure scripts/timeline_figure.py --font /path/to/Arial.ttf --dpi 600
 ```
 
-| Figure       | Island                       | Print script                  | Library    |
-| ------------ | ---------------------------- | ----------------------------- | ---------- |
+| Figure       | Island                         | Print script                    | Library    |
+| ------------ | ------------------------------ | ------------------------------- | ---------- |
 | Trials radar | `islands/TrialsTimeline.tsx` | `scripts/timeline_figure.py`  | pyCirclize |
 | Phenogram    | `islands/Phenogram.tsx`      | `scripts/phenogram_figure.py` | matplotlib |
 
@@ -1054,8 +1057,8 @@ the font.
 
 ## Data Sources
 
-| Source                                                                    | Provides                                                           | Licence             |
-| ------------------------------------------------------------------------- | ------------------------------------------------------------------ | ------------------- |
+| Source                                                                   | Provides                                                           | Licence             |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------- |
 | [PubMed / NCBI E-utilities](https://www.ncbi.nlm.nih.gov/books/NBK25501/) | Paper search and citation metadata                                 | NCBI, public domain |
 | [Europe PMC](https://europepmc.org/)                                      | Full-text JATS XML                                                 | per-article         |
 | [Unpaywall](https://unpaywall.org/)                                       | Open-access PDF locations for the fallback path                    | CC0                 |
@@ -1065,7 +1068,7 @@ the font.
 | [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/)                          | Monogenic disease associations and clinical significance           | NCBI, public domain |
 | [Orphanet / Orphadata](https://www.orphadata.com/)                        | Disease cross-references with mapping relation, HPO frequencies    | CC BY 4.0           |
 | [Open Targets Platform](https://platform.opentargets.org/)                | Identity anchors, ranked associations, GO terms, ChEMBL mechanisms | CC0 1.0             |
-| [ClinicalTrials.gov API v2](https://clinicaltrials.gov/data-api/api)      | Trial metadata and facility `geoPoint` coordinates                 | NLM terms           |
+| [ClinicalTrials.gov API v2](https://clinicaltrials.gov/data-api/api)      | Trial metadata and facility `geoPoint` coordinates               | NLM terms           |
 | [UCSC Genome Browser](https://genome.ucsc.edu/)                           | hg38 cytoband ideogram                                             | UCSC terms          |
 
 Trial registries carried in Table 2: ClinicalTrials.gov, ISRCTN, ANZCTR, ChiCTR.
@@ -1085,12 +1088,12 @@ the map), and the adapt wizard looks up ontology terms in EMBL-EBI's
 
 ## Testing
 
-| Suite                   | Runner      | Scope                                                                   |
-| ----------------------- | ----------- | ----------------------------------------------------------------------- |
+| Suite                     | Runner        | Scope                                                                   |
+| ------------------------- | ------------- | ----------------------------------------------------------------------- |
 | `tests/**/*_test.ts(x)` | `deno test` | Web app: filters, data contract, layout maths, SSR routes, adapt wizard |
-| `tests/pipeline/`       | pytest      | The Python pipeline and its export                                      |
-| `tests/scripts/`        | pytest      | The print figures, cytoband fetch, backfills, reconcilers               |
-| `e2e/tests/`            | Playwright  | The specs plus the sign-in setup, against the production build          |
+| `tests/pipeline/`       | pytest        | The Python pipeline and its export                                      |
+| `tests/scripts/`        | pytest        | The print figures, cytoband fetch, backfills, reconcilers               |
+| `e2e/tests/`            | Playwright    | The specs plus the sign-in setup, against the production build          |
 
 ```bash
 deno task test                # web app
@@ -1174,7 +1177,6 @@ Two gaps worth knowing before you trust a green run.
   the Docling PDF path, negative cases (no gold row reports zero genes), and
   everything after `extract_from_paper` — the confidence gate and NCBI
   validation.
-
 - **Retrieval precision is not measured.** Recall is exact, but the argument for
   the MeSH branch is a volume argument — more papers for a few more gold ones —
   not a relevance one. Nothing here says what fraction of the extra papers is
